@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVG1331 AoO Optimizer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap');
+:root {
+  --bg:#060b12;--surface:#0c1520;--surface2:#101d2c;--surface3:#152436;
+  --border:#1a3352;--border2:#224466;
+  --accent:#00c8ff;--accent2:#ff6b00;--gold:#f0b840;
+  --green:#3de070;--red:#ff4455;--purple:#a060ff;
+  --text:#bcd8f0;--muted:#4a6a88;--faint:#1e3448;
+  --front:#c84040;--mid:#1e6ab0;--back:#287840;--zombie:#7030b8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-weight:400;display:flex;flex-direction:column;
+  background-image:radial-gradient(ellipse at 10% 0%,rgba(0,80,160,0.15) 0%,transparent 50%),
+  radial-gradient(ellipse at 90% 100%,rgba(0,50,120,0.10) 0%,transparent 50%);}
+
+/* ── TOP BAR ── */
+#topbar{background:linear-gradient(180deg,#0a1828,#080e18);border-bottom:1px solid var(--border);
+  padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  position:relative;}
+#topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+.logo{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;letter-spacing:3px;color:var(--accent);}
+.logo span{color:var(--accent2);}
+.top-meta{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:1px;}
+.top-actions{display:flex;gap:8px;align-items:center;}
+#adminBtn{font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:5px 12px;
+  border:1px solid var(--border2);background:var(--surface2);color:var(--muted);
+  border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;}
+#adminBtn:hover{border-color:var(--gold);color:var(--gold);}
+#playerName{font-family:'Share Tech Mono',monospace;font-size:0.75rem;color:var(--accent);
+  background:none;border:none;border-bottom:1px solid var(--border2);padding:2px 6px;
+  width:140px;outline:none;}
+#playerName::placeholder{color:var(--muted);}
+
+/* ── LAYOUT ── */
+#app{display:flex;flex:1;overflow:hidden;}
+
+/* ── SIDEBAR ── */
+#sidebar{width:200px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;}
+.nav-section{padding:14px 0 6px;}
+.nav-label{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);
+  letter-spacing:2px;padding:0 16px 6px;text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 16px;cursor:pointer;
+  font-size:0.82rem;color:var(--muted);transition:all 0.15s;border-left:3px solid transparent;
+  user-select:none;}
+.nav-item:hover{color:var(--text);background:var(--faint);}
+.nav-item.active{color:var(--accent);background:rgba(0,200,255,0.07);border-left-color:var(--accent);}
+.nav-item .nav-icon{font-size:0.85rem;width:16px;text-align:center;}
+.nav-badge{margin-left:auto;font-family:'Share Tech Mono',monospace;font-size:0.6rem;
+  padding:2px 6px;border-radius:10px;background:var(--faint);color:var(--muted);}
+.nav-badge.ok{background:rgba(61,224,112,0.12);color:var(--green);}
+.nav-badge.warn{background:rgba(240,184,64,0.12);color:var(--gold);}
+
+/* ── MAIN CONTENT ── */
+#content{flex:1;overflow-y:auto;padding:24px;}
+
+/* ── PANELS ── */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── DASHBOARD ── */
+.dash-header{margin-bottom:20px;}
+.dash-header h2{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700;
+  color:var(--text);letter-spacing:2px;}
+.dash-header p{font-size:0.8rem;color:var(--muted);margin-top:4px;}
+
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:24px;}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  cursor:pointer;transition:border-color 0.2s;}
+.profile-card:hover{border-color:var(--border2);}
+.profile-card.complete{border-color:rgba(61,224,112,0.3);}
+.profile-card.partial{border-color:rgba(240,184,64,0.3);}
+.pc-header{background:var(--surface2);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;}
+.pc-title{font-family:'Orbitron',monospace;font-size:0.68rem;font-weight:700;letter-spacing:2px;color:var(--accent);}
+.pc-status{font-family:'Share Tech Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:10px;}
+.pc-status.complete{background:rgba(61,224,112,0.12);color:var(--green);}
+.pc-status.partial{background:rgba(240,184,64,0.12);color:var(--gold);}
+.pc-status.empty{background:var(--faint);color:var(--muted);}
+.pc-body{padding:12px 14px;}
+.pc-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;
+  font-size:0.78rem;border-bottom:1px solid rgba(26,51,82,0.5);}
+.pc-row:last-child{border-bottom:none;}
+.pc-key{color:var(--muted);}
+.pc-val{color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;}
+.pc-val.set{color:var(--green);}
+.pc-val.missing{color:var(--red);}
+.pc-edit{font-size:0.68rem;color:var(--accent);margin-top:8px;text-align:right;}
+
+/* QUICK ACTIONS */
+.quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+.qa-btn{padding:10px 18px;border-radius:5px;border:1px solid var(--border2);
+  background:var(--surface);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:0.82rem;
+  font-weight:600;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:8px;}
+.qa-btn:hover{background:var(--surface2);border-color:var(--accent);color:var(--accent);}
+.qa-btn.primary{background:rgba(0,200,255,0.1);border-color:var(--accent);color:var(--accent);}
+.qa-btn.primary:hover{background:rgba(0,200,255,0.2);}
+
+/* ── SECTION HEADERS ── */
+.sec-header{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;
+  letter-spacing:3px;color:var(--accent);margin-bottom:12px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.sec-header::before{content:'';width:3px;height:12px;background:var(--accent);display:inline-block;}
+
+/* ── OFFICER BUILDER ── */
+.officer-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.officer-cat-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.occ-head{background:var(--surface2);padding:8px 14px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--border);}
+.occ-title{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:2px;color:var(--accent);}
+.occ-slots{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);}
+.occ-body{padding:8px;}
+.officer-slot{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:4px;
+  border:1px solid var(--faint);margin-bottom:4px;cursor:pointer;transition:all 0.15s;}
+.officer-slot:last-child{margin-bottom:0;}
+.officer-slot:hover{border-color:var(--border2);background:var(--faint);}
+.officer-slot.filled{border-color:rgba(0,200,255,0.25);background:rgba(0,200,255,0.04);}
+.os-num{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);width:14px;}
+.os-info{flex:1;}
+.os-name{font-size:0.82rem;font-weight:600;color:var(--text);}
+.os-skill{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);margin-top:1px;}
+.os-skill .sv{color:var(--green);}
+.os-empty{font-size:0.78rem;color:var(--muted);font-style:italic;}
+.os-remove{font-size:0.7rem;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:3px;}
+.os-remove:hover{color:var(--red);background:rgba(255,68,85,0.1);}
+
+/* OFFICER PICKER MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;
+  display:flex;align-items:center;justify-content:center;}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:8px;
+  width:480px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;}
+.modal-head{background:var(--surface2);padding:14px 18px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;}
+.modal-title{font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:700;
+  letter-spacing:2px;color:var(--accent);}
+.modal-close{cursor:pointer;color:var(--muted);font-size:1.1rem;padding:2px 8px;
+  border-radius:3px;transition:color 0.15s;}
+.modal-close:hover{color:var(--red);}
+.modal-body{overflow-y:auto;padding:12px;}
+.officer-option{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;
+  border:1px solid var(--faint);border-radius:5px;margin-bottom:6px;cursor:pointer;transition:all 0.15s;}
+.officer-option:hover{border-color:var(--accent);background:rgba(0,200,255,0.05);}
+.officer-option.selected{border-color:var(--green);background:rgba(61,224,112,0.05);}
+.oo-name{font-weight:600;font-size:0.86rem;color:var(--text);}
+.oo-skill{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+.oo-skill .sv{color:var(--green);}
+.oo-skill .sn{color:var(--accent2);}
+
+/* ── TROOP BUILDER ── */
+.troop-layout{display:flex;flex-direction:column;gap:10px;}
+.row-builder{border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+.rb-head{padding:10px 16px;display:flex;justify-content:space-between;align-items:center;}
+.rb-head.front{background:rgba(200,64,64,0.15);}
+.rb-head.mid{background:rgba(30,106,176,0.15);}
+.rb-head.back{background:rgba(40,120,64,0.15);}
+.rb-head.zombie{background:rgba(112,48,184,0.15);}
+.rb-title{font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:700;letter-spacing:2px;}
+.rb-head.front .rb-title{color:#ff8080;}
+.rb-head.mid .rb-title{color:#60b0ff;}
+.rb-head.back .rb-title{color:#60e088;}
+.rb-head.zombie .rb-title{color:#c080ff;}
+.rb-total{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--muted);}
+.rb-body{background:var(--surface);padding:10px 14px;}
+.unit-builder-row{display:grid;grid-template-columns:2fr 80px 90px 90px 1fr;gap:8px;
+  align-items:center;margin-bottom:8px;padding:6px 0;border-bottom:1px solid var(--faint);}
+.unit-builder-row:last-child{border-bottom:none;margin-bottom:0;}
+.ub-name{font-size:0.82rem;font-weight:600;color:var(--text);}
+.ub-tier{font-family:'Share Tech Mono',monospace;font-size:0.65rem;padding:2px 6px;
+  border-radius:3px;text-align:center;}
+.t12{background:rgba(240,184,64,0.1);border:1px solid rgba(240,184,64,0.35);color:var(--gold);}
+.t13{background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.35);color:var(--accent);}
+.ub-input{background:var(--surface2);border:1px solid var(--border);border-radius:4px;
+  padding:5px 8px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.75rem;
+  width:100%;outline:none;text-align:right;}
+.ub-input:focus{border-color:var(--accent);}
+.ub-units{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted);text-align:right;}
+.ub-ability{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);line-height:1.4;}
+.ub-ability .an{color:var(--accent2);}
+
+/* CAPACITY BAR */
+.cap-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:14px 18px;margin-bottom:20px;}
+.cap-label{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted);
+  margin-bottom:8px;display:flex;justify-content:space-between;}
+.cap-label span{color:var(--text);}
+.cap-track{height:8px;background:var(--faint);border-radius:4px;overflow:hidden;position:relative;}
+.cap-fill{height:100%;border-radius:4px;transition:width 0.3s;
+  background:linear-gradient(90deg,var(--mid),var(--accent));}
+.cap-fill.over{background:linear-gradient(90deg,var(--accent2),var(--red));}
+.cap-rows{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
+.cap-row-item{font-family:'Share Tech Mono',monospace;font-size:0.68rem;}
+.cap-row-item .crl{color:var(--muted);}
+
+/* ── RECOMMENDATION ── */
+.rec-controls{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+.battle-select{background:var(--surface2);border:1px solid var(--border2);border-radius:5px;
+  padding:8px 14px;color:var(--text);font-family:'Exo 2',sans-serif;font-size:0.82rem;
+  outline:none;cursor:pointer;}
+.battle-select:focus{border-color:var(--accent);}
+.gen-btn{padding:9px 20px;background:rgba(0,200,255,0.12);border:1px solid var(--accent);
+  border-radius:5px;color:var(--accent);font-family:'Orbitron',monospace;font-size:0.68rem;
+  font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;}
+.gen-btn:hover{background:rgba(0,200,255,0.22);}
+.gen-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+#recOutput{background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:20px;min-height:200px;font-size:0.84rem;line-height:1.7;color:var(--text);}
+#recOutput .rec-loading{color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:0.78rem;
+  display:flex;align-items:center;gap:10px;}
+.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#recOutput h3{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:2px;
+  color:var(--accent);margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+#recOutput h3:first-child{margin-top:0;}
+#recOutput .row-tag{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  padding:1px 6px;border-radius:3px;margin-right:6px;}
+#recOutput .tag-front{background:rgba(200,64,64,0.15);border:1px solid rgba(200,64,64,0.4);color:#ff8080;}
+#recOutput .tag-mid{background:rgba(30,106,176,0.15);border:1px solid rgba(30,106,176,0.4);color:#60b0ff;}
+#recOutput .tag-back{background:rgba(40,120,64,0.15);border:1px solid rgba(40,120,64,0.4);color:#60e088;}
+#recOutput .tag-zombie{background:rgba(112,48,184,0.15);border:1px solid rgba(112,48,184,0.4);color:#c080ff;}
+#recOutput .val{color:var(--green);}
+#recOutput .warn{color:var(--gold);}
+#recOutput .note{color:var(--muted);font-size:0.78rem;font-style:italic;}
+
+/* ── IMAGE UPLOAD ── */
+.upload-area{border:2px dashed var(--border2);border-radius:8px;padding:32px;text-align:center;
+  cursor:pointer;transition:all 0.2s;background:var(--surface);}
+.upload-area:hover,.upload-area.drag{border-color:var(--accent);background:rgba(0,200,255,0.04);}
+.upload-icon{font-size:2rem;margin-bottom:8px;opacity:0.5;}
+.upload-text{font-size:0.84rem;color:var(--muted);}
+.upload-text strong{color:var(--text);}
+#fileInput{display:none;}
+.upload-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+.preview-item{position:relative;border:1px solid var(--border);border-radius:5px;overflow:hidden;}
+.preview-item img{width:100px;height:80px;object-fit:cover;display:block;}
+.preview-remove{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.7);
+  border:none;color:var(--red);cursor:pointer;border-radius:2px;font-size:0.7rem;padding:1px 5px;}
+.analyze-btn{margin-top:12px;padding:9px 20px;background:rgba(160,96,255,0.12);
+  border:1px solid var(--purple);border-radius:5px;color:var(--purple);
+  font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:2px;
+  cursor:pointer;transition:all 0.2s;}
+.analyze-btn:hover{background:rgba(160,96,255,0.22);}
+#analysisOutput{margin-top:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:16px;min-height:80px;font-size:0.82rem;line-height:1.7;display:none;}
+
+/* ── ADMIN ── */
+#adminPanel{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;
+  display:none;align-items:center;justify-content:center;}
+#adminPanel.open{display:flex;}
+.admin-box{background:var(--surface);border:1px solid var(--gold);border-radius:8px;
+  width:520px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;}
+.admin-head{background:rgba(240,184,64,0.08);padding:14px 18px;border-bottom:1px solid rgba(240,184,64,0.25);
+  display:flex;justify-content:space-between;align-items:center;}
+.admin-title{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:700;
+  letter-spacing:2px;color:var(--gold);}
+.admin-body{overflow-y:auto;padding:20px;flex:1;}
+.admin-section{margin-bottom:20px;}
+.admin-section h3{font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:2px;
+  color:var(--gold);margin-bottom:10px;text-transform:uppercase;}
+.admin-unit{background:var(--surface2);border:1px solid var(--border);border-radius:5px;
+  padding:10px 14px;margin-bottom:6px;}
+.admin-unit-name{font-weight:600;font-size:0.84rem;margin-bottom:4px;}
+.admin-field{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.admin-field label{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);width:100px;}
+.admin-field input{background:var(--faint);border:1px solid var(--border);border-radius:3px;
+  padding:4px 8px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;
+  width:120px;outline:none;}
+.admin-field input:focus{border-color:var(--gold);}
+.admin-pw{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px;}
+.admin-pw input{background:var(--surface2);border:1px solid var(--border2);border-radius:5px;
+  padding:9px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.9rem;
+  width:200px;outline:none;text-align:center;letter-spacing:3px;}
+.admin-pw input:focus{border-color:var(--gold);}
+.admin-pw-btn{padding:8px 24px;background:rgba(240,184,64,0.1);border:1px solid var(--gold);
+  border-radius:4px;color:var(--gold);font-family:'Orbitron',monospace;font-size:0.68rem;
+  font-weight:700;letter-spacing:2px;cursor:pointer;}
+.admin-save{margin-top:14px;padding:9px 20px;background:rgba(240,184,64,0.1);
+  border:1px solid var(--gold);border-radius:5px;color:var(--gold);
+  font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:2px;cursor:pointer;}
+
+/* ── MISC ── */
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted);}
+.empty-state .es-icon{font-size:2.5rem;margin-bottom:12px;opacity:0.3;}
+.empty-state p{font-size:0.84rem;line-height:1.6;}
+.tag{font-family:'Share Tech Mono',monospace;font-size:0.65rem;padding:2px 7px;
+  border-radius:3px;display:inline-block;}
+.tag-green{background:rgba(61,224,112,0.1);border:1px solid rgba(61,224,112,0.3);color:var(--green);}
+.tag-gold{background:rgba(240,184,64,0.1);border:1px solid rgba(240,184,64,0.3);color:var(--gold);}
+.tag-red{background:rgba(255,68,85,0.1);border:1px solid rgba(255,68,85,0.3);color:var(--red);}
+input[type=number]::-webkit-inner-spin-button{opacity:0.3;}
+
+/* ── POST-MORTEM ── */
+.pm-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.pm-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.pm-card-full{background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;margin-bottom:16px;}
+.pm-head{background:var(--surface2);padding:9px 14px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;}
+.pm-title{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;
+  letter-spacing:2px;color:var(--accent);}
+.pm-body{padding:12px 14px;}
+.pm-field{margin-bottom:10px;}
+.pm-field label{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);
+  display:block;margin-bottom:4px;letter-spacing:1px;}
+.pm-field select, .pm-field input[type=text]{
+  background:var(--surface2);border:1px solid var(--border);border-radius:4px;
+  padding:7px 10px;color:var(--text);font-family:'Exo 2',sans-serif;font-size:0.8rem;
+  width:100%;outline:none;}
+.pm-field select:focus,.pm-field input:focus{border-color:var(--accent);}
+.pm-field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:4px;
+  padding:8px 10px;color:var(--text);font-family:'Exo 2',sans-serif;font-size:0.8rem;
+  width:100%;outline:none;resize:vertical;min-height:70px;line-height:1.5;}
+.pm-field textarea:focus{border-color:var(--accent);}
+.pm-field textarea::placeholder,.pm-field input::placeholder{color:var(--muted);}
+
+/* hypothesis confidence */
+.hyp-tag{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  padding:2px 8px;border-radius:10px;margin:2px;}
+.hyp-confirmed{background:rgba(61,224,112,0.12);border:1px solid rgba(61,224,112,0.35);color:var(--green);}
+.hyp-partial{background:rgba(240,184,64,0.12);border:1px solid rgba(240,184,64,0.35);color:var(--gold);}
+.hyp-refuted{background:rgba(255,68,85,0.12);border:1px solid rgba(255,68,85,0.35);color:var(--red);}
+.hyp-unknown{background:var(--faint);border:1px solid var(--border);color:var(--muted);}
+
+/* buff comparison table */
+.buff-compare-table{width:100%;border-collapse:collapse;font-size:0.75rem;margin-top:8px;}
+.buff-compare-table th{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:1px;
+  color:var(--muted);padding:4px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.buff-compare-table td{padding:5px 8px;border-bottom:1px solid var(--faint);vertical-align:middle;}
+.buff-compare-table tr:last-child td{border-bottom:none;}
+.bct-stat{color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:0.68rem;}
+.bct-friendly{color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;}
+.bct-enemy{color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;}
+.bct-gap{font-family:'Share Tech Mono',monospace;font-size:0.72rem;font-weight:600;}
+.bct-gap.pos{color:var(--green);}
+.bct-gap.neg{color:var(--red);}
+.bct-gap.crit{color:var(--red);background:rgba(255,68,85,0.1);padding:1px 5px;border-radius:3px;}
+.bct-gap.neutral{color:var(--muted);}
+.severity-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;}
+.dot-crit{background:var(--red);}
+.dot-high{background:var(--accent2);}
+.dot-med{background:var(--gold);}
+.dot-low{background:var(--green);}
+
+/* unit performance */
+.unit-perf-row{display:flex;align-items:center;gap:8px;padding:5px 0;
+  border-bottom:1px solid var(--faint);}
+.unit-perf-row:last-child{border-bottom:none;}
+.upr-tier{font-family:'Share Tech Mono',monospace;font-size:0.65rem;padding:1px 5px;
+  border-radius:3px;min-width:28px;text-align:center;}
+.upr-label{flex:1;font-size:0.78rem;color:var(--muted);}
+.upr-kills{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--green);min-width:60px;text-align:right;}
+.upr-lost{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--red);min-width:60px;text-align:right;}
+.upr-eff{font-family:'Share Tech Mono',monospace;font-size:0.7rem;min-width:50px;text-align:right;}
+.upr-conf{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);min-width:40px;text-align:right;}
+
+/* pm output */
+#pmOutput{background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:20px;min-height:200px;font-size:0.84rem;line-height:1.7;color:var(--text);}
+#pmOutput h3{font-family:'Orbitron',monospace;font-size:0.72rem;letter-spacing:2px;
+  color:var(--accent);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+#pmOutput h3:first-child{margin-top:0;}
+#pmOutput h4{font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:1px;
+  color:var(--gold);margin:10px 0 4px;}
+#pmOutput .verdict-box{border-radius:5px;padding:10px 14px;margin:10px 0;}
+#pmOutput .verdict-confirmed{background:rgba(61,224,112,0.07);border:1px solid rgba(61,224,112,0.25);}
+#pmOutput .verdict-partial{background:rgba(240,184,64,0.07);border:1px solid rgba(240,184,64,0.25);}
+#pmOutput .verdict-refuted{background:rgba(255,68,85,0.07);border:1px solid rgba(255,68,85,0.25);}
+#pmOutput .action-item{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--faint);}
+#pmOutput .action-item:last-child{border-bottom:none;}
+#pmOutput .action-priority{font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  padding:2px 7px;border-radius:3px;height:fit-content;white-space:nowrap;}
+#pmOutput .pri-critical{background:rgba(255,68,85,0.12);border:1px solid rgba(255,68,85,0.4);color:var(--red);}
+#pmOutput .pri-high{background:rgba(255,107,0,0.12);border:1px solid rgba(255,107,0,0.4);color:var(--accent2);}
+#pmOutput .pri-medium{background:rgba(240,184,64,0.12);border:1px solid rgba(240,184,64,0.4);color:var(--gold);}
+#pmOutput .pri-low{background:rgba(61,224,112,0.12);border:1px solid rgba(61,224,112,0.4);color:var(--green);}
+#pmOutput .action-text{font-size:0.82rem;line-height:1.5;}
+#pmOutput .confidence-note{font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  color:var(--muted);padding:3px 8px;background:var(--faint);border-radius:3px;display:inline-block;}
+
+/* upload mini */
+.upload-mini{border:1px dashed var(--border2);border-radius:5px;padding:14px;text-align:center;
+  cursor:pointer;transition:all 0.2s;background:var(--surface2);font-size:0.78rem;color:var(--muted);}
+.upload-mini:hover{border-color:var(--accent);color:var(--text);}
+.upload-mini-preview{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.upload-mini-preview img{width:70px;height:56px;object-fit:cover;border-radius:3px;
+  border:1px solid var(--border);}
+.pm-run-btn{width:100%;padding:11px;background:rgba(160,96,255,0.12);border:1px solid var(--purple);
+  border-radius:5px;color:var(--purple);font-family:'Orbitron',monospace;font-size:0.7rem;
+  font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;margin-top:14px;}
+.pm-run-btn:hover{background:rgba(160,96,255,0.22);}
+.pm-run-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+</style>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB226hxffeTC9sr5I5xu7_Q0DMJfgHSBpY",
+  authDomain: "avg1331-optimizer.firebaseapp.com",
+  projectId: "avg1331-optimizer",
+  storageBucket: "avg1331-optimizer.firebasestorage.app",
+  messagingSenderId: "715863726048",
+  appId: "1:715863726048:web:fbcded37c99bb1c2657d85"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+const provider = new GoogleAuthProvider();
+
+window._fbAuth = auth;
+window._fbDb = db;
+window._fbProvider = provider;
+window._fbSignIn = () => signInWithPopup(auth, provider);
+window._fbSignOut = () => signOut(auth);
+
+async function loadProfile(uid) {
+  try {
+    const snap = await getDoc(doc(db, "players", uid));
+    if (snap.exists()) {
+      window.STATE = { ...window.STATE, ...snap.data() };
+      window.applyState && window.applyState();
+    }
+  } catch(e) { console.error("Load error:", e); }
+}
+
+window.saveToFirebase = async function() {
+  const user = auth.currentUser;
+  if (!user || !window.STATE) return;
+  try {
+    await setDoc(doc(db, "players", user.uid), window.STATE, { merge: true });
+  } catch(e) { console.error("Save error:", e); }
+};
+
+onAuthStateChanged(auth, user => {
+  window._fbUser = user;
+  const authBtn    = document.getElementById("authBtn");
+  const authStatus = document.getElementById("authStatus");
+  const authGate   = document.getElementById("authGate");
+  const appEl      = document.getElementById("app");
+  if (user) {
+    if (authBtn)    { authBtn.textContent = "Sign Out"; authBtn.onclick = () => signOut(auth); }
+    if (authStatus) { authStatus.textContent = user.displayName || user.email; authStatus.style.color = "var(--green)"; }
+    if (authGate)   authGate.style.display = "none";
+    if (appEl)      appEl.style.display = "flex";
+    const nameEl = document.getElementById("playerName");
+    if (nameEl && !nameEl.value) nameEl.value = user.displayName || "";
+    loadProfile(user.uid);
+  } else {
+    if (authBtn)    { authBtn.textContent = "Sign In with Google"; authBtn.onclick = () => signInWithPopup(auth, provider); }
+    if (authStatus) { authStatus.textContent = "Not signed in"; authStatus.style.color = "var(--muted)"; }
+    if (authGate)   authGate.style.display = "flex";
+    if (appEl)      appEl.style.display = "none";
+  }
+});
+</script>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">AOO <span>OPTIMIZER</span></div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);">PLAYER:</span>
+    <input id="playerName" type="text" placeholder="Enter callsign..." maxlength="24">
+  </div>
+  <div class="top-meta" id="cityBadge">C?? &nbsp;|&nbsp; BP —</div>
+  <div class="top-actions" style="gap:12px;">
+    <span id="authStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);"></span>
+    <button id="authBtn" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:5px 12px;
+      border:1px solid var(--border2);background:var(--surface2);color:var(--text);
+      border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;">Sign In with Google</button>
+    <button id="adminBtn" onclick="openAdmin()" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:5px 12px;
+      border:1px solid var(--border2);background:var(--surface2);color:var(--muted);
+      border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;">⚙ ADMIN</button>
+  </div>
+</div>
+
+<!-- APP -->
+<!-- AUTH GATE -->
+<div id="authGate" style="position:fixed;inset:0;background:var(--bg);z-index:500;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  background-image:radial-gradient(ellipse at 50% 30%,rgba(0,100,200,0.15) 0%,transparent 60%);">
+  <div style="font-family:'Orbitron',monospace;font-size:1.6rem;font-weight:900;
+    color:var(--accent);letter-spacing:4px;">AVG1331</div>
+  <div style="font-family:'Orbitron',monospace;font-size:0.9rem;font-weight:700;
+    color:var(--text);letter-spacing:3px;">AoO OPTIMIZER</div>
+  <div style="font-family:'Exo 2',sans-serif;font-size:0.84rem;color:var(--muted);
+    text-align:center;max-width:320px;line-height:1.6;">
+    Formation optimizer for Age of Origins.<br>Sign in to save your profile across devices.
+  </div>
+  <button onclick="window._fbSignIn && window._fbSignIn()"
+    style="padding:12px 28px;background:rgba(0,200,255,0.12);border:1px solid var(--accent);
+    border-radius:6px;color:var(--accent);font-family:'Orbitron',monospace;font-size:0.78rem;
+    font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;"
+    onmouseover="this.style.background='rgba(0,200,255,0.22)'"
+    onmouseout="this.style.background='rgba(0,200,255,0.12)'">
+    Sign In with Google
+  </button>
+  <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);">
+    Server #1331 · AVG Alliance · babazulu1331
+  </div>
+</div>
+
+<div id="app" style="display:none;">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <div class="nav-item active" onclick="showPanel('dashboard')">
+        <span class="nav-icon">⊞</span> Dashboard
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">My Profile</div>
+      <div class="nav-item" onclick="showPanel('officers')">
+        <span class="nav-icon">★</span> Officers
+        <span class="nav-badge" id="badge-officers">—</span>
+      </div>
+      <div class="nav-item" onclick="showPanel('troops')">
+        <span class="nav-icon">⚔</span> Troops
+        <span class="nav-badge" id="badge-troops">—</span>
+      </div>
+      <div class="nav-item" onclick="showPanel('upload')">
+        <span class="nav-icon">📷</span> Screenshots
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Optimize</div>
+      <div class="nav-item" onclick="showPanel('recommend')">
+        <span class="nav-icon">◈</span> Get Formation
+      </div>
+      <div class="nav-item" onclick="showPanel('postmortem')">
+        <span class="nav-icon">⊛</span> Post-Mortem
+        <span class="nav-badge" id="badge-pm">—</span>
+      </div>
+    </div>
+    <div style="flex:1;"></div>
+    <div style="padding:12px 16px;font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);border-top:1px solid var(--border);">
+      v1.0 · Nation Duel + Monsters
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- DASHBOARD -->
+    <div id="panel-dashboard" class="panel active">
+      <div class="dash-header">
+        <h2>COMMANDER PROFILE</h2>
+        <p>Complete your profile to receive optimized formation recommendations.</p>
+      </div>
+
+      <div class="quick-actions">
+        <button class="qa-btn primary" onclick="showPanel('recommend')">◈ Get Formation Recommendation</button>
+        <button class="qa-btn" onclick="showPanel('officers')">★ Set Officers</button>
+        <button class="qa-btn" onclick="showPanel('troops')">⚔ Set Troops</button>
+        <button class="qa-btn" onclick="showPanel('upload')">📷 Upload Screenshots</button>
+      </div>
+
+      <div class="sec-header">Profile Summary</div>
+      <div class="profile-grid">
+
+        <div class="profile-card" onclick="showPanel('officers')">
+          <div class="pc-header">
+            <span class="pc-title">Officers</span>
+            <span class="pc-status" id="ps-officers">Empty</span>
+          </div>
+          <div class="pc-body" id="pc-officers-body">
+            <div class="pc-row"><span class="pc-key">Warfare (6)</span><span class="pc-val missing" id="pv-warfare">Not set</span></div>
+            <div class="pc-row"><span class="pc-key">Strategy (2)</span><span class="pc-val missing" id="pv-strategy">Not set</span></div>
+            <div class="pc-row"><span class="pc-key">Drillmaster (6)</span><span class="pc-val missing" id="pv-drillmaster">Not set</span></div>
+            <div class="pc-row"><span class="pc-key">Machinist (2)</span><span class="pc-val missing" id="pv-machinist">Not set</span></div>
+            <div class="pc-row"><span class="pc-key">Director (2)</span><span class="pc-val missing" id="pv-director">Not set</span></div>
+          </div>
+          <div class="pc-edit">Click to edit →</div>
+        </div>
+
+        <div class="profile-card" onclick="showPanel('troops')">
+          <div class="pc-header">
+            <span class="pc-title">Troops</span>
+            <span class="pc-status" id="ps-troops">Empty</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-row"><span class="pc-key">Fleet cap used</span><span class="pc-val" id="pv-fleet">—</span></div>
+            <div class="pc-row"><span class="pc-key">Zombie pool</span><span class="pc-val" id="pv-zombie">—</span></div>
+            <div class="pc-row"><span class="pc-key">Front row</span><span class="pc-val" id="pv-front">—</span></div>
+            <div class="pc-row"><span class="pc-key">Middle row</span><span class="pc-val" id="pv-mid">—</span></div>
+            <div class="pc-row"><span class="pc-key">Back row</span><span class="pc-val" id="pv-back">—</span></div>
+          </div>
+          <div class="pc-edit">Click to edit →</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="pc-header">
+            <span class="pc-title">City Stats</span>
+            <span class="pc-status empty" id="ps-city">Partial</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-row"><span class="pc-key">City Level</span>
+              <span class="pc-val"><input id="cityLevel" type="number" min="1" max="35" placeholder="30" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:50px;outline:none;text-align:right;" oninput="saveCity()"></span>
+            </div>
+            <div class="pc-row"><span class="pc-key">Battle Power</span>
+              <span class="pc-val"><input id="cityBP" type="number" placeholder="10778812" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:90px;outline:none;text-align:right;" oninput="saveCity()"></span>
+            </div>
+            <div class="pc-row"><span class="pc-key">Fortification Buff</span>
+              <span class="pc-val"><input id="fortBuff" type="number" placeholder="160" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:50px;outline:none;text-align:right;" oninput="saveCity()"><span style="color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:0.72rem;">%</span></span>
+            </div>
+            <div class="pc-row"><span class="pc-key">Mid-Row Atk Buff</span>
+              <span class="pc-val"><input id="midBuff" type="number" placeholder="267.6" step="0.1" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:60px;outline:none;text-align:right;" oninput="saveCity()"><span style="color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:0.72rem;">%</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="pc-header">
+            <span class="pc-title">Titans &amp; Plane</span>
+            <span class="pc-status empty">Optional</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-row"><span class="pc-key">Edgar</span>
+              <span class="pc-val"><input id="edgarLv" type="number" min="1" max="30" placeholder="16" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:40px;outline:none;text-align:right;" oninput="saveCity()"> Lv</span>
+            </div>
+            <div class="pc-row"><span class="pc-key">Zephyrine</span>
+              <span class="pc-val"><input id="zephLv" type="number" min="1" max="30" placeholder="15" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:40px;outline:none;text-align:right;" oninput="saveCity()"> Lv</span>
+            </div>
+            <div class="pc-row"><span class="pc-key">Warplane</span>
+              <span class="pc-val"><input id="planeLv" type="number" min="1" max="30" placeholder="19" style="background:none;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.72rem;width:40px;outline:none;text-align:right;" oninput="saveCity()"> Lv</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- OFFICERS -->
+    <div id="panel-officers" class="panel">
+      <div class="dash-header">
+        <h2>OFFICER ROSTER</h2>
+        <p>Select officers for each category. Click a slot to choose.</p>
+      </div>
+      <div class="officer-layout" id="officerLayout"></div>
+    </div>
+
+    <!-- TROOPS -->
+    <div id="panel-troops" class="panel">
+      <div class="dash-header">
+        <h2>TROOP FORMATION</h2>
+        <p>Enter troop counts for Nation Duel (400,000 fleet cap + 50,000 zombie pool).</p>
+      </div>
+      <div class="cap-bar-wrap">
+        <div class="cap-label">
+          <span>Fleet Cap</span>
+          <span id="capText">0 / 400,000</span>
+        </div>
+        <div class="cap-track"><div class="cap-fill" id="capFill" style="width:0%"></div></div>
+        <div class="cap-rows" id="capRowBreakdown"></div>
+      </div>
+      <div class="troop-layout" id="troopLayout"></div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div id="panel-upload" class="panel">
+      <div class="dash-header">
+        <h2>SCREENSHOT ANALYSIS</h2>
+        <p>Upload game screenshots and the AI will extract stats and officer data automatically.</p>
+      </div>
+      <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="handleDrop(event)">
+        <div class="upload-icon">📷</div>
+        <div class="upload-text"><strong>Click to upload or drag screenshots here</strong><br>
+        Supports officer screens, troop screens, army stats, city info</div>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFiles(this.files)">
+      <div class="upload-preview" id="uploadPreview"></div>
+      <div id="uploadActions" style="display:none;">
+        <button class="analyze-btn" onclick="analyzeImages()">◈ ANALYZE SCREENSHOTS</button>
+      </div>
+      <div id="analysisOutput"></div>
+    </div>
+
+    <!-- RECOMMEND -->
+    <div id="panel-recommend" class="panel">
+      <div class="dash-header">
+        <h2>FORMATION RECOMMENDATION</h2>
+        <p>AI-generated formation based on your profile and the game mechanics database.</p>
+      </div>
+      <div class="rec-controls">
+        <select class="battle-select" id="battleType">
+          <option value="nation_duel_normal">Nation Duel — Normal Enemy</option>
+          <option value="nation_duel_elite">Nation Duel — Elite Enemy</option>
+          <option value="monster">Monster Hunting</option>
+        </select>
+        <button class="gen-btn" id="genBtn" onclick="generateRecommendation()">◈ GENERATE</button>
+      </div>
+      <div id="recOutput">
+        <div class="empty-state">
+          <div class="es-icon">◈</div>
+          <p>Select a battle type and click Generate.<br>
+          For best results, complete your officer and troop profile first.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST-MORTEM -->
+    <div id="panel-postmortem" class="panel">
+      <div class="dash-header">
+        <h2>BATTLE POST-MORTEM</h2>
+        <p>Upload battle report screenshots, describe your hypothesis, and get a structured analysis of what happened and why.</p>
+      </div>
+
+      <!-- STEP 1: BATTLE CONTEXT -->
+      <div class="pm-card-full">
+        <div class="pm-head">
+          <span class="pm-title">① BATTLE CONTEXT</span>
+        </div>
+        <div class="pm-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div class="pm-field">
+              <label>BATTLE TYPE</label>
+              <select id="pmBattleType">
+                <option value="nation_duel_normal">Nation Duel — Normal Enemy</option>
+                <option value="nation_duel_elite">Nation Duel — Elite Enemy</option>
+                <option value="uranium_mine">Uranium Mine (resource node)</option>
+                <option value="city_attack">City Attack / Defense</option>
+                <option value="monster">Monster Hunting</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="pm-field">
+              <label>YOUR ROLE</label>
+              <select id="pmRole">
+                <option value="attacker">Attacker</option>
+                <option value="defender">Defender</option>
+              </select>
+            </div>
+            <div class="pm-field">
+              <label>RESULT</label>
+              <select id="pmResult">
+                <option value="win">Victory</option>
+                <option value="loss">Defeat</option>
+                <option value="unknown">Unknown / Partial</option>
+              </select>
+            </div>
+          </div>
+          <div class="pm-field" style="margin-bottom:0;">
+            <label>PRE-BATTLE HYPOTHESIS <span style="color:var(--muted);font-size:0.6rem;">(what did you expect this formation to achieve?)</span></label>
+            <textarea id="pmHypothesis" placeholder="e.g. Mid-range stack should dominate — Demon Raider Speed Racer burst + Havoc Breaker EC should eliminate enemy front and mid rows before their back row becomes a factor. Expected kill ratio 2:1 or better."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: SCREENSHOTS -->
+      <div class="pm-layout">
+        <div class="pm-card">
+          <div class="pm-head">
+            <span class="pm-title">② YOUR SCREENSHOTS</span>
+            <span style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);">Summary + Troops + Tech Bonus</span>
+          </div>
+          <div class="pm-body">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:8px;line-height:1.6;">
+              Capture: Summary screen → Check Details (your side) → scroll through all troop rows → scroll to Technology Bonus section
+            </div>
+            <div class="upload-mini" onclick="document.getElementById('pmFileFriendly').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
+              ondragleave="this.style.borderColor=''"
+              ondrop="pmHandleDrop(event,'friendly')">
+              📷 Upload your battle screens
+            </div>
+            <input type="file" id="pmFileFriendly" accept="image/*" multiple
+              onchange="pmHandleFiles(this.files,'friendly')">
+            <div class="upload-mini-preview" id="pmPreviewFriendly"></div>
+          </div>
+        </div>
+
+        <div class="pm-card">
+          <div class="pm-head">
+            <span class="pm-title">③ ENEMY SCREENSHOTS</span>
+            <span style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);">Optional but improves analysis</span>
+          </div>
+          <div class="pm-body">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:8px;line-height:1.6;">
+              Tap enemy "Check Details" for their troop breakdown and Technology Bonus. Capturing both sides enables buff comparison.
+            </div>
+            <div class="upload-mini" onclick="document.getElementById('pmFileEnemy').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
+              ondragleave="this.style.borderColor=''"
+              ondrop="pmHandleDrop(event,'enemy')">
+              📷 Upload enemy battle screens
+            </div>
+            <input type="file" id="pmFileEnemy" accept="image/*" multiple
+              onchange="pmHandleFiles(this.files,'enemy')">
+            <div class="upload-mini-preview" id="pmPreviewEnemy"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: EXPECTED BUFFS (auto-filled from profile) -->
+      <div class="pm-card-full">
+        <div class="pm-head">
+          <span class="pm-title">④ EXPECTED BUFFS <span style="color:var(--muted);font-weight:400;font-size:0.6rem;">— from your current profile</span></span>
+          <span style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);">Discrepancies vs battle report = findings</span>
+        </div>
+        <div class="pm-body">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;" id="pmExpectedBuffs">
+            <!-- filled by JS from STATE -->
+          </div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);margin-top:8px;">
+            <span id="pmContextNote"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RUN ANALYSIS -->
+      <button class="pm-run-btn" id="pmRunBtn" onclick="runPostMortem()">⊛ RUN POST-MORTEM ANALYSIS</button>
+
+      <!-- OUTPUT -->
+      <div id="pmOutput" style="margin-top:14px;display:none;">
+        <div class="empty-state"><div class="es-icon">⊛</div><p>Analysis will appear here.</p></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<!-- OFFICER PICKER MODAL -->
+<div class="modal-overlay" id="officerModal" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="modalTitle">SELECT OFFICER</span>
+      <span class="modal-close" onclick="closeModal()">✕</span>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="admin-box">
+    <div class="admin-head">
+      <span class="admin-title">⚙ ADMIN — MECHANICS DATABASE</span>
+      <span class="modal-close" onclick="closeAdmin()">✕</span>
+    </div>
+    <div class="admin-body" id="adminBody">
+      <div class="admin-pw" id="adminPW">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.75rem;color:var(--gold);">ADMIN ACCESS CODE</div>
+        <input type="password" id="adminPWInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPW()">
+        <button class="admin-pw-btn" onclick="checkAdminPW()">UNLOCK</button>
+        <div id="adminPWError" style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--red);display:none;">Incorrect code</div>
+      </div>
+      <div id="adminContent" style="display:none;">
+        <div class="admin-section">
+          <h3>Fortification Buffs</h3>
+          <div class="admin-field">
+            <label>Current Buff</label>
+            <input type="number" id="adminFortBuff" placeholder="160"> %
+          </div>
+        </div>
+        <div class="admin-section">
+          <h3>Unit DPS Overrides</h3>
+          <div id="adminUnitList"></div>
+        </div>
+        <div class="admin-section">
+          <h3>Ability Notes</h3>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted);line-height:1.7;">
+            Bomb Launcher: ~3 targets, exact dmg TBD<br>
+            EC (Storm Trooper): up to 3 targets or stacked 1<br>
+            Bulletproof Armor: 31% chance × 50% block<br>
+            Sniper Hit: every 3rd attack ×1.8 dmg<br>
+            Speed Racer: +60% atk speed first 10s
+          </div>
+        </div>
+        <button class="admin-save" onclick="saveAdmin()">SAVE CHANGES</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+// GAME MECHANICS DATABASE
+// ════════════════════════════════════════════
+const GAME_DB = {
+  units: {
+    front: [
+      {name:"Destruction Tank",tier:13,type:"Tank",upt:5,hp:2643,def:160,atk:192,cd:2.0,
+       ability:{name:"Bulletproof Armor",desc:"31% chance to block 50% damage per hit = 15.5% avg reduction"},
+       baseDps:96.0, effHp:3128},
+      {name:"Apocalypse Infantry",tier:13,type:"Infantry",upt:1,hp:2643,def:160,atk:192,cd:2.0,
+       ability:{name:"Unknown",desc:"Ability not yet confirmed"},
+       baseDps:96.0, effHp:2643},
+      {name:"Hell King",tier:12,type:"Shredder",upt:10,hp:2226,def:138,atk:166,cd:2.0,
+       ability:{name:"Defensive Stance",desc:"34% dmg reduction for 4s every 8s = 14.45% avg"},
+       baseDps:83.0, effHp:2602},
+      {name:"Ultima Armored Soldier",tier:12,type:"Armored Soldier",upt:2,hp:2271,def:140,atk:166,cd:2.0,
+       ability:{name:"Unknown",desc:"Ability not yet confirmed"},
+       baseDps:83.0, effHp:2271},
+    ],
+    middle: [
+      {name:"Demon Raider",tier:12,type:"Bike",upt:5,hp:1618,def:97,atk:245,cd:1.0,
+       ability:{name:"Speed Racer",desc:"+60% atk speed first 10s → 0.625s CD burst, then 1.0s sustained"},
+       baseDps:245.0, effDps:1292.6, note:"Best DPS/unit in roster"},
+      {name:"Hades Gatling",tier:13,type:"Gunner",upt:1,hp:1942,def:116,atk:283,cd:1.5,
+       ability:{name:"Rapid Fire",desc:"DPS boost proc — exact mechanic unconfirmed"},
+       baseDps:188.7, effDps:995.4},
+      {name:"Havoc Breaker",tier:13,type:"Storm Trooper",upt:1,hp:1980,def:118,atk:288,cd:2.0,
+       ability:{name:"Electromagnetic Conduction",desc:"Every 3rd attack chains to up to 3 units or stacks on 1, prioritizes enemy back row"},
+       baseDps:144.0, effDps:759.7},
+      {name:"Fanatic Terminator",tier:12,type:"Rocket",upt:1,hp:1618,def:97,atk:245,cd:2.0,
+       ability:{name:"Overshoot",desc:"Every 3rd attack deals heavy dmg to 1 target, prioritizes enemy back row"},
+       baseDps:122.5, effDps:646.3, note:"Inferior to Havoc Breaker in every dimension"},
+    ],
+    back: [
+      {name:"Death Cannon",tier:13,type:"Cannon",upt:5,hp:1410,def:84,atk:320,cd:2.0,
+       ability:{name:"Bomb Launcher",desc:"~3 targets per proc, retargets dynamically. Exact dmg multiplier unconfirmed"},
+       baseDps:160.0, effDps:739.2},
+      {name:"Eagle Eye Shot",tier:12,type:"Sniper",upt:1,hp:1173,def:70,atk:279,cd:2.0,
+       ability:{name:"Sniper Hit",desc:"Every 3rd attack ×1.8 damage = +26.7% average DPS"},
+       baseDps:139.5, effDps:816.4, note:"Best single-target back unit with ability"},
+      {name:"Immortal Shielder",tier:13,type:"Shielder",upt:5,hp:1438,def:86,atk:326,cd:2.0,
+       ability:{name:"Shield Barrier",desc:"Every 4th attack shields a friendly unit, absorbs incoming damage"},
+       baseDps:163.2, effDps:754.0, note:"Defensive utility — not pure DPS"},
+      {name:"Ultima EMP Cannon",tier:12,type:"EMP",upt:10,hp:1197,def:72,atk:285,cd:2.0,
+       ability:{name:"Unknown",desc:"EMP pulse icon — likely debuff or AoE"},
+       baseDps:142.3, effDps:657.4},
+    ],
+    zombie: [
+      {name:"Biochemical Zombie",tier:13,type:"Zombie",upt:1,
+       ability:{name:"Zombie Stack",desc:"7.01× effective stack with Zephyrine queen bonus"},
+       note:"Always fill completely — separate 50,000 cap"}
+    ]
+  },
+
+  officers: {
+    warfare: [
+      {name:"Tifa",key:"Advanced Kill: All Atk +12.88%",tags:["all_atk"]},
+      {name:"Zeus",key:"Precise Shot: Dmg Dealt +7.8% multiplicative",tags:["dmg_mult"]},
+      {name:"Butterfly",key:"Kill All Atk +9.48% + Melee Atk + Melee Expert (4★)",tags:["all_atk","melee"]},
+      {name:"Panda Jack",key:"Mid Atk + Long Atk + Kill All Atk (equip)",tags:["mid_atk","long_atk","all_atk"]},
+      {name:"Kingsley",key:"Mid Atk + Melee HP + equipment buffs",tags:["mid_atk","melee"]},
+      {name:"Storm Bow",key:"All DEF/HP +11.12%",tags:["defense"]},
+      {name:"Alexandria",key:"Dmg Taken -6.8%",tags:["defense"]},
+      {name:"Aeon",key:"Details TBD",tags:[]},
+    ],
+    strategy: [
+      {name:"Loreline",key:"Equipment: vs Enemy Rows +7.6%",tags:["vs_enemy"],note:"Base skills irrelevant — equipment only"},
+      {name:"Major Morgan",key:"Fleet size +8.7% (IRRELEVANT in Nation Duel)",tags:["filler"]},
+      {name:"Bravestar",key:"Wounded +21.58% (IRRELEVANT in Nation Duel)",tags:["filler"],note:"Watch for 3★ equipment"},
+      {name:"Saki",key:"Fleet flat (IRRELEVANT in Nation Duel)",tags:["filler"]},
+    ],
+    drillmaster: [
+      {name:"Freya",key:"Armor Assault: Mid+Long Atk +12.96%",tags:["mid_atk","long_atk"]},
+      {name:"Maria",key:"Eagle Eye: All Atk +8,400,000 flat at 400K units",tags:["all_atk"],note:"4.3× normal value"},
+      {name:"Jimmy",key:"Camouflage: Enemy Atk -8.01% + Killer skills",tags:["enemy_debuff"]},
+      {name:"Cattie",key:"Sharp Senses: Enemy Atk -12.96%",tags:["enemy_debuff"]},
+      {name:"Layla",key:"Morale Boost: All Atk +9.345% first 20s + Mid/Long Weaken",tags:["all_atk","opening"]},
+      {name:"Selina",key:"Shadow Strike: All ATK/DEF/HP +6.48% permanent",tags:["all_atk","defense"]},
+      {name:"Simon",key:"Open Fire: All Atk +13.7% first 20s",tags:["all_atk","opening"],note:"Swap Selina→Simon if fights <40s"},
+      {name:"Eric",key:"EMP Pulse: Enemy HP/DEF -8.15% first 20s",tags:["enemy_debuff"]},
+    ],
+    machinist: [
+      {name:"Emily",key:"All ATK/DEF/HP +20.99%",tags:["all"]},
+      {name:"Kay",key:"+3,672,000 flat Atk / +20,808,000 flat HP at 400K",tags:["all"],note:"2.17× normal value"},
+    ],
+    director: [
+      {name:"Doc Gray",key:"Elite Pacemaker +11: +7% vs all enemy rows",tags:["vs_enemy"]},
+      {name:"I. Medici",key:"Gold Flames +10: +6.4% vs all enemy rows",tags:["vs_enemy"]},
+      {name:"F. Medici",key:"Handgun +10: +6.4% vs all enemy rows",tags:["vs_enemy"],note:"Skip — same as I.Medici, lower mastery"},
+      {name:"Ginger",key:"Economy skills only",tags:["filler"]},
+      {name:"Jesse",key:"Gathering skills only",tags:["filler"]},
+      {name:"Sergeant Barney",key:"Recruitment skills only",tags:["filler"]},
+      {name:"Steven",key:"Mobility skills only",tags:["filler"]},
+      {name:"Victoria",key:"City defense only",tags:["filler"]},
+    ]
+  },
+
+  recommended: {
+    nation_duel: {
+      warfare: ["Tifa","Zeus","Butterfly","Panda Jack","Kingsley","Storm Bow"],
+      strategy: ["Loreline","Major Morgan"],
+      drillmaster: ["Freya","Maria","Jimmy","Cattie","Layla","Selina"],
+      machinist: ["Emily","Kay"],
+      director: ["Doc Gray","I. Medici"],
+      front: [{name:"Destruction Tank",tier:13,troops:14000,units:70000}],
+      middle: [{name:"Demon Raider",tier:12,troops:40000,units:200000},
+               {name:"Hades Gatling",tier:13,troops:50000,units:50000},
+               {name:"Havoc Breaker",tier:13,troops:20000,units:20000}],
+      back: [{name:"Death Cannon",tier:13,troops:8000,units:40000},
+             {name:"Eagle Eye Shot",tier:12,troops:10000,units:10000},
+             {name:"Immortal Shielder",tier:13,troops:2000,units:10000}],
+      zombie: [{name:"Biochemical Zombie",tier:13,troops:50000,units:50000}]
+    }
+  },
+
+  rowBuffs: {front:201.1, middle:267.6, back:202.0, zombie:441.0},
+  fortBuff: 160,
+  fleetCap: 400000,
+  zombieCap: 50000,
+  adminCode: "BABA2026"
+};
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+let STATE = {
+  player: "",
+  cityLevel: "", cityBP: "", fortBuff: 160, midBuff: 267.6,
+  edgarLv: 16, zephLv: 15, planeLv: 19,
+  officers: {warfare:[null,null,null,null,null,null], strategy:[null,null],
+             drillmaster:[null,null,null,null,null,null], machinist:[null,null], director:[null,null]},
+  troops: {front:{}, middle:{}, back:{}, zombie:{}},
+  uploadedImages: [],
+  adminUnlocked: false
+};
+
+// Load from storage
+async function loadState() {
+  try {
+    const r = await window.storage.get('aoo_player_state');
+    if (r && r.value) {
+      const saved = JSON.parse(r.value);
+      STATE = {...STATE, ...saved};
+    }
+  } catch(e) {}
+  applyState();
+}
+
+async function saveState() {
+  try {
+    await window.storage.set('aoo_player_state', JSON.stringify(STATE));
+  } catch(e) {}
+  // Also save to Firebase if signed in
+  window.saveToFirebase && window.saveToFirebase();
+  updateDashboard();
+}
+
+function applyState() {
+  if (STATE.player) document.getElementById('playerName').value = STATE.player;
+  if (STATE.cityLevel) document.getElementById('cityLevel').value = STATE.cityLevel;
+  if (STATE.cityBP) document.getElementById('cityBP').value = STATE.cityBP;
+  if (STATE.fortBuff) document.getElementById('fortBuff').value = STATE.fortBuff;
+  if (STATE.midBuff) document.getElementById('midBuff').value = STATE.midBuff;
+  if (STATE.edgarLv) document.getElementById('edgarLv').value = STATE.edgarLv;
+  if (STATE.zephLv) document.getElementById('zephLv').value = STATE.zephLv;
+  if (STATE.planeLv) document.getElementById('planeLv').value = STATE.planeLv;
+  updateCityBadge();
+  updateDashboard();
+  renderOfficers();
+  renderTroops();
+}
+
+document.getElementById('playerName').addEventListener('input', e => {
+  STATE.player = e.target.value;
+  saveState();
+});
+
+function saveCity() {
+  STATE.cityLevel = document.getElementById('cityLevel').value;
+  STATE.cityBP = document.getElementById('cityBP').value;
+  STATE.fortBuff = parseFloat(document.getElementById('fortBuff').value)||160;
+  STATE.midBuff = parseFloat(document.getElementById('midBuff').value)||267.6;
+  STATE.edgarLv = document.getElementById('edgarLv').value;
+  STATE.zephLv = document.getElementById('zephLv').value;
+  STATE.planeLv = document.getElementById('planeLv').value;
+  updateCityBadge();
+  saveState();
+}
+
+function updateCityBadge() {
+  const lv = STATE.cityLevel||'??', bp = STATE.cityBP ? parseInt(STATE.cityBP).toLocaleString() : '—';
+  document.getElementById('cityBadge').textContent = `C${lv}  |  BP ${bp}`;
+}
+
+// ════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(id)) n.classList.add('active');
+  });
+}
+
+// ════════════════════════════════════════════
+// OFFICERS
+// ════════════════════════════════════════════
+const OFFICER_CATS = [
+  {key:'warfare', label:'Warfare', slots:6, max:6},
+  {key:'strategy', label:'Strategy', slots:2, max:2},
+  {key:'drillmaster', label:'Drillmaster', slots:6, max:6},
+  {key:'machinist', label:'Machinist', slots:2, max:2},
+  {key:'director', label:'Director', slots:2, max:2},
+];
+
+function renderOfficers() {
+  const el = document.getElementById('officerLayout');
+  el.innerHTML = '';
+  OFFICER_CATS.forEach(cat => {
+    const card = document.createElement('div');
+    card.className = 'officer-cat-card';
+    const filled = STATE.officers[cat.key].filter(Boolean).length;
+    card.innerHTML = `<div class="occ-head">
+      <span class="occ-title">${cat.label.toUpperCase()}</span>
+      <span class="occ-slots">${filled} / ${cat.slots} slots</span>
+    </div><div class="occ-body" id="occ-${cat.key}"></div>`;
+    el.appendChild(card);
+    const body = document.getElementById('occ-'+cat.key);
+    for(let i=0;i<cat.slots;i++) {
+      const officer = STATE.officers[cat.key][i];
+      const row = document.createElement('div');
+      row.className = 'officer-slot'+(officer?' filled':'');
+      if(officer) {
+        const od = GAME_DB.officers[cat.key].find(o=>o.name===officer)||{name:officer,key:''};
+        row.innerHTML = `<div class="os-num">${i+1}</div>
+          <div class="os-info">
+            <div class="os-name">${od.name}</div>
+            <div class="os-skill">${od.key}</div>
+            ${od.note?`<div class="os-skill" style="color:var(--accent2)">${od.note}</div>`:''}
+          </div>
+          <div class="os-remove" onclick="removeOfficer('${cat.key}',${i});event.stopPropagation()">✕</div>`;
+      } else {
+        row.innerHTML = `<div class="os-num">${i+1}</div>
+          <div class="os-empty">— tap to assign —</div>`;
+      }
+      row.addEventListener('click', ()=>openOfficerPicker(cat.key, i));
+      body.appendChild(row);
+    }
+  });
+  updateBadges();
+}
+
+let _pickingCat='', _pickingSlot=0;
+function openOfficerPicker(cat, slot) {
+  _pickingCat=cat; _pickingSlot=slot;
+  const officers = GAME_DB.officers[cat]||[];
+  document.getElementById('modalTitle').textContent = `SELECT ${cat.toUpperCase()} OFFICER — SLOT ${slot+1}`;
+  const body = document.getElementById('modalBody');
+  body.innerHTML = '';
+  // Clear option
+  const clearOpt = document.createElement('div');
+  clearOpt.className = 'officer-option';
+  clearOpt.innerHTML = `<div><div class="oo-name" style="color:var(--muted)">— Clear slot —</div></div>`;
+  clearOpt.onclick = ()=>{STATE.officers[cat][slot]=null; saveState(); renderOfficers(); closeModal();};
+  body.appendChild(clearOpt);
+  officers.forEach(o=>{
+    const inUse = STATE.officers[cat].includes(o.name) && STATE.officers[cat][slot]!==o.name;
+    const opt = document.createElement('div');
+    opt.className = 'officer-option'+(STATE.officers[cat][slot]===o.name?' selected':'');
+    if(inUse) opt.style.opacity='0.4';
+    opt.innerHTML = `<div>
+      <div class="oo-name">${o.name}${inUse?' <span style="color:var(--muted);font-size:0.65rem">(in use)</span>':''}</div>
+      <div class="oo-skill">${o.key}</div>
+      ${o.note?`<div class="oo-skill"><span class="sn">${o.note}</span></div>`:''}
+    </div>`;
+    opt.onclick = ()=>{
+      STATE.officers[cat][slot]=o.name; saveState(); renderOfficers(); closeModal();
+    };
+    body.appendChild(opt);
+  });
+  document.getElementById('officerModal').style.display='flex';
+}
+function closeModal(){document.getElementById('officerModal').style.display='none';}
+function removeOfficer(cat,slot){STATE.officers[cat][slot]=null;saveState();renderOfficers();}
+
+// ════════════════════════════════════════════
+// TROOPS
+// ════════════════════════════════════════════
+const ALL_UNITS = [
+  ...GAME_DB.units.front.map(u=>({...u,row:'front'})),
+  ...GAME_DB.units.middle.map(u=>({...u,row:'middle'})),
+  ...GAME_DB.units.back.map(u=>({...u,row:'back'})),
+  ...GAME_DB.units.zombie.map(u=>({...u,row:'zombie'})),
+];
+
+function renderTroops() {
+  const el = document.getElementById('troopLayout');
+  el.innerHTML = '';
+  const rows = [
+    {key:'front', label:'FRONT ROW — Melee', cls:'front'},
+    {key:'middle', label:'MIDDLE ROW — Mid-Range  ★ Primary DPS', cls:'mid'},
+    {key:'back', label:'BACK ROW — Long-Range', cls:'back'},
+    {key:'zombie', label:'ZOMBIE POOL — Separate Cap (50,000)', cls:'zombie'},
+  ];
+  rows.forEach(row=>{
+    const units = ALL_UNITS.filter(u=>u.row===row.key);
+    const card = document.createElement('div');
+    card.className = 'row-builder';
+    const total = units.reduce((s,u)=>{
+      const t = parseInt(STATE.troops[row.key][u.name]||0);
+      return s + t * (u.upt||1);
+    },0);
+    card.innerHTML = `<div class="rb-head ${row.cls}">
+      <span class="rb-title">${row.label}</span>
+      <span class="rb-total">${total.toLocaleString()} units</span>
+    </div><div class="rb-body">
+      <div style="display:grid;grid-template-columns:2fr 60px 90px 90px 1.5fr;gap:8px;
+        padding:4px 0 8px;border-bottom:1px solid var(--faint);
+        font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:1px;">
+        <span>UNIT</span><span>TIER</span><span style="text-align:right">TROOPS</span>
+        <span style="text-align:right">UNITS</span><span>ABILITY</span>
+      </div>
+      ${units.map(u=>`
+        <div class="unit-builder-row">
+          <div class="ub-name">${u.name}</div>
+          <div><span class="ub-tier t${u.tier||13}">${u.tier?'T'+u.tier:''}</span></div>
+          <input class="ub-input" type="number" min="0" placeholder="0"
+            value="${STATE.troops[row.key][u.name]||''}"
+            data-row="${row.key}" data-unit="${u.name}" data-upt="${u.upt||1}"
+            oninput="troopChanged(this)">
+          <div class="ub-units" id="units-${row.key}-${u.name.replace(/\s/g,'_')}">
+            ${((parseInt(STATE.troops[row.key][u.name]||0))*(u.upt||1)).toLocaleString()}
+          </div>
+          <div class="ub-ability"><span class="an">${u.ability?.name||''}</span><br>${u.ability?.desc||''}</div>
+        </div>
+      `).join('')}
+    </div>`;
+    el.appendChild(card);
+  });
+  updateCapBar();
+}
+
+function troopChanged(input) {
+  const row=input.dataset.row, unit=input.dataset.unit, upt=parseInt(input.dataset.upt)||1;
+  const val = parseInt(input.value)||0;
+  STATE.troops[row][unit] = val||'';
+  const key = unit.replace(/\s/g,'_');
+  const unitsEl = document.getElementById(`units-${row}-${key}`);
+  if(unitsEl) unitsEl.textContent = (val*upt).toLocaleString();
+  saveState();
+  updateCapBar();
+}
+
+function calcFleetUnits() {
+  let total=0;
+  ['front','middle','back'].forEach(row=>{
+    ALL_UNITS.filter(u=>u.row===row).forEach(u=>{
+      total += (parseInt(STATE.troops[row][u.name]||0))*(u.upt||1);
+    });
+  });
+  return total;
+}
+function calcZombieUnits() {
+  let total=0;
+  GAME_DB.units.zombie.forEach(u=>{
+    total += (parseInt(STATE.troops.zombie[u.name]||0))*(u.upt||1);
+  });
+  return total;
+}
+
+function updateCapBar() {
+  const fleet=calcFleetUnits(), cap=GAME_DB.fleetCap;
+  const pct=Math.min(100,fleet/cap*100);
+  const fill=document.getElementById('capFill');
+  const text=document.getElementById('capText');
+  if(fill){fill.style.width=pct+'%'; fill.className='cap-fill'+(fleet>cap?' over':'');}
+  if(text) text.textContent=`${fleet.toLocaleString()} / ${cap.toLocaleString()}`;
+  const breakdown=document.getElementById('capRowBreakdown');
+  if(breakdown){
+    const fr=['front','middle','back'].map(r=>{
+      const ru=ALL_UNITS.filter(u=>u.row===r).reduce((s,u)=>s+(parseInt(STATE.troops[r][u.name]||0))*(u.upt||1),0);
+      const col=r==='front'?'#ff8080':r==='middle'?'#60b0ff':'#60e088';
+      const label=r.charAt(0).toUpperCase()+r.slice(1);
+      return `<div class="cap-row-item"><span class="crl">${label}: </span><span style="color:${col}">${ru.toLocaleString()}</span></div>`;
+    });
+    const z=calcZombieUnits();
+    fr.push(`<div class="cap-row-item"><span class="crl">Zombie: </span><span style="color:#c080ff">${z.toLocaleString()} / 50,000</span></div>`);
+    breakdown.innerHTML=fr.join('');
+  }
+  updateDashboard();
+}
+
+// ════════════════════════════════════════════
+// DASHBOARD UPDATE
+// ════════════════════════════════════════════
+function updateDashboard() {
+  const cats = ['warfare','strategy','drillmaster','machinist','director'];
+  cats.forEach(cat=>{
+    const filled=STATE.officers[cat].filter(Boolean).length;
+    const max=STATE.officers[cat].length;
+    const el=document.getElementById('pv-'+cat);
+    if(el){
+      el.textContent = filled>0?`${filled}/${max} set`:((cat==='machinist'||cat==='director')?`${filled}/${max} set`:'Not set');
+      el.className='pc-val'+(filled===max?' set':filled>0?' ':'  missing');
+    }
+  });
+  const fleet=calcFleetUnits(), zombie=calcZombieUnits();
+  const pv=id=>document.getElementById(id);
+  if(pv('pv-fleet')) { pv('pv-fleet').textContent=fleet>0?fleet.toLocaleString()+' / 400,000':'—'; }
+  if(pv('pv-zombie')) { pv('pv-zombie').textContent=zombie>0?zombie.toLocaleString()+' / 50,000':'—'; }
+  ['front','mid','back'].forEach(r=>{
+    const rk=r==='mid'?'middle':r;
+    const ru=ALL_UNITS.filter(u=>u.row===rk).reduce((s,u)=>s+(parseInt(STATE.troops[rk][u.name]||0))*(u.upt||1),0);
+    if(pv('pv-'+r)) pv('pv-'+r).textContent=ru>0?ru.toLocaleString()+' units':'—';
+  });
+  // Badges
+  const oTotal=cats.reduce((s,c)=>s+STATE.officers[c].filter(Boolean).length,0);
+  const oMax=cats.reduce((s,c)=>s+STATE.officers[c].length,0);
+  const ob=document.getElementById('badge-officers');
+  if(ob){ob.textContent=oTotal>0?`${oTotal}/${oMax}`:'—';ob.className='nav-badge'+(oTotal===oMax?' ok':oTotal>0?' warn':'');}
+  const tb=document.getElementById('badge-troops');
+  if(tb){tb.textContent=fleet>0?fleet.toLocaleString():'—';tb.className='nav-badge'+(fleet===GAME_DB.fleetCap?' ok':fleet>0?' warn':'');}
+}
+
+function updateBadges(){updateDashboard();}
+
+// ════════════════════════════════════════════
+// IMAGE UPLOAD
+// ════════════════════════════════════════════
+let uploadedFiles=[];
+function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('drag');handleFiles(e.dataTransfer.files);}
+function handleFiles(files){
+  Array.from(files).forEach(f=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      uploadedFiles.push({name:f.name,data:ev.target.result,type:f.type});
+      renderPreviews();
+    };
+    reader.readAsDataURL(f);
+  });
+}
+function renderPreviews(){
+  const prev=document.getElementById('uploadPreview');
+  const acts=document.getElementById('uploadActions');
+  prev.innerHTML='';
+  uploadedFiles.forEach((f,i)=>{
+    const d=document.createElement('div');d.className='preview-item';
+    d.innerHTML=`<img src="${f.data}"><button class="preview-remove" onclick="removeUpload(${i})">✕</button>`;
+    prev.appendChild(d);
+  });
+  acts.style.display=uploadedFiles.length>0?'block':'none';
+}
+function removeUpload(i){uploadedFiles.splice(i,1);renderPreviews();}
+
+async function analyzeImages(){
+  if(!uploadedFiles.length) return;
+  const out=document.getElementById('analysisOutput');
+  out.style.display='block';
+  out.innerHTML='<div class="rec-loading"><div class="spinner"></div> Analyzing screenshots...</div>';
+  const imgs=uploadedFiles.map(f=>({type:"image",source:{type:"base64",media_type:f.type,data:f.data.split(',')[1]}}));
+  const prompt=`You are analyzing Age of Origins mobile game screenshots for the AoO Alliance Optimizer tool.
+Extract ALL relevant data you can see: officer names, skill levels, equipment names and stats, troop counts, city stats, army buffs, titan/plane levels.
+Format your response clearly with sections:
+- OFFICERS DETECTED: name, category (warfare/drillmaster/etc), skills visible, equipment visible
+- TROOPS DETECTED: unit name, tier, count
+- STATS DETECTED: any BP, buff percentages, city level
+- SUGGESTED UPDATES: what to update in the player profile
+Be precise with numbers. Note anything unclear.`;
+  try {
+    const resp=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
+        messages:[{role:"user",content:[...imgs,{type:"text",text:prompt}]}]})
+    });
+    const data=await resp.json();
+    const text=data.content?.map(c=>c.text||'').join('')||'No response';
+    out.innerHTML=`<div style="font-family:'Share Tech Mono',monospace;font-size:0.75rem;line-height:1.8;white-space:pre-wrap;">${text}</div>`;
+  } catch(e){
+    out.innerHTML=`<div style="color:var(--red);">Analysis failed: ${e.message}</div>`;
+  }
+}
+
+// ════════════════════════════════════════════
+// RECOMMENDATION ENGINE
+// ════════════════════════════════════════════
+async function generateRecommendation(){
+  const bt=document.getElementById('battleType').value;
+  const btn=document.getElementById('genBtn');
+  const out=document.getElementById('recOutput');
+  btn.disabled=true;
+  out.innerHTML='<div class="rec-loading"><div class="spinner"></div> Generating recommendation...</div>';
+
+  // Build player context
+  const playerCtx={
+    player: STATE.player||'Commander',
+    cityLevel: STATE.cityLevel||'unknown',
+    cityBP: STATE.cityBP||'unknown',
+    fortBuff: STATE.fortBuff||160,
+    midBuff: STATE.midBuff||267.6,
+    titans: {edgar:STATE.edgarLv, zephyrine:STATE.zephLv, plane:STATE.planeLv},
+    officers: STATE.officers,
+    troops: STATE.troops,
+    fleetUsed: calcFleetUnits(),
+    zombieUsed: calcZombieUnits(),
+  };
+
+  const battleLabels={
+    nation_duel_normal:"Nation Duel — Normal Enemy (random, unknown formation)",
+    nation_duel_elite:"Nation Duel — Elite Enemy (matched opponent, can scout after Day 1)",
+    monster:"Monster Hunting (PvE — maximize damage output)"
+  };
+
+  const systemPrompt=`You are the AoO Alliance Optimizer, an expert Age of Origins formation advisor.
+You have deep knowledge of the game mechanics database for T12/T13 units in Nation Duel and monster hunting.
+
+KEY GAME MECHANICS (always apply):
+- Nation Duel uses SYSTEM TROOPS: 400,000 fleet cap + 50,000 zombie pool (separate). No real troop loss.
+- Row buffs (player's confirmed): Front (Melee) +201.1%, Middle (Mid-Range) +267.6%, Back (Long-Range) +202.0%, Zombie +441.0%
+- Current fortification buff: +${STATE.fortBuff||160}% all troops attack
+- Fleet size officer skills (Morgan, Saki) are IRRELEVANT in Nation Duel
+
+UNIT KNOWLEDGE:
+${JSON.stringify(GAME_DB.units, null, 1)}
+
+RECOMMENDED BASELINE (Nation Duel):
+Officers: Warfare: Tifa, Zeus, Butterfly, Panda Jack, Kingsley, Storm Bow | Strategy: Loreline + Morgan | Drillmaster: Freya, Maria, Jimmy, Cattie, Layla, Selina (swap Selina→Simon if fights <40s) | Machinist: Emily + Kay | Director: Doc Gray + I.Medici
+Formation: Front 70K (Destruction Tank T13 14K troops) | Middle 270K (Demon Raider T12 40K + Hades Gatling T13 50K + Havoc Breaker T13 20K) | Back 60K (Death Cannon T13 8K + Eagle Eye Shot T12 10K + Immortal Shielder T13 2K) | Zombie 50K
+
+Respond with a clear, structured recommendation. Use the player's actual data where provided, otherwise use the recommended baseline. Note any gaps in their profile. Keep response focused and actionable.`;
+
+  const userMsg=`Battle type: ${battleLabels[bt]}
+
+Player profile:
+${JSON.stringify(playerCtx, null, 2)}
+
+Provide the optimal officer roster and troop formation for this battle type. Note any important adjustments based on their specific profile versus the baseline.`;
+
+  try {
+    const resp=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
+        messages:[{role:"user",content:[{type:"text",text:userMsg}]},],
+        system:systemPrompt})
+    });
+    const data=await resp.json();
+    const text=data.content?.map(c=>c.text||'').join('')||'No response';
+    out.innerHTML=formatRecOutput(text);
+  } catch(e){
+    out.innerHTML=`<div style="color:var(--red);">Error: ${e.message}</div>`;
+  }
+  btn.disabled=false;
+}
+
+function formatRecOutput(text){
+  let html=text
+    .replace(/#{1,3} ?(.+)/g,'<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong style="color:#e0eeff">$1</strong>')
+    .replace(/\+[\d,.]+%/g,m=>`<span class="val">${m}</span>`)
+    .replace(/−[\d,.]+%/g,m=>`<span style="color:var(--red)">${m}</span>`)
+    .replace(/\n\n/g,'</p><p>')
+    .replace(/\n/g,'<br>');
+  return `<p>${html}</p>`;
+}
+
+// ════════════════════════════════════════════
+// ADMIN
+// ════════════════════════════════════════════
+function openAdmin(){document.getElementById('adminPanel').classList.add('open');}
+function closeAdmin(){document.getElementById('adminPanel').classList.remove('open');}
+function checkAdminPW(){
+  const pw=document.getElementById('adminPWInput').value;
+  if(pw===GAME_DB.adminCode||STATE.adminUnlocked){
+    STATE.adminUnlocked=true;
+    document.getElementById('adminPW').style.display='none';
+    document.getElementById('adminContent').style.display='block';
+    renderAdminUnits();
+  } else {
+    document.getElementById('adminPWError').style.display='block';
+  }
+}
+function renderAdminUnits(){
+  const el=document.getElementById('adminUnitList');
+  el.innerHTML='';
+  ALL_UNITS.filter(u=>u.row!=='zombie').forEach(u=>{
+    const div=document.createElement('div');
+    div.className='admin-unit';
+    div.innerHTML=`<div class="admin-unit-name">${u.name} (T${u.tier})</div>
+      <div class="admin-field">
+        <label>Ability name</label>
+        <input type="text" value="${u.ability?.name||''}" 
+          data-unit="${u.name}" data-field="abilityName" style="width:160px;">
+      </div>
+      <div class="admin-field">
+        <label>Ability desc</label>
+        <input type="text" value="${u.ability?.desc||''}"
+          data-unit="${u.name}" data-field="abilityDesc" style="width:220px;">
+      </div>`;
+    el.appendChild(div);
+  });
+}
+function saveAdmin(){
+  // Save fort buff
+  const fb=document.getElementById('adminFortBuff').value;
+  if(fb) { GAME_DB.fortBuff=parseFloat(fb); STATE.fortBuff=parseFloat(fb); document.getElementById('fortBuff').value=fb; }
+  // Save unit overrides
+  document.querySelectorAll('[data-unit]').forEach(inp=>{
+    const unitName=inp.dataset.unit, field=inp.dataset.field;
+    const unit=ALL_UNITS.find(u=>u.name===unitName);
+    if(unit&&field==='abilityName') unit.ability.name=inp.value;
+    if(unit&&field==='abilityDesc') unit.ability.desc=inp.value;
+  });
+  saveState();
+  closeAdmin();
+  renderTroops();
+}
+
+// ════════════════════════════════════════════
+// POST-MORTEM
+// ════════════════════════════════════════════
+let pmFiles = { friendly: [], enemy: [] };
+
+function pmHandleDrop(e, side) {
+  e.preventDefault();
+  pmHandleFiles(e.dataTransfer.files, side);
+}
+
+function pmHandleFiles(files, side) {
+  Array.from(files).forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      pmFiles[side].push({ name: f.name, data: ev.target.result, type: f.type });
+      renderPmPreviews(side);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderPmPreviews(side) {
+  const el = document.getElementById('pmPreview' + (side === 'friendly' ? 'Friendly' : 'Enemy'));
+  el.innerHTML = pmFiles[side].map((f, i) =>
+    `<div style="position:relative;">
+      <img src="${f.data}" style="width:70px;height:56px;object-fit:cover;border-radius:3px;border:1px solid var(--border);">
+      <button onclick="pmFiles['${side}'].splice(${i},1);renderPmPreviews('${side}')"
+        style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);border:none;
+        color:var(--red);cursor:pointer;border-radius:2px;font-size:0.6rem;padding:1px 4px;">✕</button>
+    </div>`
+  ).join('');
+  // update badge
+  const total = pmFiles.friendly.length + pmFiles.enemy.length;
+  const badge = document.getElementById('badge-pm');
+  if (badge) { badge.textContent = total > 0 ? total + ' imgs' : '—'; badge.className = 'nav-badge' + (total > 0 ? ' ok' : ''); }
+}
+
+function renderPmExpectedBuffs() {
+  const el = document.getElementById('pmExpectedBuffs');
+  const battleType = document.getElementById('pmBattleType')?.value || 'nation_duel_normal';
+  const note = document.getElementById('pmContextNote');
+
+  const buffs = [
+    { label: 'Melee Atk', val: '201.1%' },
+    { label: 'Mid-Range Atk', val: (STATE.midBuff || 267.6) + '%' },
+    { label: 'Long-Range Atk', val: '202.0%' },
+    { label: 'Zombie Atk', val: '441.0%' },
+    { label: 'Melee HP', val: '200.3%' },
+    { label: 'Mid-Range HP', val: '135.9%' },
+    { label: 'Long-Range HP', val: '130.9%' },
+    { label: 'vs Melee Boost', val: '44.0%' },
+    { label: 'vs Mid Boost', val: '19.5%' },
+    { label: 'vs Long Boost', val: '16.4%' },
+    { label: 'Enemy Melee Atk ↓', val: '-21.2%' },
+    { label: 'Enemy Mid Atk ↓', val: '-27.3%' },
+  ];
+
+  el.innerHTML = buffs.map(b => `
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:6px 10px;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);">${b.label}</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.78rem;color:var(--text);margin-top:2px;">${b.val}</div>
+    </div>`).join('');
+
+  if (note) {
+    const contextNotes = {
+      uranium_mine: '⚠ Uranium Mine: Kingsley and Panda Jack base skills do NOT apply — adjust expectations accordingly.',
+      nation_duel_normal: '✓ Nation Duel: all officer skills apply — Technology Bonus should match profile exactly.',
+      nation_duel_elite: '✓ Nation Duel Elite: formation locked at 23:00 — post-mortem informs next day.',
+      city_attack: '✓ City battle: all skills including city-specific base skills apply.',
+      monster: '✓ Monster Hunt: all skills apply — PvE, focus on maximizing damage output.',
+      other: 'Verify which officer base skills apply for this battle type.'
+    };
+    note.textContent = contextNotes[battleType] || '';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const pmBt = document.getElementById('pmBattleType');
+  if (pmBt) pmBt.addEventListener('change', renderPmExpectedBuffs);
+  renderPmExpectedBuffs();
+});
+
+async function runPostMortem() {
+  if (pmFiles.friendly.length === 0) {
+    alert('Please upload at least your own battle screenshots before running analysis.');
+    return;
+  }
+
+  const btn = document.getElementById('pmRunBtn');
+  const out = document.getElementById('pmOutput');
+  btn.disabled = true;
+  out.style.display = 'block';
+  out.innerHTML = '<div class="rec-loading"><div class="spinner"></div> Analyzing battle report — reading Technology Bonus, unit performance, and hypothesis alignment...</div>';
+
+  const battleType = document.getElementById('pmBattleType').value;
+  const role = document.getElementById('pmRole').value;
+  const result = document.getElementById('pmResult').value;
+  const hypothesis = document.getElementById('pmHypothesis').value || 'No hypothesis provided.';
+
+  // Build image content array
+  const imageContent = [];
+  if (pmFiles.friendly.length > 0) {
+    imageContent.push({ type: 'text', text: '--- FRIENDLY SIDE SCREENSHOTS (your battle report) ---' });
+    pmFiles.friendly.forEach(f => imageContent.push({
+      type: 'image', source: { type: 'base64', media_type: f.type, data: f.data.split(',')[1] }
+    }));
+  }
+  if (pmFiles.enemy.length > 0) {
+    imageContent.push({ type: 'text', text: '--- ENEMY SIDE SCREENSHOTS (opponent battle report) ---' });
+    pmFiles.enemy.forEach(f => imageContent.push({
+      type: 'image', source: { type: 'base64', media_type: f.type, data: f.data.split(',')[1] }
+    }));
+  }
+
+  const battleContextNotes = {
+    uranium_mine: 'IMPORTANT: This is a Uranium Mine / resource node battle. Kingsley and Panda Jack BASE skills do NOT apply here (only their equipment skills apply). Adjust expected buffs accordingly.',
+    nation_duel_normal: 'Nation Duel Normal Enemy: all officer skills apply. Technology Bonus should closely match player profile buffs. System troops — no real troop loss.',
+    nation_duel_elite: 'Nation Duel Elite Enemy: all officer skills apply. Formation was locked at 23:00. Post-mortem informs next day formation, not a retry.',
+    city_attack: 'City battle: all officer skills including city-specific base skills apply.',
+    monster: 'Monster Hunt PvE: all skills apply. Focus on damage output maximization.',
+    other: 'Battle type not specified — assess which officer skills apply based on context.'
+  };
+
+  const unitIconGuide = `
+UNIT ICON RECOGNITION GUIDE:
+- Icons show unit silhouette + Roman numeral tier badge (VIII=T8, IX=T9, X=T10, XI=T11, XII=T12, XIII=T13)
+- First 3 rows (surviving=1 each) are typically: Warplane, Titan 1, Titan 2 — identified by level number not tier
+- Row inference: front=high losses/low kills per unit, middle=bikes/gunners/storm troopers, back=cannons/snipers survive well with high kills
+- Bike: low horizontal profile, fast silhouette | Tank: wide heavy vehicle | Cannon: wheeled large barrel
+- Shredder: blade/saw attachment on vehicle | Sniper: long rifle barrel, prone | Shielder: large shield prominent
+- Gunner: rotary/gatling barrel | Storm Trooper: lightning/electric weapon | EMP: pulse rings/wave emitter
+- Zombie: hunched green/grey figure, always grouped, distinctly biological
+- CONFIDENCE LEVELS: Tier badge = HIGH confidence. Unit type (tank/cannon/bike) = MEDIUM-HIGH. Exact unit name = MEDIUM (flag if uncertain)`;
+
+  const playerContext = `
+PLAYER PROFILE (Baba_Zulu):
+City: C${STATE.cityLevel || '30'} | Battle Power: ${STATE.cityBP || '10,778,812'}
+Expected row buffs: Melee Atk 201.1% | Mid-Range Atk ${STATE.midBuff || 267.6}% | Long-Range Atk 202.0% | Zombie Atk 441.0%
+vs Enemy Rows: Melee +44.0% | Mid +19.5% | Long +16.4%
+Enemy Atk Reductions: Melee -21.2% | Mid -27.3% | Long -27.3%
+Active officers: ${Object.entries(STATE.officers).map(([cat, slots]) =>
+    `${cat}: ${slots.filter(Boolean).join(', ') || 'none set'}`).join(' | ')}
+Titans: Edgar Lv.${STATE.edgarLv || 16} | Zephyrine Lv.${STATE.zephLv || 15} | Warplane Lv.${STATE.planeLv || 19}`;
+
+  const systemPrompt = `You are the AoO Alliance Optimizer post-mortem analyst for Age of Origins.
+Your job is to analyze battle reports and determine whether the player's pre-battle hypothesis was correct, identify what actually happened, and produce prioritized actionable recommendations.
+
+ANALYSIS PHILOSOPHY:
+- Technology Bonus values are ground truth — highest confidence data
+- Unit kill/loss data is useful but icon identification has uncertainty — flag confidence level
+- The goal is hypothesis validation: was the formation theory correct, or did something unexpected happen?
+- Distinguish between "formation was wrong" vs "formation was right but stat gap lost it"
+- For unknown enemy formations, infer their composition from which of the player's units took most damage and what the enemy's kill distribution looked like
+
+${unitIconGuide}
+
+OUTPUT FORMAT — use these exact section headers:
+## BATTLE SUMMARY
+## HYPOTHESIS VERDICT  
+## TECHNOLOGY BONUS ANALYSIS (most important — read all values from screenshots)
+## UNIT PERFORMANCE BREAKDOWN (note confidence level for each unit identification)
+## ENEMY FORMATION INFERENCE (what their composition likely was, based on evidence)
+## PRIORITIZED RECOMMENDATIONS
+## NEXT HYPOTHESIS (suggested formation theory for the next similar battle)
+
+For recommendations, prefix each with [CRITICAL], [HIGH], [MEDIUM], or [LOW] priority.
+Be specific — reference actual numbers from the screenshots, not generalities.`;
+
+  const userMsg = `Battle type: ${battleType}
+Player role: ${role}
+Result: ${result}
+${battleContextNotes[battleType] || ''}
+
+Pre-battle hypothesis:
+"${hypothesis}"
+
+${playerContext}
+
+Please analyze all uploaded screenshots and provide the full post-mortem.`;
+
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: "user", content: [...imageContent, { type: "text", text: userMsg }] }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.map(c => c.text || '').join('') || 'No response received.';
+    out.innerHTML = formatPmOutput(text);
+  } catch (e) {
+    out.innerHTML = `<div style="color:var(--red);">Analysis error: ${e.message}</div>`;
+  }
+  btn.disabled = false;
+}
+
+function formatPmOutput(text) {
+  return text
+    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\[CRITICAL\]/g, '<span class="action-priority pri-critical">CRITICAL</span>')
+    .replace(/\[HIGH\]/g, '<span class="action-priority pri-high">HIGH</span>')
+    .replace(/\[MEDIUM\]/g, '<span class="action-priority pri-medium">MEDIUM</span>')
+    .replace(/\[LOW\]/g, '<span class="action-priority pri-low">LOW</span>')
+    .replace(/CONFIRMED/g, '<span class="hyp-tag hyp-confirmed">CONFIRMED</span>')
+    .replace(/PARTIALLY CONFIRMED/g, '<span class="hyp-tag hyp-partial">PARTIALLY CONFIRMED</span>')
+    .replace(/REFUTED/g, '<span class="hyp-tag hyp-refuted">REFUTED</span>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#e0eeff">$1</strong>')
+    .replace(/`([^`]+)`/g, '<code style="font-family:\'Share Tech Mono\',monospace;font-size:0.8em;color:var(--accent);background:var(--faint);padding:1px 5px;border-radius:3px;">$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+window.addEventListener('load', ()=>{
+  loadState();
+  renderOfficers();
+  renderTroops();
+});
+</script>
+</body>
+</html>

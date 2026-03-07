@@ -1,0 +1,5200 @@
+{
+  "meta": {
+    "game": "Age of Origins",
+    "player": "Baba_Zulu",
+    "session": "Session 3 \u2014 Nation Duel Day 1 complete, Firebase/GitHub deployment complete",
+    "notes": "Player name: Baba_Zulu. Screen values are authoritative \u2014 include VIP, technology, buildings, equipment, officers. Loadout-dependent; timestamp indicates active standard loadout.",
+    "last_updated": "2026-03-07",
+    "app_url": "https://babazulu1331.github.io/avg1331-optimizer/avg1331_optimizer.html",
+    "firebase_project": "avg1331-optimizer",
+    "github_repo": "babazulu1331/avg1331-optimizer",
+    "project_name": "FORGE",
+    "project_full": "Formation Optimizer for Game Events"
+  },
+  "city_stats": {
+    "updated_session2": true,
+    "total_battle_power": 10778812,
+    "building_power": 1541964,
+    "technology_power": 433337,
+    "troop_power": 6453237,
+    "equipment_power": 327164,
+    "total_officer_power": 1298104,
+    "total_units": 860074,
+    "fleet_queues": "5/5",
+    "idle_army": 573262,
+    "army_distribution": [
+      211245,
+      369666,
+      279163
+    ],
+    "economy": {
+      "as_of_screenshot": "2026-03-07",
+      "food_base_per_hr": 20550,
+      "food_bonus_per_hr": 27927.45,
+      "oil_base_per_hr": 21150,
+      "oil_bonus_per_hr": 31767.3,
+      "steel_base_per_hr": 6408,
+      "steel_bonus_per_hr": 7555.032,
+      "minerals_base_per_hr": 2790,
+      "minerals_bonus_per_hr": 3038.31,
+      "food_gather_bonus_pct": 212.1,
+      "oil_gather_bonus_pct": 208.9,
+      "steel_gather_bonus_pct": 198.8,
+      "mineral_gather_bonus_pct": 202.8,
+      "gold_gather_bonus_pct": 20.0
+    },
+    "fleet_cap_base": 170890,
+    "fleet_cap_with_equipment": 174390,
+    "zombie_pool": 17500,
+    "technology_bonuses": {
+      "melee_attack": 187.2,
+      "mid_range_attack": 239.8,
+      "long_range_attack": 194.7,
+      "zombie_attack": 429.7,
+      "zombie_hp": 204,
+      "zombie_defense": 172.6,
+      "research_melee_attack": 71.9,
+      "research_mid_attack": 103.5,
+      "research_long_attack": 77.4
+    },
+    "screenshot_date": "2026-03-07",
+    "note": "Troops Details shows idle+deployed troops. Gap of ~306,220 = troops in active fleets (286,812 deployed) + ~19,408 wounded in hospital (not shown in Troops Details).",
+    "units_note": "Total Units = sum of (troop_count \u00d7 units_per_troop) for all troops. Shredders=10, Tanks=5, Bikes=5, Cannons=5, Shielders=5, EMP=10, Heavy Armored Soldier=2, all others=1. Troops Details shows troop counts (not unit counts). Difference between Total Units and Troops Details sum is combat losses from the day \u2014 no wounded in hospital at time of screenshot."
+  },
+  "fleet": {
+    "updated_session2": true,
+    "cap_confirmed_C30": 184462,
+    "cap_note": "10,000 base + 174,462 bonus = 184,462 total. Includes Morgan fleet % bonus. Varies by Strategy officer appointed.",
+    "base_load": 8,
+    "example_gathering_fleet_load": 2959012,
+    "cap_confirmed": 184462,
+    "cap_base_game": 10000,
+    "cap_bonus": 174462,
+    "zombie_pool_separate_from_cap": true,
+    "zombie_pool_note": "Zombie pool units do NOT count against fleet cap. Verified: Fleet 2 = 184,462 non-zombie units + 17,600 zombie units = 202,062 total, but displays as 184,462/184,462 fleet cap used.",
+    "confirmed_load_capacity": 2992666,
+    "confirmed_bp_fleet2_monster": 1952993
+  },
+  "formation": {
+    "updated_session2": true,
+    "rows": {
+      "front_melee": {
+        "troop_types": [
+          "Infantry",
+          "Tank",
+          "Shredder",
+          "Armored Soldier"
+        ],
+        "buffed_by": "Melee Attack/Defense/HP skills",
+        "role": "Damage sponge"
+      },
+      "middle": {
+        "troop_types": [
+          "Gunner",
+          "Bike",
+          "Rocket",
+          "Storm Trooper"
+        ],
+        "buffed_by": "Mid-Range Attack/Defense/HP skills",
+        "role": "Primary mid-range damage"
+      },
+      "middle_special": {
+        "troop_types": [
+          "Zombie"
+        ],
+        "buffed_by": "Zombie-specific skills only \u2014 NOT buffed by mid-range skills",
+        "role": "Special damage dealer \u2014 buffed by Zephyrine and zombie-specific officer skills"
+      },
+      "back_longrange": {
+        "troop_types": [
+          "Cannon",
+          "Sniper",
+          "EMP",
+          "Shielder"
+        ],
+        "buffed_by": "Long-Range Attack/Defense/HP skills",
+        "role": "Primary long-range damage"
+      },
+      "behind_all": {
+        "troop_types": [
+          "Titan",
+          "Plane"
+        ],
+        "buffed_by": "Own mechanics",
+        "role": "Independent combat units"
+      }
+    }
+  },
+  "troops": {
+    "screenshot_date": "2026-03-07",
+    "note": "Counts from City Info > Troops Details. Does not include wounded in hospital (~19,408 estimated) or troops currently deployed in fleets (~286,812). Total Units per City Info = 860,074.",
+    "T10": [
+      {
+        "name": "Biochemical Zombie",
+        "type": "Zombie",
+        "row": "Middle (special)",
+        "tier": 10,
+        "count": 2430,
+        "bp": 9.7,
+        "hp": 1942,
+        "attack": 312,
+        "defense": 81,
+        "attack_range": 2.5,
+        "movement_speed": 8,
+        "attack_cooldown": 2,
+        "units_per_troop": 1,
+        "load": 0,
+        "special_ability": null,
+        "total_units": 2430
+      },
+      {
+        "name": "Cobra Sniper",
+        "type": "Sniper",
+        "row": "Back",
+        "tier": 10,
+        "count": 3384,
+        "bp": 9.7,
+        "hp": 772,
+        "attack": 208,
+        "defense": 43,
+        "attack_range": 3.8,
+        "movement_speed": 10,
+        "attack_cooldown": 2,
+        "units_per_troop": 1,
+        "load": 7,
+        "special_ability": {
+          "name": "Sniper Hit",
+          "description": "Every 3 attacks deals 1.8x damage to single enemy"
+        },
+        "total_units": 3384
+      },
+      {
+        "name": "Pyromaster",
+        "type": "Rocket",
+        "row": "Middle",
+        "tier": 10,
+        "count": 4741,
+        "bp": 9.7,
+        "hp": 1046,
+        "attack": 181,
+        "defense": 69,
+        "attack_range": 2.5,
+        "movement_speed": 9,
+        "attack_cooldown": 2,
+        "units_per_troop": 1,
+        "load": 12,
+        "special_ability": {
+          "name": "Overshoot",
+          "mechanic": "Every 3rd attack deals heavy damage to a single enemy, prioritizing the enemy back row within range.",
+          "targets": 1,
+          "frequency": "Every 3 attacks",
+          "priority_target": "Enemy back row",
+          "damage_characteristic": "Single target, high damage \u2014 exact multiplier unconfirmed",
+          "strategic_note": "Back row sniping ability. Bypasses enemy front row to hit their highest-value units. In PvP this directly threatens enemy cannons and snipers."
+        },
+        "total_units": 4741
+      },
+      {
+        "name": "Storm Raider",
+        "type": "Bike",
+        "row": "Middle",
+        "tier": 10,
+        "count": 324,
+        "bp": 48.5,
+        "hp": 5229,
+        "attack": 907,
+        "defense": 347,
+        "attack_range": 2,
+        "movement_speed": 15,
+        "attack_cooldown": 1,
+        "units_per_troop": 5,
+        "load": 60,
+        "special_ability": {
+          "name": "Speed Racer",
+          "description": "+60% attack speed first 10s (30s in PvE)"
+        },
+        "total_units": 1620
+      },
+      {
+        "name": "Wasteland King",
+        "type": "Shredder",
+        "row": "Front",
+        "tier": 10,
+        "count": 1046,
+        "bp": 97,
+        "hp": 15325,
+        "attack": 1157,
+        "defense": 963,
+        "attack_range": 0.5,
+        "movement_speed": 10,
+        "attack_cooldown": 2,
+        "units_per_troop": 10,
+        "load": 160,
+        "special_ability": {
+          "name": "Defensive Stance",
+          "description": "34% damage reduction for 4s triggered every 8s"
+        },
+        "total_units": 10460
+      }
+    ],
+    "T9": [
+      {
+        "name": "Biochemical Zombie",
+        "type": "Zombie",
+        "row": "Middle (special)",
+        "tier": 9,
+        "count": 35859,
+        "units_per_troop": 1,
+        "total_units": 35859
+      },
+      {
+        "name": "Death Tank",
+        "type": "Tank",
+        "row": "Front",
+        "tier": 9,
+        "count": 21517,
+        "units_per_troop": 5,
+        "total_units": 107585,
+        "special_ability": {
+          "name": "Bulletproof Armor",
+          "mechanic": "When taking damage, 31% chance to block 50% of that hit's damage.",
+          "trigger": "Each incoming hit \u2014 probabilistic, always active",
+          "average_damage_reduction": "15.5% average reduction per hit (31% \u00d7 50%)",
+          "targets": "Self (defensive)",
+          "applies_to": "All Tank tier units \u2014 same mechanic, stronger base stats at higher tiers",
+          "strategic_note": "Always-active probabilistic reduction. Averages 15.5% damage reduction per incoming hit."
+        }
+      },
+      {
+        "name": "Elite Infantry",
+        "type": "Infantry",
+        "row": "Front",
+        "tier": 9,
+        "count": 26354,
+        "units_per_troop": 1,
+        "total_units": 26354
+      },
+      {
+        "name": "Havoc Storm Trooper",
+        "type": "Trooper",
+        "row": "Middle",
+        "tier": 9,
+        "count": 63851,
+        "units_per_troop": 1,
+        "total_units": 63851
+      },
+      {
+        "name": "Mad Gatling",
+        "type": "Gunner",
+        "row": "Middle",
+        "tier": 9,
+        "count": 111150,
+        "units_per_troop": 1,
+        "total_units": 111150
+      },
+      {
+        "name": "Supreme Shielder",
+        "type": "Shielder",
+        "row": "Back",
+        "tier": 9,
+        "count": 6544,
+        "units_per_troop": 5,
+        "total_units": 32720,
+        "special_ability": {
+          "name": "Shield Barrier",
+          "mechanic": "Every 4th attack triggers a shield on a friendly unit, absorbing a certain amount of incoming damage.",
+          "visual": "Explosion hitting a shield while troops are protected \u2014 incoming damage being blocked, not outgoing AoE",
+          "combat_role": "Defensive utility \u2014 reduces friendly troop losses, extends fight duration",
+          "optimization_note": "Immortal Shielder's value is NOT pure DPS \u2014 the shield absorption adds effective HP to friendly units fleet-wide. Raw eDPS/unit of 754 understates its contribution in a sustained fight."
+        }
+      },
+      {
+        "name": "Uranium Cannon",
+        "type": "Cannon",
+        "row": "Back",
+        "tier": 9,
+        "count": 19488,
+        "units_per_troop": 5,
+        "total_units": 97440,
+        "special_ability": {
+          "name": "Bomb Launcher",
+          "mechanic": "Hits 3 different targets per activation. Damage per target and activation frequency unconfirmed \u2014 no reliable reference found. Best assumption based on other bomb-type skill descriptions in game.",
+          "confidence": "LOW \u2014 treat as estimate only",
+          "assumed_targets": 3,
+          "assumed_frequency": "Unknown \u2014 likely every N attacks similar to Sniper Hit pattern",
+          "effective_dps_multiplier_if_3_targets_full_damage": 3.0,
+          "effective_dps_multiplier_conservative": "1.5\u20132.0x (assuming reduced damage per target or partial activation)",
+          "optimization_note": "Even at conservative 1.5x multiplier, Death Cannon would be 739 * 1.5 = 1,109 eDPS/unit \u2014 significantly beating Eagle Eye Shot (816). At full 3x it would be 2,217 eDPS/unit, making it the best unit in the entire roster by a wide margin. The Bomb Launcher uncertainty is the single biggest variable in back row optimization."
+        }
+      }
+    ],
+    "T8": [
+      {
+        "name": "Biochemical Zombie",
+        "type": "Zombie",
+        "row": "Middle (special)",
+        "tier": 8,
+        "count": 11271,
+        "units_per_troop": 1,
+        "total_units": 11271
+      },
+      {
+        "name": "Blaster Rocket Launcher",
+        "type": "Rocket",
+        "row": "Middle",
+        "tier": 8,
+        "count": 102277,
+        "units_per_troop": 1,
+        "total_units": 102277
+      },
+      {
+        "name": "Enhanced EMP Cannon",
+        "type": "EMP",
+        "row": "Back",
+        "tier": 8,
+        "count": 1611,
+        "units_per_troop": 10,
+        "total_units": 16110
+      },
+      {
+        "name": "Heavy Armored Soldier",
+        "type": "Infantry",
+        "row": "Front",
+        "tier": 8,
+        "count": 475,
+        "units_per_troop": 2,
+        "total_units": 950
+      },
+      {
+        "name": "Sharpshooter Sniper",
+        "type": "Sniper",
+        "row": "Back",
+        "tier": 8,
+        "count": 93628,
+        "units_per_troop": 1,
+        "total_units": 93628
+      },
+      {
+        "name": "Swift Raider",
+        "type": "Bike",
+        "row": "Middle",
+        "tier": 8,
+        "count": 3630,
+        "units_per_troop": 5,
+        "total_units": 18150
+      },
+      {
+        "name": "War Shredder",
+        "type": "Shredder",
+        "row": "Front",
+        "tier": 8,
+        "count": 5565,
+        "units_per_troop": 10,
+        "total_units": 55650
+      }
+    ],
+    "T7": [
+      {
+        "name": "Biochemical Zombie",
+        "type": "Zombie",
+        "row": "Middle (special)",
+        "tier": 7,
+        "count": 4200,
+        "units_per_troop": 1,
+        "total_units": 4200
+      },
+      {
+        "name": "Flame Cannon",
+        "type": "Cannon",
+        "row": "Back",
+        "tier": 7,
+        "count": 5491,
+        "units_per_troop": 5,
+        "total_units": 27455
+      },
+      {
+        "name": "Shielded Infantry",
+        "type": "Infantry",
+        "row": "Front",
+        "tier": 7,
+        "count": 5760,
+        "units_per_troop": 1,
+        "total_units": 5760
+      },
+      {
+        "name": "Specialist Gunner",
+        "type": "Gunner",
+        "row": "Middle",
+        "tier": 7,
+        "count": 3331,
+        "units_per_troop": 1,
+        "total_units": 3331
+      },
+      {
+        "name": "Superior Storm Trooper",
+        "type": "Trooper",
+        "row": "Middle",
+        "tier": 7,
+        "count": 16,
+        "units_per_troop": 1,
+        "total_units": 16
+      }
+    ],
+    "T6_and_below": {
+      "note": "Filler and gathering only \u2014 no meaningful combat value",
+      "troops": [
+        {
+          "name": "Biochemical Zombie",
+          "type": "Zombie",
+          "tier": 6,
+          "count": 1370,
+          "units_per_troop": 1,
+          "total_units": 1370
+        },
+        {
+          "name": "EMP Cannon 1",
+          "type": "EMP",
+          "tier": 6,
+          "count": 39,
+          "units_per_troop": 10,
+          "total_units": 390
+        },
+        {
+          "name": "Intermediate Sniper",
+          "type": "Sniper",
+          "tier": 6,
+          "count": 5161,
+          "units_per_troop": 1,
+          "total_units": 5161
+        },
+        {
+          "name": "Biochemical Zombie",
+          "type": "Zombie",
+          "tier": 5,
+          "count": 855,
+          "units_per_troop": 1,
+          "total_units": 855
+        },
+        {
+          "name": "Intermediate Gunner",
+          "type": "Gunner",
+          "tier": 5,
+          "count": 1423,
+          "units_per_troop": 1,
+          "total_units": 1423
+        },
+        {
+          "name": "Shielder",
+          "type": "Shielder",
+          "tier": 5,
+          "count": 575,
+          "units_per_troop": 5,
+          "total_units": 2875
+        },
+        {
+          "name": "Skilled Rocket Launcher",
+          "type": "Rocket",
+          "tier": 4,
+          "count": 2193,
+          "units_per_troop": 1,
+          "total_units": 2193
+        },
+        {
+          "name": "Skilled Infantry",
+          "type": "Infantry",
+          "tier": 3,
+          "count": 3226,
+          "units_per_troop": 1,
+          "total_units": 3226
+        },
+        {
+          "name": "Skilled Gunner",
+          "type": "Gunner",
+          "tier": 3,
+          "count": 4929,
+          "units_per_troop": 1,
+          "total_units": 4929
+        },
+        {
+          "name": "Strong Tank",
+          "type": "Tank",
+          "tier": 3,
+          "count": 28,
+          "units_per_troop": 5,
+          "total_units": 140
+        },
+        {
+          "name": "Basic Shredder",
+          "type": "Shredder",
+          "tier": 2,
+          "count": 112,
+          "units_per_troop": 10,
+          "total_units": 1120
+        }
+      ]
+    },
+    "total_troops_in_details": 553854,
+    "total_units_calculated": 860074,
+    "city_info_total_units": 860074,
+    "difference_note": "Calculated 860,074 units from Troops Details \u00d7 units_per_troop = 860,074 City Info total. Exact match confirms all counts correct. No wounded in hospital at screenshot time. Any shortfall vs prior session counts = permanent combat losses."
+  },
+  "titans_and_plane": {
+    "updated_session2": true,
+    "vitality_mechanics": {
+      "max_vitality": 100,
+      "cost_per_pvp_deployment": 10,
+      "minimum_to_deploy": 30,
+      "recovery": "Passive over time",
+      "emergency_resource": "Vitality inject items",
+      "monster_attacks_cost": 0,
+      "ruins_attacks_cost": 0,
+      "pvp_cost": 10
+    },
+    "edgar": {
+      "name": "Edgar",
+      "type": "Titan",
+      "disaster_tier": 4,
+      "level": 16,
+      "hp": 22132501,
+      "attack": 1757028,
+      "defense": 119,
+      "cooldown": 2,
+      "range": 6,
+      "speed": 12,
+      "talents": [
+        {
+          "name": "Source Energy Strike",
+          "description": "Every 2s, 112% damage"
+        },
+        {
+          "name": "Destroy Ray",
+          "description": "Every 10s, 130.7% line damage + burn"
+        },
+        {
+          "name": "Rampart Halo",
+          "description": "Damage to your melee troops -7%"
+        }
+      ]
+    },
+    "zephyrine": {
+      "name": "Zephyrine",
+      "type": "Titan",
+      "disaster_tier": 2,
+      "level": 15,
+      "hp": 19126596,
+      "attack": 1549294,
+      "defense": 107,
+      "cooldown": 2,
+      "range": 6,
+      "speed": 12,
+      "talents": [
+        {
+          "name": "Bone Spurs",
+          "description": "Every 2s, 112% damage"
+        },
+        {
+          "name": "Zombie Queen Halo",
+          "description": "+11.9% zombie stats (permanent)"
+        },
+        {
+          "name": "Queen's Inspiration",
+          "description": "Every 10s, +22.2% army attack / +33.3% zombies specifically"
+        }
+      ],
+      "upgrade_status": {
+        "current_xp": 90000,
+        "required_xp": 115900,
+        "limiting_resource": "Mutant meat items",
+        "next_level_max_skill_level": 8
+      },
+      "evolution_status": {
+        "dna_fragments": "55/30 \u2014 sufficient",
+        "stored_energy_jars": "50/200 \u2014 bottleneck",
+        "next_tier": 3
+      }
+    },
+    "zephyr_zero": {
+      "name": "Zephyr_Zero",
+      "type": "Warplane",
+      "explorer_tier": 7,
+      "level": 19,
+      "hp": 24547279,
+      "attack": 2324846,
+      "defense": 163,
+      "cooldown": 1,
+      "range": 7.5,
+      "speed": 15,
+      "vitality": "None \u2014 deploy freely without resource cost",
+      "dodge": {
+        "melee": "100%",
+        "mid_and_long": "20%"
+      },
+      "talents": [
+        {
+          "name": "Laser Cannon",
+          "description": "Every 1s, 56% damage"
+        },
+        {
+          "name": "Melee Weakness Recognition",
+          "description": "+24% army attack vs enemy melee troops"
+        },
+        {
+          "name": "Added Firepower",
+          "description": "Units \u00d7 12 flat attack bonus"
+        }
+      ]
+    }
+  },
+  "officers": {
+    "system_mechanics": {
+      "updated_session2": true,
+      "director_strategy_warfare": "Base skill fixed, 2\u2605/3\u2605/4\u2605 skills player-chosen",
+      "machinists_drillmasters": "All skills game-set, no player choice",
+      "machinists_equipment": "No equipment slots",
+      "drillmasters_equipment": "Have equipment slots (all currently empty)",
+      "equipment_skills": "Level via equipment upgrade, separate from skill XP",
+      "skill_reset_cost": "10% of accumulated skill XP lost on reset \u2014 skill drops to Lv.1",
+      "unequipped_skills": "Remain at Lv.1 \u2014 can only gain XP while equipped on officer",
+      "star_locked_slots": "Skills cannot be equipped until officer reaches required star level",
+      "same_skill_multiple_officers": "Allowed",
+      "only_open_warfare_slot": "Alexandria slot 2 \u2014 green cross, available to learn now",
+      "equipment": {
+        "unlock_condition": "3\u2605 (Star 3) \u2014 equipment slot on LEFT side of officer screen becomes available",
+        "separate_from_skills": true,
+        "description": "Equipment is a distinct upgrade path from skills. Skills are on the RIGHT side, equipment on the LEFT.",
+        "equipment_provides": "Its own set of stat effects \u2014 separate from and additive to skill bonuses",
+        "upgrade_resources": "Different resource type from skill leveling",
+        "known_examples": {
+          "Loreline": "Double Gun equipment \u2014 vs Enemy Rows +7.6%",
+          "Doc Gray": "Elite Pacemaker +11 Lv.11 \u2014 +7% vs all enemy rows",
+          "I. Medici": "Gold Flames +10 Lv.10 \u2014 +6.4% vs all enemy rows",
+          "F. Medici": "Handgun +10 Lv.10 \u2014 +6.4% vs all enemy rows"
+        },
+        "storm_bow_equipment": {
+          "status": "LOCKED \u2014 requires 3\u2605",
+          "icon_visible": "Two equipment slots visible on left side of screen (crossbow + armor icons)",
+          "effects": "Unknown until unlocked \u2014 record when 3\u2605 is reached",
+          "priority": "HIGH \u2014 All Troops DEF/HP base skill makes equipment effects potentially very valuable"
+        },
+        "implications_for_optimization": [
+          "3\u2605 unlocks BOTH a new skill slot AND equipment \u2014 double upgrade at the same threshold",
+          "Equipment effects are separate from skill pool \u2014 purely additive",
+          "Officers without equipment (pre-3\u2605) are missing a full upgrade layer",
+          "When evaluating officers, note whether equipment is active or locked"
+        ]
+      },
+      "rarity": {
+        "Orange": {
+          "equipment": "Active from 3\u2605 \u2014 equipment slot on left side of screen with own stats + expertise",
+          "star_4": "Second equipment slot unlocks",
+          "examples": [
+            "Kingsley",
+            "Panda Jack",
+            "Tifa",
+            "Zeus",
+            "Storm Bow",
+            "Alexandria",
+            "Aeon"
+          ]
+        },
+        "Purple": {
+          "equipment": "NO equipment system \u2014 purple officers have skills only",
+          "note": "Butterfly is purple \u2014 no equipment bonuses regardless of star level",
+          "examples": [
+            "Butterfly"
+          ]
+        }
+      },
+      "equipment_upgrade_resources": {
+        "currency": "Officer Equipment Alloy chips",
+        "event_strategy": "Hold upgrades for event bonuses \u2014 do not spend outside events",
+        "current_chips": 382,
+        "pending_upgrades": [
+          {
+            "officer": "Kingsley",
+            "item": "Light Machine Gun",
+            "from": 13,
+            "to": 15,
+            "reason": "Lv.15 unlocks Mid-Range Killer expertise",
+            "cost_estimate": "165 (Lv.14) + more (Lv.15) \u2014 needs event to cover both"
+          },
+          {
+            "officer": "Panda Jack",
+            "item": "Rocket Launcher",
+            "from": 12,
+            "to": 13,
+            "cost": 150,
+            "reason": "Incremental stat gain on all three equipment stats"
+          }
+        ],
+        "priority_order": "Kingsley to Lv.15 first (unlocks new expertise) then Panda Jack"
+      }
+    },
+    "warfare": {
+      "active_slots": 6,
+      "lineup": [
+        {
+          "slot": 1,
+          "officer": "Kingsley",
+          "role": "Mid-range attack + Zombie attack + LMG equipment"
+        },
+        {
+          "slot": 2,
+          "officer": "Panda Jack",
+          "role": "Mid+Long attack + Rocket equipment"
+        },
+        {
+          "slot": 3,
+          "officer": "Butterfly",
+          "role": "Universal attack + melee sponge durability"
+        },
+        {
+          "slot": 4,
+          "officer": "Tifa",
+          "role": "Highest universal attack base"
+        },
+        {
+          "slot": 5,
+          "officer": "Zeus",
+          "role": "Damage multiplier + mid-range"
+        },
+        {
+          "slot": 6,
+          "officer": "Storm Bow",
+          "role": "Universal DEF/HP + mid-range defense"
+        }
+      ],
+      "officers": {
+        "Kingsley": {
+          "stars": 3,
+          "grade": 3,
+          "bp": 167243,
+          "mastery": 434,
+          "level": 18,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Advanced Defense",
+              "value": "City Guards Attack and HP +17.36%",
+              "applies_in": "City defense ONLY \u2014 not Nation Duel, not field battles"
+            },
+            {
+              "name": "Mid-Range Attack",
+              "level": 7,
+              "value": "Mid-Range Troops Attack +11.718%"
+            },
+            {
+              "name": "Melee HP",
+              "level": 6,
+              "value": "Melee Troop HP +11.284%"
+            },
+            {
+              "name": "4th Skill",
+              "status": "Unlocks at Star 4"
+            }
+          ],
+          "equipment": {
+            "item": "Light Machine Gun",
+            "level": 13,
+            "stats": {
+              "Long-Range Attack": "+8.2%",
+              "Mid-Range HP and Defense": "+8.2%",
+              "Biochemical Zombies Attack": "+8.2%"
+            },
+            "expertise": [
+              {
+                "name": "Advanced Endurance",
+                "level": 8,
+                "value": "All Troops DEF/HP +7.6%"
+              },
+              {
+                "name": "Mid-Range Killer",
+                "level": 1,
+                "value": "+1.2% vs mid-range troops",
+                "unlocks_at": "Equipment Lv.15"
+              }
+            ],
+            "upgrade_hold": "Wait for Officer Equipment Alloy event \u2014 need Lv.13\u219215 (two steps) to unlock Mid-Range Killer",
+            "chips_available": 382,
+            "cost_next": "165 chips (Lv.14), more for Lv.15"
+          },
+          "fragments": "18/24 for G5 \u2014 6 more needed",
+          "equipment_upgrade": "322/165 materials \u2014 can upgrade to L14 now",
+          "future_plan": "At 4\u2605 reset to city defense loadout (Bravery + Iron Wall + Unyielding), move Mid-Range Attack L7 and Melee HP L6 to better officers at 10% XP loss",
+          "equipment_status": "active",
+          "nation_duel_note": "Base skill (City Guards) does NOT apply in Nation Duel. Equipment + Mid-Range Attack + Melee HP skills all apply.",
+          "slot_2": "Unlocks at Star 4"
+        },
+        "Panda Jack": {
+          "stars": 3,
+          "grade": 3,
+          "bp": 140002,
+          "mastery": 362,
+          "level": 18,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Advanced Attack",
+              "value": "Siege Army Attack and HP +14.48%",
+              "applies_in": "Siege battles ONLY \u2014 not Nation Duel, not field battles"
+            },
+            {
+              "name": "Mid-Range Attack",
+              "level": 10,
+              "value": "Mid-Range Troops Attack +10.86%"
+            },
+            {
+              "name": "Long-Range Attack",
+              "level": 2,
+              "value": "Long-Range Troops Attack +7.964%"
+            },
+            {
+              "name": "4th Skill",
+              "status": "Unlocks at Star 4"
+            }
+          ],
+          "equipment": {
+            "item": "Rocket Launcher",
+            "level": 12,
+            "stats": {
+              "Mid-Range Attack": "+7.6%",
+              "Long-Range HP and Defense": "+7.6%",
+              "Biochemical Zombies Attack": "+7.6%"
+            },
+            "expertise": [
+              {
+                "name": "Advanced Kill",
+                "level": 6,
+                "value": "All Troops Attack +5.8%"
+              }
+            ],
+            "upgrade_hold": "Wait for Officer Equipment Alloy event \u2014 Lv.12\u219213 costs 150 chips",
+            "chips_available": 382
+          },
+          "fragments": "2/24 for G1 \u2014 22 more needed",
+          "equipment_upgrade": "322/150 materials \u2014 can upgrade to L13 now",
+          "equipment_status": "active",
+          "nation_duel_note": "Base skill (Siege Army) does NOT apply in Nation Duel. Equipment + Mid-Range Attack + Long-Range Attack skills all apply.",
+          "slot_2": "Unlocks at Star 4"
+        },
+        "Butterfly": {
+          "stars": 4,
+          "grade": 4,
+          "bp": 62568,
+          "mastery": 316,
+          "level": 16,
+          "rarity": "Purple",
+          "note": "Orange replacement planned",
+          "skills": [
+            {
+              "name": "Intermediate Kill",
+              "type": "Base",
+              "value": "All Troops Attack +9.48% (+0.68%/lv)"
+            },
+            {
+              "name": "Melee Attack",
+              "type": "Leveled",
+              "level": 6,
+              "value": "Melee Troop Attack +8.216% (+1.768%/lv)"
+            },
+            {
+              "name": "Melee Expert",
+              "type": "Leveled",
+              "level": 6,
+              "value": "Melee Troop ATK/HP +3.476% (+0.748%/lv)"
+            },
+            {
+              "name": "Melee Defense",
+              "type": "Leveled",
+              "level": 4,
+              "value": "Melee Troop Defense +7.584% (+1.632%/lv)"
+            }
+          ],
+          "equipment": "None",
+          "fragments": "18/48 for G5",
+          "mastery_gain_next_star": 68,
+          "equipment_status": "active"
+        },
+        "Tifa": {
+          "stars": 2,
+          "grade": 3,
+          "bp": 48541,
+          "mastery": 322,
+          "level": 17,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Advanced Kill",
+              "type": "Base",
+              "value": "All Troops Attack +12.88% (+0.64%/lv)"
+            },
+            {
+              "name": "Long-Range Expert",
+              "type": "Leveled",
+              "level": 9,
+              "value": "Long-Range Troops ATK/HP +4.508% (+0.224%/lv)"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Unlocks at 3\u2605 \u2014 player chooses"
+            },
+            {
+              "name": "4th Skill",
+              "type": "Locked",
+              "value": "Unlocks at 4\u2605 \u2014 player chooses"
+            }
+          ],
+          "equipment": "None \u2014 slots locked until 3\u2605 and 4\u2605",
+          "fragments": "9/12 for G4 \u2014 3 more needed",
+          "note": "Highest universal attack base skill of all Warfare officers",
+          "equipment_status": "locked_requires_3star"
+        },
+        "Zeus": {
+          "stars": 2,
+          "grade": 2,
+          "bp": 49140,
+          "mastery": 312,
+          "level": 18,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Precise Shot",
+              "type": "Base",
+              "value": "Damage Dealt to all Troops +7.8% (+0.4%/lv)"
+            },
+            {
+              "name": "Mid-Range Expert",
+              "type": "Leveled",
+              "level": 10,
+              "value": "Mid-Range Troops ATK/HP +4.68% (+0.24%/lv)"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Unlocks at 3\u2605 \u2014 player chooses"
+            },
+            {
+              "name": "4th Skill",
+              "type": "Locked",
+              "value": "Unlocks at 4\u2605 \u2014 player chooses"
+            }
+          ],
+          "equipment": "None \u2014 slots locked until 3\u2605 and 4\u2605",
+          "fragments": "5/12 for G3 \u2014 7 more needed",
+          "note": "Damage Dealt bonus applies after all attack calculations \u2014 multiplicative",
+          "equipment_status": "locked_requires_3star"
+        },
+        "Storm Bow": {
+          "stars": 2,
+          "grade": 2,
+          "bp": 32413,
+          "mastery": 294,
+          "level": 15,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Advanced Endurance",
+              "type": "Base",
+              "value": "All Troops DEF/HP +11.76%",
+              "next_grade_gain": "+0.64%",
+              "next_grade_value": "12.40%",
+              "verified": true
+            },
+            {
+              "name": "Mid-Range Defense",
+              "type": "Leveled",
+              "level": 3,
+              "value": "Mid-Range Troops Defense +6.762%",
+              "next_grade_gain": "+0.368%",
+              "next_grade_value": "7.130%",
+              "verified": true
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Unlocks at Star 3 \u2014 player chooses"
+            },
+            {
+              "name": "4th Skill",
+              "type": "Locked",
+              "value": "Unlocks at Star 4 \u2014 player chooses"
+            }
+          ],
+          "equipment": "None \u2014 slots locked until 3\u2605 and 4\u2605",
+          "fragments": "10/12 for Grade 3",
+          "star_up_preview": {
+            "current": "2 Star, Grade 2",
+            "next": "Grade 3 \u2014 requires 12 fragments (have 10)",
+            "mastery_gain": "+16 \u2192 310",
+            "adv_endurance_gain": "+0.64% \u2192 12.40%",
+            "mid_range_def_gain": "+0.368% \u2192 7.130%",
+            "note": "2 fragments short \u2014 cannot grade up yet"
+          },
+          "equipment_status": "locked_requires_3star",
+          "star_3_unlocks": [
+            "Third skill slot \u2014 player chooses",
+            "Equipment slot \u2014 effects unknown until unlocked, likely DEF/HP or mid-range focused given base skill"
+          ]
+        },
+        "Alexandria": {
+          "stars": 2,
+          "grade": 1,
+          "bp": 24480,
+          "mastery": 272,
+          "level": 14,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Defense Weakness",
+              "type": "Base",
+              "value": "Damage Taken from all Troops -6.8% (+0.4%/lv)"
+            },
+            {
+              "name": "2nd Skill",
+              "type": "Not Learned",
+              "value": "Available to learn now \u2014 player chooses"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Unlocks at 3\u2605 \u2014 player chooses"
+            },
+            {
+              "name": "4th Skill",
+              "type": "Locked",
+              "value": "Unlocks at 4\u2605 \u2014 player chooses"
+            }
+          ],
+          "equipment": "None \u2014 slot 2 open (green cross), only currently assignable empty Warfare slot",
+          "fragments": "3/12 for G2 \u2014 9 more needed",
+          "equipment_status": "locked_requires_3star"
+        },
+        "Aeon": {
+          "stars": 2,
+          "grade": 2,
+          "bp": 29605,
+          "mastery": 306,
+          "level": 17,
+          "rarity": "Orange",
+          "status": "BENCHED",
+          "skills": [
+            {
+              "name": "Advanced Melee Mastery",
+              "type": "Base",
+              "value": "Melee Troops ATK/DEF/HP +15.3% (+0.8%/lv)"
+            },
+            {
+              "name": "Melee Expert",
+              "type": "Leveled",
+              "level": 1,
+              "value": "Melee Troop ATK/HP +1.836% (+0.096%/lv)"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Unlocks at 3\u2605"
+            },
+            {
+              "name": "4th Skill",
+              "type": "Locked",
+              "value": "Unlocks at 4\u2605"
+            }
+          ],
+          "fragments": "8/12 for G3",
+          "note": "Benched \u2014 melee only. Melee Expert L1 cheap to level even while benched",
+          "equipment_status": "locked_requires_3star"
+        }
+      },
+      "context_notes": {
+        "Kingsley": "Base skill does NOT apply in Uranium Mine or resource node battles \u2014 equipment skill still applies",
+        "Panda Jack": "Base skill does NOT apply in Uranium Mine or resource node battles \u2014 equipment skill still applies",
+        "all_others": "Skills apply in all battle contexts unless noted"
+      }
+    },
+    "strategy": {
+      "active_slots": 2,
+      "lineup": {
+        "standard_monster": [
+          "Morgan",
+          "Loreline"
+        ],
+        "void_ke": [
+          "Morgan",
+          "Bravestar"
+        ]
+      },
+      "officers": {
+        "Loreline": {
+          "stars": 3,
+          "grade": 4,
+          "bp": 153302,
+          "mastery": 434,
+          "level": 18,
+          "skills": [
+            {
+              "name": "Advanced Training",
+              "type": "Base",
+              "value": "Recruitment Speed +17.36% (+0.8%/lv)"
+            },
+            {
+              "name": "Draft",
+              "type": "Leveled",
+              "level": 9,
+              "value": "Single Recruitment Unit Max +125.86 (+5.8/lv)"
+            },
+            {
+              "name": "Comprehension",
+              "type": "Leveled",
+              "level": 6,
+              "value": "Monsters XP +4.774% (+0.22%/lv)"
+            }
+          ],
+          "equipment": {
+            "name": "Double Gun",
+            "level": 12,
+            "upgrade_level": "+12",
+            "bp": 70300,
+            "stats": [
+              {
+                "stat": "vs Enemy Rows",
+                "value": "+7.6% all rows (\u2192+8.2% at L13)"
+              },
+              {
+                "stat": "Medic Expert L4",
+                "value": "+2,400 wounded"
+              }
+            ]
+          },
+          "fragments": "20/24 for G5"
+        },
+        "Major Morgan": {
+          "stars": 2,
+          "grade": 3,
+          "bp": 50112,
+          "mastery": 348,
+          "level": 21,
+          "skills": [
+            {
+              "name": "Advanced Command",
+              "type": "Base",
+              "value": "Max Fleet Units +8.7% (+0.4%/lv)"
+            },
+            {
+              "name": "Comprehension",
+              "type": "Leveled",
+              "level": 8,
+              "value": "Monsters XP +4.524% (+0.208%/lv)"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Needs 3\u2605"
+            }
+          ],
+          "equipment": "None \u2014 slots locked until 3\u2605",
+          "fragments": "1/12 for G4"
+        },
+        "Bravestar": {
+          "stars": 2,
+          "grade": 4,
+          "bp": 50049,
+          "mastery": 332,
+          "level": 16,
+          "skills": [
+            {
+              "name": "Advanced Medicine",
+              "type": "Base",
+              "value": "Max Wounded +21.58% (+1.17%/lv)"
+            },
+            {
+              "name": "First Aid",
+              "type": "Leveled",
+              "level": 9,
+              "value": "Killed\u2192Wounded Ratio +2.988% (+0.162%/lv)"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Needs 3\u2605"
+            }
+          ],
+          "equipment": "None \u2014 slots locked until 3\u2605",
+          "fragments": "4/12 for G5"
+        },
+        "Saki": {
+          "stars": 2,
+          "grade": 0,
+          "bp": 27090,
+          "mastery": 280,
+          "level": 18,
+          "status": "BENCHED",
+          "skills": [
+            {
+              "name": "War Mobilization",
+              "type": "Base",
+              "value": "Fleet Units Bonus +8,400 flat (+480/lv)"
+            },
+            {
+              "name": "Raid",
+              "type": "Leveled",
+              "level": 1,
+              "value": "Fleet Speed +0.6% per 100 mastery"
+            }
+          ],
+          "note": "Morgan superior \u2014 percentage scales with fleet, flat does not"
+        }
+      }
+    },
+    "machinist": {
+      "officers": {
+        "Emily": {
+          "updated_session2": true,
+          "stars": 2,
+          "grade": 1,
+          "bp": 42282,
+          "mastery": 324,
+          "level": 17,
+          "skills": [
+            {
+              "name": "Machine Awakening",
+              "type": "Base",
+              "value": "All Troops ATK/DEF/HP +6.48% (+0.36%/lv)",
+              "effective_at_current_mastery": "+20.99%"
+            },
+            {
+              "name": "Armor Blessing",
+              "type": "Leveled",
+              "level": 6,
+              "value": "All Troops Block +7.128 per 100 mastery",
+              "effective_at_current_mastery": "+23.09 block"
+            },
+            {
+              "name": "3rd Skill",
+              "type": "Locked",
+              "value": "Activates at Star 3"
+            },
+            {
+              "name": "4th Skill",
+              "type": "Locked",
+              "value": "Activates at Star 4"
+            }
+          ],
+          "equipment": "None \u2014 no equipment slots for Machinists",
+          "fragments": "1/12 for G2",
+          "note": "Recently graded up from G0 to G1 \u2014 +18 mastery gained"
+        },
+        "Kay": {
+          "stars": 2,
+          "grade": 0,
+          "bp": 39933,
+          "mastery": 306,
+          "level": 17,
+          "skills": [
+            {
+              "name": "Heavy Mecha",
+              "type": "Base",
+              "value": "Troops ATK +units\u00d79.18, HP +units\u00d752.02"
+            },
+            {
+              "name": "Armor Blessing",
+              "type": "Leveled",
+              "level": 6,
+              "value": "All Troops Block +6.732 (+0.396/lv)"
+            }
+          ],
+          "equipment": "None \u2014 no equipment slots for Machinists",
+          "flat_bonuses_at_C30_fleet": {
+            "fleet_size": 176528,
+            "attack_bonus": 1620527,
+            "hp_bonus": 9182087
+          }
+        }
+      }
+    },
+    "drillmaster": {
+      "active_slots": 6,
+      "lineup": [
+        {
+          "slot": 1,
+          "officer": "Jimmy",
+          "role": "Enemy attack debuff + killer skills"
+        },
+        {
+          "slot": 2,
+          "officer": "Layla",
+          "role": "Opening burst + enemy weakening"
+        },
+        {
+          "slot": 3,
+          "officer": "Cattie",
+          "role": "Highest enemy attack debuff"
+        },
+        {
+          "slot": 4,
+          "officer": "Freya",
+          "role": "Dual mid+long row attack"
+        },
+        {
+          "slot": 5,
+          "officer": "Maria",
+          "role": "Highest flat attack addition"
+        },
+        {
+          "slot": 6,
+          "officer": "Selina",
+          "role": "Universal ATK/DEF/HP"
+        }
+      ],
+      "officers": {
+        "Jimmy": {
+          "stars": 4,
+          "grade": 0,
+          "bp": 47459,
+          "mastery": 267,
+          "level": 16,
+          "rarity": "Purple",
+          "skills": [
+            {
+              "name": "Camouflage",
+              "type": "Base",
+              "value": "Enemy Troops Attack -8.01% (+0.42%/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 5,
+              "value": "Wounded +5,340 (+280/lv)"
+            },
+            {
+              "name": "Melee Killer",
+              "type": "Game-set",
+              "level": 5,
+              "value": "vs Melee attack +6.675% (+0.35%/lv)"
+            },
+            {
+              "name": "Mid-Range Killer",
+              "type": "Game-set",
+              "level": 3,
+              "value": "vs Mid-Range attack +6.141% (+0.322%/lv)"
+            }
+          ],
+          "note": "Killer skills uncertain vs monsters. Confirmed relevant ruins/PvP. Ruins row mapping unconfirmed."
+        },
+        "Layla": {
+          "stars": 4,
+          "grade": 0,
+          "bp": 47459,
+          "mastery": 267,
+          "level": 16,
+          "rarity": "Purple",
+          "skills": [
+            {
+              "name": "Morale Boost",
+              "type": "Base",
+              "value": "First 20s: All Troops Attack +9.345% (+0.49%/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 7,
+              "value": "Wounded +6,408 (+336/lv) \u2014 highest IMT"
+            },
+            {
+              "name": "Mid-Range Weaken",
+              "type": "Game-set",
+              "level": 3,
+              "value": "Enemy Mid-Range Attack -6.141% (+0.322%/lv)"
+            },
+            {
+              "name": "Long-Range Weaken",
+              "type": "Game-set",
+              "level": 3,
+              "value": "Enemy Long-Range Attack -6.141% (+0.322%/lv)"
+            }
+          ],
+          "note": "Weaken skills likely irrelevant vs monsters"
+        },
+        "Cattie": {
+          "stars": 2,
+          "grade": 1,
+          "bp": 35721,
+          "mastery": 324,
+          "level": 17,
+          "skills": [
+            {
+              "name": "Sharp Senses",
+              "type": "Base",
+              "value": "Enemy Troops Attack -12.96% (+0.72%/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 3,
+              "value": "Wounded +5,508 (+306/lv)"
+            }
+          ],
+          "fragments": "2/12 for G2"
+        },
+        "Freya": {
+          "stars": 2,
+          "grade": 1,
+          "bp": 31347,
+          "mastery": 324,
+          "level": 17,
+          "skills": [
+            {
+              "name": "Armor Assault",
+              "type": "Base",
+              "value": "Mid-Range AND Long-Range Attack +12.96% (+0.72%/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 1,
+              "value": "Wounded +4,860 (+270/lv)"
+            }
+          ],
+          "fragments": "1/12 for G2",
+          "note": "Buffs all middle row (Gunners/Bikes/Rockets/Troopers) AND all back row (Cannons/Snipers/EMP/Shielders) \u2014 does NOT buff Zombies"
+        },
+        "Maria": {
+          "stars": 2,
+          "grade": 2,
+          "bp": 33862,
+          "mastery": 350,
+          "level": 18,
+          "skills": [
+            {
+              "name": "Eagle Eye Detection",
+              "type": "Base",
+              "value": "All Troops Attack +units\u00d721 (+1.08/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 1,
+              "value": "Wounded +5,250 (+270/lv)"
+            }
+          ],
+          "fragments": "7/12 for G3",
+          "flat_attack_at_C30_fleet": 3707088
+        },
+        "Selina": {
+          "stars": 2,
+          "grade": 1,
+          "bp": 31347,
+          "mastery": 324,
+          "level": 17,
+          "skills": [
+            {
+              "name": "Shadow Strike",
+              "type": "Base",
+              "value": "All Troops ATK/DEF/HP +6.48% (+0.36%/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 1,
+              "value": "Wounded +4,860 (+270/lv)"
+            }
+          ],
+          "fragments": "6/12 for G2"
+        },
+        "Simon": {
+          "stars": 2,
+          "grade": 0,
+          "bp": 26509,
+          "mastery": 274,
+          "level": 12,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "Open Fire",
+              "type": "Base",
+              "value": "First 20s: All Troops Attack +13.7% (+0.9%/lv)"
+            },
+            {
+              "name": "IMT",
+              "type": "Leveled",
+              "level": 1,
+              "value": "Wounded +4,110 (+270/lv)"
+            }
+          ],
+          "fragments": "4/12 for G1",
+          "note": "Highest opening burst of all Drillmasters. Future replacement for purple officers."
+        },
+        "Eric": {
+          "stars": 1,
+          "grade": 1,
+          "bp": 14670,
+          "mastery": 163,
+          "level": 4,
+          "rarity": "Orange",
+          "skills": [
+            {
+              "name": "EMP Pulse Wave",
+              "type": "Base",
+              "value": "First 20s: Enemy HP/DEF -8.15% (+0.75%/lv)"
+            },
+            {
+              "name": "2nd-4th Skills",
+              "type": "Locked",
+              "value": "All game-set, unknown"
+            }
+          ],
+          "fragments": "0/4 for G2",
+          "note": "Only officer that reduces enemy HP. Opening burst synergy with Simon."
+        }
+      }
+    },
+    "director": {
+      "officers": {
+        "I. Medici": {
+          "skills_equipped": [
+            {
+              "name": "Load",
+              "level": 9,
+              "value": "Load Boost +1.4% per 100 mastery"
+            },
+            {
+              "name": "Gather Minerals",
+              "level": 4,
+              "value": "Mineral Gather Speed +1.8% per 100 mastery"
+            }
+          ],
+          "equipment_skill": {
+            "name": "Medic Expert",
+            "level": 4,
+            "value": "+2,400 wounded",
+            "nation_duel_relevance": "IRRELEVANT"
+          },
+          "equipment_item": "Gold Flames +10",
+          "equipment_note": "Equipment item 'Gold Flames' \u2014 has attack-related skill(s) not yet recorded in database. Only Medic Expert L4 (+2,400 wounded) was captured previously. PENDING: screenshot all skill slots.",
+          "equipment_level": 10,
+          "equipment_stats": {
+            "attack_against_melee_boost": "+6.4%",
+            "attack_against_mid_range_boost": "+6.4%",
+            "attack_against_long_range_boost": "+6.4%",
+            "total_row_attack_contribution": "+19.2%"
+          }
+        },
+        "Doc Gray": {
+          "skills_equipped": [
+            {
+              "name": "Oil Expert",
+              "level": 8,
+              "value": "Oil Output +4.1% per 100 mastery"
+            },
+            {
+              "name": "Processing",
+              "level": 1,
+              "value": "Resource Output +1.5% per 100 mastery"
+            }
+          ],
+          "equipment_skill": {
+            "name": "Medic Expert",
+            "level": 8,
+            "value": "+4,800 wounded",
+            "nation_duel_relevance": "IRRELEVANT"
+          },
+          "equipment_item": "Elite Pacemaker +11",
+          "equipment_note": "Equipment item 'Elite Pacemaker' \u2014 has attack-related skill(s) not yet recorded. Only Medic Expert L8 (+4,800 wounded) was captured previously. PENDING: screenshot all skill slots.",
+          "equipment_level": 11,
+          "equipment_stats": {
+            "attack_against_melee_boost": "+7.0%",
+            "attack_against_mid_range_boost": "+7.0%",
+            "attack_against_long_range_boost": "+7.0%",
+            "total_row_attack_contribution": "+21.0%"
+          }
+        },
+        "F. Medici": {
+          "skills_equipped": [
+            {
+              "name": "Processing",
+              "level": 7,
+              "value": "Resource Output +2.1% per 100 mastery"
+            },
+            {
+              "name": "Tax Rate",
+              "level": 1,
+              "value": "Transport Tax 1.5% per 100 mastery"
+            }
+          ],
+          "equipment_skill": {
+            "name": "Medic Expert",
+            "level": 1,
+            "value": "+600 wounded",
+            "nation_duel_relevance": "IRRELEVANT"
+          },
+          "equipment_item": "Handgun +10",
+          "equipment_note": "Equipment item 'Handgun' \u2014 has attack-related skill(s) not yet recorded. Only Medic Expert L1 (+600 wounded) was captured previously. PENDING: screenshot all skill slots.",
+          "equipment_level": 10,
+          "equipment_stats": {
+            "attack_against_melee_boost": "+6.4%",
+            "attack_against_mid_range_boost": "+6.4%",
+            "attack_against_long_range_boost": "+6.4%",
+            "total_row_attack_contribution": "+19.2%"
+          }
+        },
+        "Ginger": {
+          "skills_equipped": [
+            {
+              "name": "Processing",
+              "level": 10,
+              "value": "Resource Output +2.4% per 100 mastery"
+            },
+            {
+              "name": "Steel Expert",
+              "level": 7,
+              "value": "Steel Output +3.9% per 100 mastery"
+            },
+            {
+              "name": "Mineral Expert",
+              "level": 3,
+              "value": "Mineral Output +3.1% per 100 mastery"
+            }
+          ]
+        },
+        "Jesse": {
+          "role": "Gathering specialist",
+          "skills_equipped": [
+            {
+              "name": "Gather Oil",
+              "level": 5,
+              "value": "Oil Gather Speed +1.9% per 100 mastery"
+            },
+            {
+              "name": "Food Gather",
+              "level": 5,
+              "value": "Food Gather Speed +1.9% per 100 mastery"
+            }
+          ]
+        },
+        "Sergeant Barney": {
+          "role": "Recruitment specialist",
+          "skills_equipped": [
+            {
+              "name": "Draft",
+              "level": 3,
+              "value": "Single Recruitment Unit Max +23 per 100 mastery"
+            }
+          ]
+        },
+        "Steven": {
+          "role": "Mobility specialist",
+          "skills_equipped": [
+            {
+              "name": "Fuel Up",
+              "level": 2,
+              "value": "Mobility Recovery Speed +1.2% per 100 mastery"
+            }
+          ]
+        },
+        "Victoria": {
+          "role": "City defense",
+          "skills_equipped": [
+            {
+              "name": "Ally Defense",
+              "level": 1,
+              "value": "Max City Defenses +0.1% per 100 mastery"
+            }
+          ]
+        }
+      },
+      "pending_action": "Screenshot full equipment skill details for Gold Flames (I.Medici), Elite Pacemaker (Doc Gray), and Handgun (F.Medici) to capture all combat-relevant skills. This will determine optimal Director slot choices for Nation Duel.",
+      "nation_duel_recommendation": {
+        "slot_1": "Doc Gray \u2014 Elite Pacemaker +11 gives +7% vs all enemy rows (highest)",
+        "slot_2": "I. Medici \u2014 Gold Flames +10 gives +6.4% vs all enemy rows",
+        "not_used": "F. Medici \u2014 identical stats to I.Medici but lower mastery, no advantage",
+        "combined_contribution": "+13.4% Attack Against all enemy rows from Director slots",
+        "note": "All three equipment items provide Attack Against Row Boost to all three rows. Doc Gray is strictly better due to higher equipment level. Directors ARE worth fielding for Nation Duel \u2014 +13.4% vs all rows is meaningful."
+      }
+    },
+    "equipped": {
+      "directors": [
+        {
+          "name": "I. Medici",
+          "role": "Director",
+          "equipped_skill": {
+            "name": "Gold Flames",
+            "effect": "All army attack vs ALL enemy rows +6.4%",
+            "type": "vs_enemy_all_rows"
+          }
+        },
+        {
+          "name": "Doc Gray",
+          "role": "Director",
+          "equipped_skill": {
+            "name": "Elite Pacemaker",
+            "effect": "All army attack vs ALL enemy rows +7%",
+            "type": "vs_enemy_all_rows"
+          }
+        }
+      ],
+      "strategy": [
+        {
+          "name": "Major Morgan",
+          "role": "Strategy",
+          "equipped_skill": {
+            "name": "Fleet Size",
+            "effect": "Fleet unit cap +X (contributes to 174,390)",
+            "type": "fleet_cap"
+          }
+        },
+        {
+          "name": "Loreline",
+          "role": "Strategy",
+          "equipped_skill": {
+            "name": "Double Gun",
+            "effect": "All army attack vs ALL enemy rows +7.6%",
+            "type": "vs_enemy_all_rows"
+          }
+        }
+      ],
+      "machinists": [
+        {
+          "name": "Emily",
+          "role": "Machinist",
+          "innate_skills": [
+            {
+              "name": "Machine Awakening",
+              "effect": "All troops Attack +6.12%, HP +6.12%, Defense +6.12%",
+              "type": "universal"
+            }
+          ]
+        },
+        {
+          "name": "Kay",
+          "role": "Machinist",
+          "innate_skills": [
+            {
+              "name": "Attack Boost",
+              "effect": "All troops Attack +(units x 9.18) flat points",
+              "flat_per_unit": 9.18
+            },
+            {
+              "name": "HP Boost",
+              "effect": "All troops HP +(units x 52.02) flat points",
+              "flat_per_unit": 52.02
+            }
+          ]
+        }
+      ],
+      "drillmasters": [
+        {
+          "name": "Jimmy",
+          "role": "Drillmaster",
+          "innate_skills": [
+            {
+              "name": "Melee Killer",
+              "level": 5,
+              "effect": "Army attack vs ENEMY MELEE +6.675%",
+              "type": "vs_enemy_melee"
+            },
+            {
+              "name": "Mid-Range Killer",
+              "level": 3,
+              "effect": "Army attack vs ENEMY MID-RANGE +6.141%",
+              "type": "vs_enemy_mid"
+            },
+            {
+              "name": "Enemy Attack Reduction",
+              "effect": "Enemy all troops Attack -8.01%",
+              "type": "enemy_debuff"
+            }
+          ]
+        },
+        {
+          "name": "Layla",
+          "role": "Drillmaster",
+          "innate_skills": [
+            {
+              "name": "Opening Burst",
+              "effect": "All troops Attack +9.345% for first 20 seconds",
+              "type": "timed_universal"
+            },
+            {
+              "name": "Mid-Range Weaken",
+              "level": 3,
+              "effect": "Enemy mid-range attack -6.141%",
+              "type": "enemy_debuff"
+            },
+            {
+              "name": "Long-Range Weaken",
+              "level": 3,
+              "effect": "Enemy long-range attack -6.141%",
+              "type": "enemy_debuff"
+            }
+          ]
+        },
+        {
+          "name": "Cattie",
+          "role": "Drillmaster",
+          "innate_skills": [
+            {
+              "name": "Enemy Attack Reduction",
+              "effect": "Enemy all troops Attack -12.96%",
+              "type": "enemy_debuff"
+            },
+            {
+              "name": "Wounded Capacity",
+              "effect": "Wounded capacity +5508",
+              "type": "wounded"
+            }
+          ]
+        },
+        {
+          "name": "Maria",
+          "role": "Drillmaster",
+          "innate_skills": [
+            {
+              "name": "Attack Boost",
+              "effect": "All troops Attack +(units x 21) flat points",
+              "flat_per_unit": 21
+            },
+            {
+              "name": "Wounded Capacity",
+              "effect": "Wounded capacity +5250",
+              "type": "wounded"
+            }
+          ]
+        },
+        {
+          "name": "Selina",
+          "role": "Drillmaster",
+          "innate_skills": [
+            {
+              "name": "All Troops",
+              "effect": "All troops Attack +6.48%, HP +6.48%, Defense +6.48%",
+              "type": "universal"
+            }
+          ]
+        },
+        {
+          "name": "Freya",
+          "role": "Drillmaster",
+          "innate_skills": [
+            {
+              "name": "Mid/Long Attack",
+              "effect": "Mid-range AND Long-range troops Attack +12.24%",
+              "type": "row_specific_mid_and_long"
+            }
+          ]
+        }
+      ],
+      "warfare": [
+        {
+          "name": "Kingsley",
+          "role": "Warfare",
+          "equipped_skills": [
+            {
+              "name": "Mid-Range Attack",
+              "level": 7,
+              "effect": "Mid-range troops Attack +10.908%",
+              "type": "row_specific_mid"
+            },
+            {
+              "name": "Melee HP",
+              "effect": "Melee troops HP +9.696%",
+              "type": "row_specific_melee_hp"
+            },
+            {
+              "name": "Advanced Endurance",
+              "effect": "All troops Defense +7.6%, HP +7.6%",
+              "type": "universal"
+            },
+            {
+              "name": "LMG Equipment",
+              "effect": "Long-range troops Attack +8.2%; Mid-range troops HP/Defense +8.2%",
+              "type": "mixed"
+            },
+            {
+              "name": "City Guard",
+              "effect": "City defense attack/HP +16.16%",
+              "type": "defense_only"
+            }
+          ]
+        },
+        {
+          "name": "Panda",
+          "role": "Warfare",
+          "equipped_skills": [
+            {
+              "name": "Mid-Range Attack",
+              "level": 10,
+              "effect": "Mid-range troops Attack +10.86%",
+              "type": "row_specific_mid"
+            },
+            {
+              "name": "Long-Range Attack",
+              "level": 2,
+              "effect": "Long-range troops Attack +7.964%",
+              "type": "row_specific_long"
+            },
+            {
+              "name": "Rocket Launcher Equipment",
+              "effect": "Mid-range Attack +7.6%; Long-range HP/Defense +7.6%",
+              "type": "mixed"
+            },
+            {
+              "name": "Advanced Kill",
+              "effect": "All troops Attack +2.3%",
+              "type": "universal"
+            },
+            {
+              "name": "Zombie LMG",
+              "effect": "Zombie attack +7.6%",
+              "type": "zombie_specific"
+            }
+          ]
+        },
+        {
+          "name": "Zeus",
+          "role": "Warfare",
+          "equipped_skills": [
+            {
+              "name": "Mid-Range Expert",
+              "level": 10,
+              "effect": "Mid-range Attack +4.68%, HP +4.68%",
+              "type": "row_specific_mid"
+            },
+            {
+              "name": "Precise Shot",
+              "effect": "All troops damage vs all enemies +7.8%",
+              "type": "universal_damage"
+            }
+          ]
+        },
+        {
+          "name": "Tifa",
+          "role": "Warfare",
+          "equipped_skills": [
+            {
+              "name": "Advanced Kill",
+              "effect": "All troops attack vs ALL enemy rows +12.88%",
+              "type": "vs_enemy_all_rows"
+            },
+            {
+              "name": "Long-Range Expert",
+              "level": 9,
+              "effect": "Long-range Attack +4.508%, HP +4.508%",
+              "type": "row_specific_long"
+            }
+          ]
+        },
+        {
+          "name": "Aeon",
+          "role": "Warfare",
+          "equipped_skills": [
+            {
+              "name": "Melee Mastery",
+              "effect": "Melee Attack +14.5%, Defense +14.5%, HP +14.5%",
+              "type": "row_specific_melee"
+            },
+            {
+              "name": "Melee Expert",
+              "effect": "Melee Attack +1.74%, HP +1.74%",
+              "type": "row_specific_melee"
+            }
+          ],
+          "development_notes": "Priority: reach 3-star for equipment unlock"
+        },
+        {
+          "name": "Butterfly",
+          "role": "Warfare",
+          "equipped_skills": [
+            {
+              "name": "Intermediate Kill",
+              "effect": "All troops Attack +9.48%",
+              "type": "universal"
+            },
+            {
+              "name": "Melee Attack",
+              "effect": "Melee troops Attack +8.216%",
+              "type": "row_specific_melee"
+            },
+            {
+              "name": "Melee Expert",
+              "effect": "Melee troops Attack +3.476%, HP +3.476%",
+              "type": "row_specific_melee"
+            },
+            {
+              "name": "Melee Defense",
+              "effect": "Melee troops Defense +7.584%",
+              "type": "row_specific_melee_def"
+            }
+          ],
+          "development_notes": "Purple officer, exploring 5-star for potential upgrade; will be replaced by stronger officer eventually"
+        }
+      ]
+    }
+  },
+  "skill_inventory": {
+    "updated_session2": true,
+    "note": "Unequipped Lv.1 skills are unleveled tokens \u2014 assign to officer to begin leveling. Skills only gain XP while equipped.",
+    "disposed_this_session": [
+      "Bravery Lv.1 x1",
+      "Defense Tower Damage Lv.1 x3",
+      "Defense Tower Cooldown Lv.1 x2",
+      "Ally Defense Lv.1 x1 (unequipped)",
+      "Reinforcement Fleet Lv.1 x3",
+      "Draft Lv.1 x1",
+      "Raid Lv.1 x5",
+      "Rapid Fleet Lv.1 x3",
+      "Various low-value Director skills"
+    ],
+    "director_unequipped": [
+      {
+        "name": "Farm Expert",
+        "level": 1,
+        "effect": "Food Output +2.7%",
+        "qty": 2,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Oil Expert",
+        "level": 1,
+        "effect": "Oil Output +2.7%",
+        "qty": 1,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Steel Expert",
+        "level": 1,
+        "effect": "Steel Output +2.7%",
+        "qty": 1,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Processing",
+        "level": 1,
+        "effect": "Resource Output +1.5%",
+        "qty": 1,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Food Gather",
+        "level": 1,
+        "effect": "Food Gather Speed +1.5%",
+        "qty": 3,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Gather Steel",
+        "level": 1,
+        "effect": "Steel Gather Speed +1.5%",
+        "qty": 2,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Tax Rate",
+        "level": 1,
+        "effect": "Transport Tax 1.5%",
+        "qty": 2,
+        "notes": "Future Director slot"
+      },
+      {
+        "name": "Load",
+        "level": 1,
+        "effect": "Load Boost +0.6%",
+        "qty": 1,
+        "notes": "Future Director slot"
+      }
+    ],
+    "strategy_unequipped": [
+      {
+        "name": "Fuel Up",
+        "level": 1,
+        "effect": "Mobility Recovery +1.1%",
+        "qty": 2,
+        "notes": "Future Strategy slot"
+      },
+      {
+        "name": "Rapid Fleet",
+        "level": 1,
+        "effect": "Monster Attack Speed +1.5%",
+        "qty": 2,
+        "notes": "Keep \u2014 future slot"
+      },
+      {
+        "name": "Raid",
+        "level": 1,
+        "effect": "Fleet Speed +0.6%",
+        "qty": 2,
+        "notes": "Keep \u2014 map movement"
+      },
+      {
+        "name": "Medicine",
+        "level": 1,
+        "effect": "Healing Speed +1.1%",
+        "qty": 4,
+        "notes": "Future Strategy slot"
+      }
+    ],
+    "warfare_unequipped": [
+      {
+        "name": "Melee Attack",
+        "level": 1,
+        "effect": "Melee Troop Attack +2.1%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Mid-Range Attack",
+        "level": 1,
+        "effect": "Mid-Range Troops Attack +2.1%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Long-Range Attack",
+        "level": 1,
+        "effect": "Long-Range Troops Attack +2.1%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Melee Defense",
+        "level": 1,
+        "effect": "Melee Troop Defense +2.1%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Long-Range Defense",
+        "level": 1,
+        "effect": "Long-Range Troops Defense +2.1%",
+        "qty": 2,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Mid-Range HP",
+        "level": 1,
+        "effect": "Mid-Range Troops HP +2.1%",
+        "qty": 2,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Long-Range HP",
+        "level": 1,
+        "effect": "Long-Range Troops HP +2.1%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Mid-Range Expert",
+        "level": 1,
+        "effect": "Mid-Range Troops ATK/HP +0.6%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Long-Range Expert",
+        "level": 1,
+        "effect": "Long-Range Troops ATK/HP +0.6%",
+        "qty": 1,
+        "notes": "Token \u2014 future slot"
+      },
+      {
+        "name": "Bravery",
+        "level": 1,
+        "effect": "City Guards Attack +0.6%",
+        "qty": 1,
+        "notes": "Keep \u2014 Kingsley future city loadout"
+      },
+      {
+        "name": "Iron Wall",
+        "level": 1,
+        "effect": "City Guards Defense +0.6%",
+        "qty": 1,
+        "notes": "Keep \u2014 Kingsley future city loadout"
+      },
+      {
+        "name": "Unyielding",
+        "level": 1,
+        "effect": "City Guards HP +0.6%",
+        "qty": 1,
+        "notes": "Keep \u2014 Kingsley future city loadout"
+      },
+      {
+        "name": "Defense Tower Damage",
+        "level": 1,
+        "effect": "Defensive Tower Damage +0.6%",
+        "qty": 1,
+        "notes": "Pending decision"
+      }
+    ]
+  },
+  "wounded_capacity": {
+    "sources": [
+      {
+        "source": "Bravestar Advanced Medicine",
+        "bonus": "+21.58% (~58,668)",
+        "type": "Percentage of total"
+      },
+      {
+        "source": "Layla IMT L7",
+        "bonus": 6408,
+        "type": "Flat"
+      },
+      {
+        "source": "Cattie IMT L3",
+        "bonus": 5508,
+        "type": "Flat"
+      },
+      {
+        "source": "Jimmy IMT L5",
+        "bonus": 5340,
+        "type": "Flat"
+      },
+      {
+        "source": "Maria IMT L1",
+        "bonus": 5250,
+        "type": "Flat"
+      },
+      {
+        "source": "Doc Gray Medic Expert L8",
+        "bonus": 4800,
+        "type": "Flat"
+      },
+      {
+        "source": "Selina IMT L1",
+        "bonus": 4860,
+        "type": "Flat"
+      },
+      {
+        "source": "Freya IMT L1",
+        "bonus": 4860,
+        "type": "Flat"
+      },
+      {
+        "source": "I. Medici Medic Expert L4",
+        "bonus": 2400,
+        "type": "Flat"
+      },
+      {
+        "source": "Loreline Medic Expert L4",
+        "bonus": 2400,
+        "type": "Flat"
+      },
+      {
+        "source": "F. Medici Medic Expert L1",
+        "bonus": 600,
+        "type": "Flat"
+      }
+    ]
+  },
+  "monster_combat": {
+    "data": [
+      {
+        "level": 33,
+        "result": "Defeated before mid-row engagement \u2014 comfortable win"
+      },
+      {
+        "level": 34,
+        "result": "~6% HP remaining at army depletion \u2014 baseline"
+      }
+    ],
+    "phase1_damage_rate": "~1.8% HP/s during full army engagement",
+    "battle_duration": "~124 seconds",
+    "damage_decay": "Significant curve as troops deplete",
+    "titan_plane_deployment": "Both titans + plane always used for monsters \u2014 no vitality cost"
+  },
+  "gathering_event": {
+    "updated_session2": true,
+    "points_per_unit": {
+      "grain": 0.1,
+      "oil": 0.1,
+      "steel": 0.5,
+      "minerals": 1,
+      "gold": 900
+    },
+    "gather_rates_with_bonus": {
+      "grain_per_hr": 92075,
+      "oil_per_hr": 91275,
+      "steel_per_hr": 15840,
+      "minerals_per_hr": 7108,
+      "gold_per_hr": 6
+    },
+    "points_per_hr": {
+      "grain": 9208,
+      "oil": 9128,
+      "steel": 7920,
+      "minerals": 7108,
+      "gold": 5400
+    },
+    "priority_ranking": [
+      "Grain",
+      "Oil",
+      "Steel",
+      "Minerals",
+      "Gold"
+    ],
+    "elite_mine_mechanics": {
+      "max_players": 5,
+      "max_duration_solo": "~7 hours on fresh mine",
+      "duration_full_occupancy": "~1.5 hours",
+      "load_limit_reached": "Rarely \u2014 fleet load capacity ~2,959,012 for combat fleet",
+      "gold_mine_advantage": "Solo, predictable duration \u2014 ideal for overnight pre-event pre-load"
+    },
+    "strategy": {
+      "pre_event_overnight": "1-2 fleets on gold Lv4-5 mines (guaranteed points, predictable), 1 fleet on grain/oil timed to finish after event start",
+      "event_start": "Withdraw all pre-loaded fleets immediately for instant points",
+      "during_event": "3-4 fleets on grain/oil elite mines, 1 fleet always free for combat",
+      "note": "Gathering is secondary contributor to Strongest Commander score. Single KE fight worth 1M+ pts. Optimize for passive efficiency, not maximum micromanagement."
+    },
+    "gold_tile_data": [
+      {
+        "level": 3,
+        "gold_total": 60,
+        "points": 54000,
+        "duration_hrs": 10
+      },
+      {
+        "level": 4,
+        "gold_total": 75,
+        "points": 67500,
+        "duration_hrs": 12
+      },
+      {
+        "level": 5,
+        "gold_total": 90,
+        "points": 81000,
+        "duration_hrs": 14
+      }
+    ],
+    "gather_bonus_pct_from_screen": {
+      "note": "Gather bonus percentages from Details screen \u2014 these multiply gather speed from tiles.",
+      "food_pct": 212.1,
+      "oil_pct": 208.9,
+      "steel_pct": 198.8,
+      "minerals_pct": 202.8,
+      "gold_pct": 20.0
+    }
+  },
+  "pending_items": {
+    "updated_session2": true,
+    "items": [
+      "Storm Bow grade up \u2014 fragments ready (20/12)",
+      "Alexandria 2nd skill choice \u2014 slot available now",
+      "Kingsley equipment upgrade to L14 \u2014 materials available (322/165)",
+      "Panda Jack equipment upgrade to L13 \u2014 materials available (322/150)",
+      "Ruins testing protocol \u2014 single variable officer swaps to confirm killer skill row targeting",
+      "Kingsley/Panda Jack 4\u2605 skill choice options when reached",
+      "Eric skill reveal as he develops toward 4\u2605",
+      "Zephyrine level up to Lv.16 \u2014 accumulate mutant meat",
+      "Zephyrine evolution to Tier 3 \u2014 accumulate stored energy jars (50/200)",
+      "Confirm ruins row mechanics \u2014 do enemy rows map to melee/mid/long categories",
+      "T9 troop stats \u2014 retrieve from session 1 database (Mad Gatling, Uranium Cannon, Havoc Storm Trooper, Death Tank, Elite Infantry, Supreme Shielder)",
+      "Mad Gatling special ability confirmation \u2014 approx 120% PvP / 150% PvE unconfirmed",
+      "Officer XP updates \u2014 not completed this session",
+      "Record Strongest Commander sub-event point breakdown during next event"
+    ]
+  },
+  "_meta": {
+    "version": "1.0",
+    "game": "Age of Origins",
+    "last_updated": "2026-03-07",
+    "city_level": 30,
+    "fleet_cap": 184462,
+    "zombie_cap": 17500,
+    "source_conversations": [
+      "2026-03-02-army-optimization",
+      "2026-03-04-monster-combat",
+      "2026-03-05-titan-plane-data"
+    ],
+    "last_merged": "2026-03-07",
+    "merged_from": [
+      "2026-03-06",
+      "unknown"
+    ],
+    "player": "Baba_Zulu",
+    "last_stats_screenshot": "2026-03-07",
+    "stats_screen_note": "All cumulative_army_stats values sourced from in-game Details screen. Include all active bonus sources: officers, equipment, equipment expertise, technology research, buildings, VIP. Values are loadout-dependent."
+  },
+  "titans": {
+    "edgar": {
+      "name": "Edgar",
+      "gender": "male",
+      "type": "Source Spirit",
+      "evolution": "Disaster Tier 4",
+      "level": 16,
+      "bp": 163942,
+      "hp": 22132501,
+      "attack": 1757028,
+      "defense": 119,
+      "cooldown": 2,
+      "range": 6,
+      "speed": 12,
+      "position": "behind long-range row",
+      "attack_targeting": "any row including enemy titan/plane row",
+      "next_evolution": "Disaster Tier 5 (unlocks additional equipment slots)",
+      "development_status": {
+        "talents_ready_to_upgrade": true,
+        "waiting_for": "Creature Modify Fluid bonus event",
+        "talent_cap_unlocked": "L8 already unlocked at Level 16"
+      },
+      "talents": [
+        {
+          "name": "Source Energy Strike",
+          "level": 7,
+          "effect": "Attacks enemy dealing 112% damage",
+          "timing": "every 2 seconds",
+          "type": "primary_attack"
+        },
+        {
+          "name": "Rampart Halo",
+          "level": 7,
+          "effect": "Reduces damage to army melee troops by 7%",
+          "timing": "passive",
+          "type": "army_buff",
+          "applies_to": "own_melee_troops"
+        },
+        {
+          "name": "Diseased Walker",
+          "level": 7,
+          "effect": "Increases movement speed of all troops by 6%",
+          "timing": "passive",
+          "type": "army_buff",
+          "applies_to": "all_troops"
+        },
+        {
+          "name": "Destroy Ray",
+          "level": 7,
+          "effect": "Deals 130.7% damage to ground units in a straight line, piercing multiple rows",
+          "timing": "every 10 seconds",
+          "type": "special_attack",
+          "notes": "Pierces all rows simultaneously. More effective vs dense formations."
+        },
+        {
+          "name": "Fire Path",
+          "level": 7,
+          "effect": "Targets hit by Destroy Ray take additional 21.5% burning damage per second for 4 seconds (86% total burn per unit)",
+          "timing": "triggered by Destroy Ray",
+          "type": "special_attack_modifier"
+        }
+      ],
+      "equipment": {
+        "name": "Primary Weapon",
+        "components": [
+          {
+            "slot": 1,
+            "level": 5,
+            "effect": "Attack +115000",
+            "scope": "edgar_only"
+          },
+          {
+            "slot": 2,
+            "level": 5,
+            "effect": "HP +2100000, Defense +8",
+            "scope": "edgar_only"
+          },
+          {
+            "slot": 3,
+            "level": 5,
+            "effect": "All troops Attack +4%",
+            "scope": "army_wide"
+          },
+          {
+            "slot": 4,
+            "level": 5,
+            "effect": "All troops HP +5%, Defense +5%",
+            "scope": "army_wide"
+          }
+        ],
+        "note": "Equipment values already incorporated into base stats above"
+      },
+      "army_wide_passives": {
+        "all_troops_attack_pct": 4,
+        "all_troops_hp_pct": 5,
+        "all_troops_defense_pct": 5,
+        "melee_damage_reduction_pct": 7,
+        "all_troops_speed_pct": 6
+      }
+    },
+    "zephyrine": {
+      "name": "Zephyrine",
+      "gender": "female",
+      "type": "Empress",
+      "evolution": "Disaster Tier 2",
+      "level": 15,
+      "bp": 141355,
+      "hp": 19126596,
+      "attack": 1549294,
+      "defense": 107,
+      "cooldown": 2,
+      "range": 6,
+      "speed": 12,
+      "position": "behind long-range row",
+      "next_evolution": "Disaster Tier 3 (unlocks Potent Inspiration talent)",
+      "development_status": {
+        "talents_at_cap": true,
+        "talent_level_cap": 7,
+        "talent_cap_unlock_condition": "Level 16 unlocks L8",
+        "pending_unlock_talent": "Potent Inspiration at Disaster T3 (All units HP/Defense +5.5% at L1)"
+      },
+      "talents": [
+        {
+          "name": "Bone Spurs",
+          "level": 7,
+          "effect": "Attacks enemy dealing 112% damage",
+          "timing": "every 2 seconds",
+          "type": "primary_attack"
+        },
+        {
+          "name": "Zombie Queen Halo",
+          "level": 7,
+          "effect": "Zombies Attack, Defense, and HP +11.9%",
+          "timing": "passive",
+          "type": "zombie_buff",
+          "applies_to": "zombies"
+        },
+        {
+          "name": "Godsend",
+          "level": 7,
+          "effect": "All troops and zombies HP and Defense +7.5%",
+          "timing": "passive",
+          "type": "army_buff",
+          "applies_to": "all_troops_and_zombies"
+        },
+        {
+          "name": "Queen's Inspiration",
+          "level": 7,
+          "effect": "Total attack of all friendly units +22.2% for 5 seconds; zombies receive additional +11.1% (total +33.3%)",
+          "timing": "every 10 seconds (50% uptime)",
+          "type": "army_buff_timed"
+        },
+        {
+          "name": "Potent Inspiration",
+          "level": null,
+          "effect": "All units HP and Defense +5.5% at L1 (scaling unknown)",
+          "timing": "passive",
+          "status": "LOCKED - unlocks at Disaster Tier 3",
+          "type": "army_buff"
+        }
+      ],
+      "equipment": {
+        "name": "Crown",
+        "components": [
+          {
+            "slot": 1,
+            "level": 4,
+            "effect": "Attack +92000",
+            "scope": "zephyrine_only"
+          },
+          {
+            "slot": 2,
+            "level": 4,
+            "effect": "HP +1600000, Defense +6",
+            "scope": "zephyrine_only"
+          },
+          {
+            "slot": 3,
+            "level": 5,
+            "effect": "All troops Attack +4%",
+            "scope": "army_wide"
+          },
+          {
+            "slot": 4,
+            "level": 4,
+            "effect": "All troops HP +4%, Defense +4%",
+            "scope": "army_wide"
+          }
+        ],
+        "note": "Equipment values already incorporated into base stats above"
+      },
+      "army_wide_passives": {
+        "all_troops_attack_pct": 4,
+        "all_troops_hp_pct": 4,
+        "all_troops_defense_pct": 4,
+        "all_troops_and_zombies_hp_pct": 7.5,
+        "all_troops_and_zombies_defense_pct": 7.5,
+        "zombie_attack_pct": 11.9,
+        "zombie_hp_pct": 11.9,
+        "zombie_defense_pct": 11.9,
+        "timed_all_attack_pct": 22.2,
+        "timed_zombie_bonus_attack_pct": 11.1,
+        "timed_duration_s": 5,
+        "timed_cooldown_s": 10
+      }
+    }
+  },
+  "warplane": {
+    "zephyr_zero": {
+      "name": "Zephyr_Zero",
+      "tier": "Explorer Tier 7",
+      "color_tier": "Green",
+      "tiers_to_blue": 3,
+      "next_color_milestone": "Lacerator Tier 0 (Blue) - unlocks new talent",
+      "level": 19,
+      "bp": 146789,
+      "hp": 24547279,
+      "attack": 2324846,
+      "defense": 163,
+      "cooldown": 1,
+      "range": 7.5,
+      "speed": 15,
+      "position": "behind long-range row",
+      "dodge": {
+        "melee": "100%",
+        "mid_range": "20%",
+        "long_range": "20%"
+      },
+      "resources": {
+        "level_upgrade": "Warplane XP",
+        "tier_upgrade": "Warplane Alloy"
+      },
+      "talents": [
+        {
+          "name": "Laser Cannon",
+          "level": 6,
+          "effect": "Deals 56% damage to single target every 1 second",
+          "timing": "every 1 second",
+          "type": "primary_attack",
+          "damage_per_second": 1301914
+        },
+        {
+          "name": "Intercept System",
+          "level": 8,
+          "effect": "Reduces damage taken from enemy titans by army by 5%",
+          "timing": "passive",
+          "type": "army_buff",
+          "applies_to": "all_troops_vs_enemy_titans"
+        },
+        {
+          "name": "Melee Weakness Recognition",
+          "level": 8,
+          "effect": "Army attack against enemy MELEE troops +24%",
+          "timing": "passive",
+          "type": "vs_enemy_row_buff",
+          "applies_to": "entire_army_vs_enemy_melee",
+          "IMPORTANT": "This buffs attacks AGAINST enemy melee, NOT your own melee troops"
+        },
+        {
+          "name": "Tactical Missile",
+          "level": 5,
+          "effect": "30% chance to launch 2 missiles during normal attacks, each deals 22.5% damage to random targets",
+          "timing": "per attack with 2 second cooldown",
+          "type": "proc_attack"
+        },
+        {
+          "name": "Added Firepower",
+          "level": 6,
+          "effect": "All troops Attack +(troop_units x 12) flat points",
+          "timing": "passive",
+          "type": "flat_attack_bonus",
+          "flat_bonus_per_unit": 12,
+          "total_at_174390_units": 2092680
+        },
+        {
+          "name": "Long-Range Weakness Recognition",
+          "level": 1,
+          "effect": "Army attack against enemy LONG-RANGE troops +3%",
+          "timing": "passive",
+          "type": "vs_enemy_row_buff",
+          "applies_to": "entire_army_vs_enemy_long_range",
+          "development_priority": "HIGH - scales to ~+24% at L8 equivalent to Melee Weakness Recognition"
+        }
+      ]
+    }
+  },
+  "equipment": {
+    "summary": {
+      "color_tier_progression": [
+        "Gray",
+        "Green",
+        "Blue",
+        "Purple",
+        "Orange/Gold"
+      ],
+      "max_level": 6,
+      "extension_slots_unlock": "Level 2",
+      "gambling_mechanic": "max 50% success rate for color upgrades"
+    },
+    "pieces": [
+      {
+        "slot": 1,
+        "name": "Reactor",
+        "color": "Purple",
+        "level": 3,
+        "base_bonuses": [
+          {
+            "type": "melee_attack_pct",
+            "value": 10.5
+          },
+          {
+            "type": "mid_attack_pct",
+            "value": 10.5
+          },
+          {
+            "type": "fleet_units_flat",
+            "value": 3500
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Advanced Weapons",
+            "quality": "Advanced",
+            "effect": "All rows Attack +5.8%"
+          },
+          {
+            "name": "Superior Precision",
+            "quality": "Superior",
+            "effect": "All troops Damage +1.3%"
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "name": "Radar",
+        "color": "Purple",
+        "level": 3,
+        "base_bonuses": [
+          {
+            "type": "mid_attack_pct",
+            "value": 10.5
+          },
+          {
+            "type": "long_attack_pct",
+            "value": 10.5
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Advanced Weapons",
+            "quality": "Advanced",
+            "effect": "All rows Attack +1.6%"
+          },
+          {
+            "name": "EMPTY",
+            "quality": null,
+            "effect": null,
+            "priority": "HIGH - add attack extension here"
+          }
+        ],
+        "notes": "Purple L4 Radar provides significant long-range attack boost; upgrade priority"
+      },
+      {
+        "slot": 3,
+        "name": "Weapon Apparatus",
+        "color": "Purple",
+        "level": 2,
+        "base_bonuses": [
+          {
+            "type": "melee_attack_pct",
+            "value": 7
+          },
+          {
+            "type": "long_attack_pct",
+            "value": 7
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Potent Weapons",
+            "quality": "Potent",
+            "effect": "All rows Attack +3.6%"
+          },
+          {
+            "name": "EMPTY",
+            "quality": null,
+            "effect": null
+          }
+        ]
+      },
+      {
+        "slot": 4,
+        "name": "Computer",
+        "color": "Purple",
+        "level": 3,
+        "base_bonuses": [
+          {
+            "type": "universal_attack_pct",
+            "value": 7
+          },
+          {
+            "type": "universal_hp_pct",
+            "value": 5.3
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Potent Weapons",
+            "quality": "Potent",
+            "effect": "All rows Attack +3.6%"
+          },
+          {
+            "name": "Advanced Comprehensive",
+            "quality": "Advanced",
+            "effect": "All troops Attack +1.8%, HP +1.8%, Defense +1.8%"
+          }
+        ]
+      },
+      {
+        "slot": 5,
+        "name": "Retrofit",
+        "color": "Orange",
+        "level": 3,
+        "base_bonuses": [
+          {
+            "type": "melee_defense_pct",
+            "value": 16.5
+          },
+          {
+            "type": "mid_defense_pct",
+            "value": 10
+          },
+          {
+            "type": "long_defense_pct",
+            "value": 6.5
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Row Defense",
+            "quality": null,
+            "effect": "All rows Defense +4.6%"
+          },
+          {
+            "name": "EMPTY",
+            "quality": null,
+            "effect": null
+          }
+        ]
+      },
+      {
+        "slot": 6,
+        "name": "Armor",
+        "color": "Orange",
+        "level": 2,
+        "base_bonuses": [
+          {
+            "type": "melee_hp_pct",
+            "value": 8.1
+          },
+          {
+            "type": "mid_hp_pct",
+            "value": 8.1
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Row Defense",
+            "quality": null,
+            "effect": "All rows Defense +4.6%"
+          },
+          {
+            "name": "EMPTY",
+            "quality": null,
+            "effect": null
+          }
+        ]
+      },
+      {
+        "slot": 7,
+        "name": "Stimulator",
+        "color": "Orange",
+        "level": 2,
+        "base_bonuses": [
+          {
+            "type": "melee_hp_pct",
+            "value": 8.5
+          },
+          {
+            "type": "mid_hp_pct",
+            "value": 8.5
+          },
+          {
+            "type": "max_wounded_pct",
+            "value": 5
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Advanced Vigor",
+            "quality": "Advanced",
+            "effect": "All rows HP +2.9% each row (row-specific)",
+            "classification": "row_specific"
+          },
+          {
+            "name": "EMPTY",
+            "quality": null,
+            "effect": null
+          }
+        ]
+      },
+      {
+        "slot": 8,
+        "name": "Medic Pod",
+        "color": "Purple",
+        "level": 3,
+        "base_bonuses": [
+          {
+            "type": "melee_hp_pct",
+            "value": 9.1
+          },
+          {
+            "type": "long_hp_pct",
+            "value": 9.1
+          }
+        ],
+        "extensions": [
+          {
+            "name": "Advanced Vigor",
+            "quality": "Advanced",
+            "effect": "All rows HP +2.9% each row (row-specific)",
+            "classification": "row_specific"
+          },
+          {
+            "name": "Superior Comprehensive",
+            "quality": "Superior",
+            "effect": "All troops Attack +1.3%, HP +1.3%, Defense +1.3%"
+          }
+        ]
+      }
+    ],
+    "validated_totals": {
+      "note": "All values validated against in-game display",
+      "extension_bonuses": {
+        "universal_attack_pct": 3.1,
+        "universal_defense_pct": 3.1,
+        "universal_hp_pct": 3.1,
+        "row_attack_pct_each": 14.6,
+        "row_defense_pct_each": 4.6,
+        "row_hp_pct_each": 5.8,
+        "all_troops_damage_pct": 1.3
+      },
+      "combined_equipment_plus_extensions": {
+        "melee": {
+          "attack_pct": 42.2,
+          "defense_pct": 24.2,
+          "hp_pct": 31.8
+        },
+        "mid_range": {
+          "attack_pct": 45.7,
+          "defense_pct": 17.7,
+          "hp_pct": 22.7
+        },
+        "long_range": {
+          "attack_pct": 42.2,
+          "defense_pct": 14.2,
+          "hp_pct": 23.3
+        },
+        "universal": {
+          "hp_pct": 5.3,
+          "damage_pct": 1.3
+        },
+        "fleet_units_flat": 3500,
+        "max_wounded_pct": 5
+      }
+    }
+  },
+  "formation_analysis": {
+    "mra_vs_lra": {
+      "conclusion": "Essentially balanced at ~1% difference with current troops/officers",
+      "lra_total_attack": 92021832,
+      "mra_total_attack": 91053634,
+      "lra_troop_composition": "17956 Cannons (89780 units) + 84584 Snipers",
+      "mra_troop_composition": "103843 Gunners + 61980 Storm Troopers + 8541 Rockets",
+      "lra_with_t10_snipers": 118582498,
+      "mra_with_t10_rockets": 100327871,
+      "recommendation": {
+        "current_C29": "MRA or hybrid; mid-range officer investment pays off with deep Gunner/ST pool",
+        "early_C30": "Hybrid; T10 Snipers start tipping balance",
+        "mid_C30": "Shift to LRA as T10 Sniper stockpile grows",
+        "factory_L34_plus": "LRA dominant with T11 Cannons"
+      }
+    }
+  },
+  "formations_library": {
+    "fleet_slots": 7,
+    "recommended_loadout": [
+      {
+        "slot": 1,
+        "name": "1111 Stagger",
+        "use_case": "Stagger attacks with alliance only",
+        "key_detail": "1 of each token troop, max Cannons, fill with Snipers"
+      },
+      {
+        "slot": 2,
+        "name": "Hard Hit - Light",
+        "use_case": "Solo or non-stagger PvP attack vs equal opponent",
+        "shredder_units": 5000
+      },
+      {
+        "slot": 3,
+        "name": "Hard Hit - Heavy",
+        "use_case": "Against stronger PvP opponents",
+        "shredder_units": 15000
+      },
+      {
+        "slot": 4,
+        "name": "Group City Attack (Formation 2.5)",
+        "use_case": "Alliance group attacks on player cities",
+        "key_detail": "500 Shredders, EMP fills first, then Sniper, then Cannon, min 25 Shielders"
+      },
+      {
+        "slot": 5,
+        "name": "Defense",
+        "use_case": "Defending your city",
+        "key_detail": "Max Zombies, Shredders/Tanks/Infantry front, Cannons back, EMP fills (EMP good in defense!)"
+      },
+      {
+        "slot": 6,
+        "name": "Elite War / Doom Arena",
+        "use_case": "Major PvP events (Triangle War, Elite War)",
+        "key_detail": "Max Zombies, 20% Shredders, 5% Tanks, 5% Bikes, 33/33/33 EMP/Sniper/Cannon"
+      },
+      {
+        "slot": 7,
+        "name": "Monster / PvE",
+        "use_case": "Solo monster attacks, zombie hunts, ruins",
+        "key_detail": "1 token each, 2000 Shredders, max Zombies, max Cannons"
+      }
+    ]
+  },
+  "battle_mechanics": {
+    "engagement_order_by_range": [
+      {
+        "unit": "Zephyr_Zero",
+        "range": 7.5,
+        "engages": "first"
+      },
+      {
+        "unit": "Edgar",
+        "range": 6
+      },
+      {
+        "unit": "Zephyrine",
+        "range": 6
+      },
+      {
+        "unit": "T9 Cannon",
+        "range": 4
+      },
+      {
+        "unit": "T9 Shielder / T8 Sniper",
+        "range": 3.8
+      },
+      {
+        "unit": "T8 EMP Cannon",
+        "range": 3.5
+      },
+      {
+        "unit": "T8 Rocket / T9 Zombie",
+        "range": 2.5
+      },
+      {
+        "unit": "T9 Gunner / T9 Storm Trooper",
+        "range": 2.2
+      },
+      {
+        "unit": "T8 Bike",
+        "range": 2
+      },
+      {
+        "unit": "T9 Tank",
+        "range": 1
+      },
+      {
+        "unit": "T8 Shredder / T8 Armored Soldier",
+        "range": 0.5
+      },
+      {
+        "unit": "T9 Infantry",
+        "range": 0.2,
+        "engages": "last"
+      }
+    ],
+    "monster_attack_priority": [
+      "Shredders",
+      "Infantry",
+      "Tanks",
+      "Armored Soldier",
+      "Bikes",
+      "Zombies",
+      "Rockets",
+      "Gunners",
+      "Storm Troopers",
+      "EMP",
+      "Cannons",
+      "Shielders",
+      "Snipers",
+      "Zephyrine",
+      "Edgar",
+      "Zephyr_Zero"
+    ],
+    "troop_fate_types": {
+      "killed": "Permanent loss",
+      "wounded": "Hospital, recoverable",
+      "defeated_expended": "Survive, return after battle at zero cost"
+    },
+    "key_mechanics": [
+      "Titans and plane fight in separate row behind long-range troops",
+      "Titans/plane not counted in 174,390 fleet cap",
+      "Zombies have separate 17,500 pool, always deploy max",
+      "Zombies fire from range 2.5 from battle start regardless of being hit",
+      "EMP Cannons recommended for defense, generally not offense (unless vs dense formations)",
+      "Infantry damage reduction (50%) is defense-only",
+      "Kingsley City Guard bonus is defense-only"
+    ]
+  },
+  "development_priorities": {
+    "high": [
+      "Zephyr_Zero Long-Range Weakness Recognition L1 -> higher (scales to +24% at L8 equivalent)",
+      "Edgar talents upgrade when Creature Modify Fluid bonus event occurs",
+      "Zephyrine to Level 16 to uncap talent L8",
+      "Zephyrine to Disaster Tier 3 to unlock Potent Inspiration (+5.5% all units HP/Defense)"
+    ],
+    "medium": [
+      "Panda Long-Range Attack L2 -> higher (currently underdeveloped)",
+      "Radar 2nd extension slot - add attack extension",
+      "Stimulator 2nd extension slot - add long-range HP",
+      "Aeon to 3-star for equipment unlock",
+      "Accumulate T10 Snipers as C30 buildings upgrade"
+    ],
+    "notes": [
+      "Wait for bonus events before upgrading: titan talents (Creature Modify Fluid), officer skills (Skill XP events)",
+      "MRA officer skills are correctly invested for current troop inventory - keep them",
+      "Gradually build long-range officer skills in parallel as T10 Snipers accumulate",
+      "Zephyr_Zero: 3 tiers to Blue (Lacerator T0) which unlocks new talent"
+    ]
+  },
+  "cumulative_army_stats": {
+    "source": "In-game Details screen \u2014 Baba_Zulu",
+    "screenshot_date": "2026-03-07",
+    "note": "Authoritative totals. Include all active sources: officers, equipment, equipment expertise, technology, buildings, VIP. Loadout-dependent \u2014 reflects standard combat loadout.",
+    "fleet_troops_units_limit": "10,000+174,462",
+    "fleet_speed_pct": 78.5,
+    "recruitment_speed_up_pct": 110.5,
+    "own_troops": {
+      "melee": {
+        "attack_pct": 201.1,
+        "defense_pct": 147.9,
+        "hp_pct": 200.3
+      },
+      "mid_range": {
+        "attack_pct": 267.6,
+        "defense_pct": 92.2,
+        "hp_pct": 135.9
+      },
+      "long_range": {
+        "attack_pct": 202.0,
+        "defense_pct": 85.7,
+        "hp_pct": 130.9
+      },
+      "zombie": {
+        "attack_pct": 441.0,
+        "hp_pct": 211.5,
+        "defense_pct": 174.1,
+        "army_limit_boost": 17750,
+        "recruit_limit_boost": 700,
+        "recruit_speed_boost_pct": 90.0
+      }
+    },
+    "increases_damage_to": {
+      "note": "Shown as separate category in Details screen. Likely includes Zeus Precise Shot (7.8%) + VIP and/or equipment expertise. Mechanic vs own_troop_attack unclear \u2014 treating as separate for now.",
+      "melee_pct": 9.1,
+      "mid_range_pct": 9.1,
+      "long_range_pct": 9.1
+    },
+    "attack_against_enemy_row": {
+      "note": "Separate category in Details screen. Mechanic relationship to own_troop_attack buffs unclear \u2014 treating as separate multiplier until confirmed.",
+      "vs_enemy_melee_pct": 27.6,
+      "vs_enemy_mid_range_pct": 27.1,
+      "vs_enemy_long_range_pct": 21.0,
+      "vs_enemy_zombie_pct": 0.0
+    },
+    "defense_against_enemy_row": {
+      "vs_enemy_melee_pct": 0.0,
+      "vs_enemy_mid_range_pct": 0.0,
+      "vs_enemy_long_range_pct": 0.0,
+      "vs_enemy_zombie_pct": 0.0
+    },
+    "enemy_debuffs_applied": {
+      "note": "Reductions applied to enemy troops when fighting Baba_Zulu.",
+      "enemy_melee_attack_reduction_pct": -21.2,
+      "enemy_mid_range_attack_reduction_pct": -27.3,
+      "enemy_long_range_attack_reduction_pct": -27.3,
+      "enemy_zombie_attack_reduction_pct": -21.2,
+      "enemy_melee_defense_reduction_pct": -2.0,
+      "enemy_mid_range_defense_reduction_pct": 0.0,
+      "enemy_long_range_defense_reduction_pct": 0.0,
+      "enemy_zombie_defense_reduction_pct": 0.0
+    },
+    "titan_and_plane": {
+      "titan_damage_taken_reduction_pct": 0.0,
+      "reduces_damage_from_warplanes_pct": 0.0
+    },
+    "all_troops": {
+      "block_flat": 14.2,
+      "block_pct": 1.4,
+      "disruptor_resistance_pct": 0.0,
+      "misfire_resistance_pct": 0.0
+    },
+    "cross_nation_battle": {
+      "note": "All Cross-Nation Battle bonuses currently +0% \u2014 not invested.",
+      "all_stats_pct": 0.0
+    },
+    "biochemical_materials": {
+      "collection_rate_boost_pct": 25.0,
+      "collection_boost_flat": 40000,
+      "zombies_limit_boost_flat": 150000
+    }
+  },
+  "development_stats": {
+    "source": "In-game Details screen \u2014 Baba_Zulu",
+    "screenshot_date": "2026-03-07",
+    "building_speed_bonus_pct": 52.7,
+    "technology_research_speed_pct": 47.3,
+    "load_boost_pct": 42.6,
+    "monster_attack_speed_pct": 115.1,
+    "mobility_recovery": "+1 per 230 seconds",
+    "healing_speed_pct": 105.0,
+    "max_wounded_base": 163000,
+    "max_wounded_bonus": 109602,
+    "max_wounded_total": 272602,
+    "note": "Max wounded total includes buildings, technology, Bravestar, officer IMT skills, equipment Medic Expert skills, and VIP."
+  },
+  "fleet_presets": {
+    "fleet_2_monster_attack": {
+      "slot": 2,
+      "name": "Monster Attack",
+      "screenshot_date": "2026-03-07",
+      "fleet_cap_used": 184462,
+      "fleet_cap_total": 184462,
+      "fleet_bp": 1952993,
+      "load_capacity": 2992666,
+      "titans_active": [
+        "Edgar Lv16",
+        "Zephyrine Lv15"
+      ],
+      "plane_active": "Zephyr_Zero Lv19",
+      "zombie_pool_used": 17600,
+      "zombie_pool_total": 17750,
+      "zombie_note": "T10 zombies fully included (2,430/2,430), T9 partially (15,170/35,859). Lower tiers excluded. Only highest available tiers used.",
+      "composition": {
+        "front_melee": {
+          "units": 63803,
+          "troops": [
+            {
+              "name": "Wasteland King",
+              "tier": 10,
+              "count": 1025,
+              "units_per_troop": 10,
+              "total_units": 10250
+            },
+            {
+              "name": "War Shredder",
+              "tier": 8,
+              "count": 2855,
+              "units_per_troop": 10,
+              "total_units": 28550
+            },
+            {
+              "name": "Death Tank",
+              "tier": 9,
+              "count": 5000,
+              "units_per_troop": 5,
+              "total_units": 25000
+            },
+            {
+              "name": "Elite Infantry",
+              "tier": 9,
+              "count": 1,
+              "units_per_troop": 1,
+              "total_units": 1,
+              "role": "token"
+            },
+            {
+              "name": "Heavy Armored Soldier",
+              "tier": 8,
+              "count": 1,
+              "units_per_troop": 2,
+              "total_units": 2,
+              "role": "token"
+            }
+          ]
+        },
+        "middle_mid_range": {
+          "units": 52349,
+          "troops": [
+            {
+              "name": "Mad Gatling",
+              "tier": 9,
+              "count": 45000,
+              "units_per_troop": 1,
+              "total_units": 45000
+            },
+            {
+              "name": "Pyromaster",
+              "tier": 10,
+              "count": 4700,
+              "units_per_troop": 1,
+              "total_units": 4700
+            },
+            {
+              "name": "Havoc Storm Trooper",
+              "tier": 9,
+              "count": 1049,
+              "units_per_troop": 1,
+              "total_units": 1049,
+              "role": "near-token"
+            },
+            {
+              "name": "Storm Raider",
+              "tier": 10,
+              "count": 320,
+              "units_per_troop": 5,
+              "total_units": 1600
+            }
+          ]
+        },
+        "middle_zombie_pool": {
+          "units": 17600,
+          "note": "Separate pool \u2014 does not consume fleet cap",
+          "troops": [
+            {
+              "name": "Biochemical Zombie",
+              "tier": 10,
+              "count": 2430,
+              "units_per_troop": 1,
+              "total_units": 2430
+            },
+            {
+              "name": "Biochemical Zombie",
+              "tier": 9,
+              "count": 15170,
+              "units_per_troop": 1,
+              "total_units": 15170
+            }
+          ]
+        },
+        "back_long_range": {
+          "units": 68310,
+          "troops": [
+            {
+              "name": "Uranium Cannon",
+              "tier": 9,
+              "count": 12000,
+              "units_per_troop": 5,
+              "total_units": 60000
+            },
+            {
+              "name": "Supreme Shielder",
+              "tier": 9,
+              "count": 1000,
+              "units_per_troop": 5,
+              "total_units": 5000
+            },
+            {
+              "name": "Cobra Sniper",
+              "tier": 10,
+              "count": 3300,
+              "units_per_troop": 1,
+              "total_units": 3300
+            },
+            {
+              "name": "Enhanced EMP Cannon",
+              "tier": 8,
+              "count": 1,
+              "units_per_troop": 10,
+              "total_units": 10,
+              "role": "token"
+            }
+          ]
+        }
+      },
+      "notable": [
+        "Blaster Rocket Launcher T8 and Sharpshooter Sniper T8 excluded \u2014 not used for monsters",
+        "T8/T7/T6/T5 zombies excluded \u2014 only T10+T9 used",
+        "Fleet cap exactly met at 184,462 non-zombie units",
+        "Tanks (25,000 units) and Shredders (38,800 units) dominate front row \u2014 heavy damage sponge"
+      ]
+    }
+  },
+  "events": {
+    "nation_duel": {
+      "name": "Nation Duel",
+      "type": "Cross-Nation Auto-PvP",
+      "rules_screenshot_date": "2026-03-07",
+      "structure": {
+        "total_nations": 24,
+        "phases": [
+          "Group Match",
+          "Finals"
+        ],
+        "group_match": {
+          "groups": 4,
+          "nations_per_group": 6,
+          "format": "Round robin \u2014 each Nation duels every other Nation in group",
+          "duration_days": 5,
+          "followed_by": "Off-day after results announced"
+        },
+        "finals": {
+          "duel_groups": 12,
+          "seeding": "Ranked 1-12 by Group Match Nation Points (highest = Group 1)",
+          "nation_points_reset": true,
+          "progression": "Win = advance 1 Duel Group per day; Lose = drop 1 Duel Group per day",
+          "duration_competitions": 4,
+          "nation_points_bonus": "Higher Duel Group = more Nation Points bonus (does NOT affect Individual Points)",
+          "final_ranking_basis": "Nation Points after all 4 Finals competitions"
+        }
+      },
+      "points": {
+        "individual_points": "Earned by confronting enemy Nation Commanders",
+        "nation_points_contributors": "Top 200 Commanders' Individual Points each day",
+        "top_200_selection_day1": "By comprehensive strength",
+        "top_200_selection_day2plus": "By Individual Points from previous day",
+        "individual_points_cleared": false,
+        "nation_points_cleared_at_finals": true,
+        "daily_winner": "Nation with more Nation Points wins the day"
+      },
+      "tournament_mechanics": {
+        "normal_enemy": {
+          "window": "00:00\u201323:00 server time",
+          "troop_type": "System Troops \u2014 NOT real troops, zero loss risk",
+          "system_troops_inherit": [
+            "Titans",
+            "Warplane",
+            "Officers",
+            "Technology bonuses",
+            "Equipment bonuses"
+          ],
+          "fleet_cap_units": 400000,
+          "zombie_pool_units": 50000,
+          "zombie_pool_separate": true,
+          "challenges_per_day": "Unlimited \u2014 each challenge refreshes progress",
+          "battle_end_condition": "All 24 enemies defeated OR Commander defeated",
+          "highest_points_recorded": true,
+          "rewards_for_completion": [
+            "Free fortification times",
+            "Fortification slots",
+            "Individual Points"
+          ],
+          "fortify_duel": "Duel Tokens or fortification times \u2192 Fortify Duel (same day only; select some to inherit next day)"
+        },
+        "elite_enemy": {
+          "window": "23:00\u201300:00 server time",
+          "format": "Auto-battle vs 1 matched enemy Commander at same Individual Points rank",
+          "troops_locked_at": "23:00 server time",
+          "attacker_determination": "Higher Individual Points = attacker",
+          "win_bonus": "+30% Individual Points",
+          "loss_bonus": "0%",
+          "bye_bonus": "+10% Individual Points",
+          "environment": "Cross-Nation PvP"
+        },
+        "fortification_collection": {
+          "acquisition": "Free times + Duel Tokens \u2192 1 random from 3 options",
+          "slots": "Each fortification occupies 1 slot",
+          "fusion": "2 same star-level \u2192 next higher star",
+          "max_level": 4,
+          "lv4_bonus": "Activates 1 additional unique battle buff",
+          "inheritance": "Selected fortifications carry forward each day; count increases over event"
+        }
+      },
+      "optimization_context": {
+        "note": "For Nation Duel, real troops are NOT used \u2014 System Troops replace them at T13 equivalent strength. The optimization variables are entirely officer, equipment, titan, warplane, and technology bonuses inherited by System Troops.",
+        "fleet_cap": 400000,
+        "zombie_pool": 50000,
+        "key_insight": "With all troops standardized at T13, the relative value of row-specific vs universal buffs changes vs normal combat. Cross-Nation battle stats (currently all +0% for Baba_Zulu) become relevant investment targets for this event.",
+        "cross_nation_stats_current": "All +0% \u2014 no Cross-Nation Battle bonuses invested yet",
+        "formation_optimization": "Pending \u2014 Baba_Zulu to ask formation optimization question"
+      },
+      "available_units": [
+        {
+          "name": "Hades Gatling",
+          "tier": 13,
+          "type": "Gunner",
+          "row": "Middle",
+          "bp": 16.5,
+          "hp": 1942,
+          "defense": 120,
+          "attack": 283,
+          "attack_cooldown": 1.5,
+          "attack_range": 2.2,
+          "movement_speed": 10,
+          "load": 12,
+          "units_per_troop": 1,
+          "attack_per_unit": 283.0,
+          "hp_per_unit": 1942.0,
+          "def_per_unit": 120.0,
+          "special_ability": {
+            "name": "Rapid Fire",
+            "mechanic": "~120% PvP / ~150% PvE \u2014 unconfirmed exact numbers (from Mad Gatling T9)"
+          },
+          "sustained_base_dps_per_unit": 188.67
+        },
+        {
+          "name": "Apocalypse Infantry",
+          "tier": 13,
+          "type": "Infantry",
+          "row": "Front",
+          "bp": 16.5,
+          "hp": 2643,
+          "defense": 160,
+          "attack": 192,
+          "attack_cooldown": 2,
+          "attack_range": 0.2,
+          "movement_speed": 10,
+          "load": 16,
+          "units_per_troop": 1,
+          "attack_per_unit": 192.0,
+          "hp_per_unit": 2643.0,
+          "def_per_unit": 160.0,
+          "special_ability": {
+            "name": "Unknown",
+            "mechanic": "Icon visible but ability unconfirmed"
+          },
+          "sustained_base_dps_per_unit": 96.0
+        },
+        {
+          "name": "Death Cannon",
+          "tier": 13,
+          "type": "Cannon",
+          "row": "Back",
+          "bp": 82.5,
+          "hp": 7050,
+          "defense": 360,
+          "attack": 1600,
+          "attack_cooldown": 2,
+          "attack_range": 4.0,
+          "movement_speed": 8,
+          "load": 35,
+          "units_per_troop": 5,
+          "attack_per_unit": 320.0,
+          "hp_per_unit": 1410.0,
+          "def_per_unit": 72.0,
+          "special_ability": {
+            "name": "Bomb Launcher",
+            "mechanic": "Hits 3 different targets per activation. Damage per target and activation frequency unconfirmed \u2014 no reliable reference found. Best assumption based on other bomb-type skill descriptions in game.",
+            "confidence": "LOW \u2014 treat as estimate only",
+            "assumed_targets": 3,
+            "assumed_frequency": "Unknown \u2014 likely every N attacks similar to Sniper Hit pattern",
+            "effective_dps_multiplier_if_3_targets_full_damage": 3.0,
+            "effective_dps_multiplier_conservative": "1.5\u20132.0x (assuming reduced damage per target or partial activation)",
+            "optimization_note": "Even at conservative 1.5x multiplier, Death Cannon would be 739 * 1.5 = 1,109 eDPS/unit \u2014 significantly beating Eagle Eye Shot (816). At full 3x it would be 2,217 eDPS/unit, making it the best unit in the entire roster by a wide margin. The Bomb Launcher uncertainty is the single biggest variable in back row optimization."
+          },
+          "sustained_base_dps_per_unit": 160.0
+        },
+        {
+          "name": "Destruction Tank",
+          "tier": 13,
+          "type": "Tank",
+          "row": "Front",
+          "bp": 82.5,
+          "hp": 13215,
+          "defense": 800,
+          "attack": 960,
+          "attack_cooldown": 2,
+          "attack_range": 1.0,
+          "movement_speed": 12,
+          "load": 80,
+          "units_per_troop": 5,
+          "attack_per_unit": 192.0,
+          "hp_per_unit": 2643.0,
+          "def_per_unit": 160.0,
+          "special_ability": {
+            "name": "Bulletproof Armor",
+            "mechanic": "When taking damage, 31% chance to block 50% of that hit's damage.",
+            "trigger": "Each incoming hit \u2014 probabilistic, always active",
+            "average_damage_reduction": "15.5% average reduction per hit (31% \u00d7 50%)",
+            "targets": "Self (defensive)",
+            "applies_to": "All Tank tier units \u2014 same mechanic, stronger base stats at higher tiers",
+            "strategic_note": "Always-active probabilistic reduction. Averages 15.5% damage reduction per incoming hit."
+          },
+          "sustained_base_dps_per_unit": 96.0
+        },
+        {
+          "name": "Fanatic Terminator",
+          "tier": 12,
+          "type": "Rocket",
+          "row": "Middle",
+          "bp": 13.9,
+          "hp": 1618,
+          "defense": 102,
+          "attack": 245,
+          "attack_cooldown": 2,
+          "attack_range": 2.5,
+          "movement_speed": 9,
+          "load": 12,
+          "units_per_troop": 1,
+          "attack_per_unit": 245.0,
+          "hp_per_unit": 1618.0,
+          "def_per_unit": 102.0,
+          "special_ability": {
+            "name": "Overshoot",
+            "mechanic": "Every 3rd attack deals heavy damage to a single enemy, prioritizing the enemy back row within range.",
+            "targets": 1,
+            "frequency": "Every 3 attacks",
+            "priority_target": "Enemy back row",
+            "damage_characteristic": "Single target, high damage \u2014 exact multiplier unconfirmed",
+            "strategic_note": "Back row sniping ability. Bypasses enemy front row to hit their highest-value units. In PvP this directly threatens enemy cannons and snipers."
+          },
+          "sustained_base_dps_per_unit": 122.5
+        },
+        {
+          "name": "Eagle Eye Shot",
+          "tier": 12,
+          "type": "Sniper",
+          "row": "Back",
+          "bp": 13.9,
+          "hp": 1173,
+          "defense": 61,
+          "attack": 279,
+          "attack_cooldown": 2,
+          "attack_range": 3.8,
+          "movement_speed": 10,
+          "load": 7,
+          "units_per_troop": 1,
+          "attack_per_unit": 279.0,
+          "hp_per_unit": 1173.0,
+          "def_per_unit": 61.0,
+          "special_ability": {
+            "name": "Sniper Hit",
+            "mechanic": "Every 3rd attack deals 1.8x damage"
+          },
+          "sustained_base_dps_per_unit": 139.5
+        },
+        {
+          "name": "Hell King",
+          "tier": 12,
+          "type": "Shredder",
+          "row": "Front",
+          "bp": 139,
+          "hp": 22260,
+          "defense": 1380,
+          "attack": 1660,
+          "attack_cooldown": 2,
+          "attack_range": 0.5,
+          "movement_speed": 10,
+          "load": 160,
+          "units_per_troop": 10,
+          "attack_per_unit": 166.0,
+          "hp_per_unit": 2226.0,
+          "def_per_unit": 138.0,
+          "special_ability": {
+            "name": "Defensive Stance",
+            "mechanic": "34% damage reduction for 4s every 8s (42.5% uptime)"
+          },
+          "sustained_base_dps_per_unit": 83.0
+        },
+        {
+          "name": "Demon Raider",
+          "tier": 12,
+          "type": "Bike",
+          "row": "Middle",
+          "bp": 69.5,
+          "hp": 8090,
+          "defense": 510,
+          "attack": 1225,
+          "attack_cooldown": 1,
+          "attack_range": 2.0,
+          "movement_speed": 15,
+          "load": 60,
+          "units_per_troop": 5,
+          "attack_per_unit": 245.0,
+          "hp_per_unit": 1618.0,
+          "def_per_unit": 102.0,
+          "special_ability": {
+            "name": "Speed Racer",
+            "mechanic": "+60% attack speed for first 10s of combat (30s in PvE)"
+          },
+          "sustained_base_dps_per_unit": 245.0
+        },
+        {
+          "name": "Ultima Armored Soldier",
+          "tier": 12,
+          "type": "Armored Soldier",
+          "row": "Front",
+          "bp": 30.6,
+          "hp": 4542,
+          "defense": 282,
+          "attack": 332,
+          "attack_cooldown": 2,
+          "attack_range": 0.5,
+          "movement_speed": 9,
+          "load": 36,
+          "units_per_troop": 2,
+          "attack_per_unit": 166.0,
+          "hp_per_unit": 2271.0,
+          "def_per_unit": 141.0,
+          "special_ability": {
+            "name": "Unknown",
+            "mechanic": "T12 Ultima Armored Soldier has impact/slash icon"
+          },
+          "sustained_base_dps_per_unit": 83.0
+        },
+        {
+          "name": "Ultima EMP Cannon",
+          "tier": 12,
+          "type": "EMP",
+          "row": "Back",
+          "bp": 152.9,
+          "hp": 11965,
+          "defense": 600,
+          "attack": 2846,
+          "attack_cooldown": 2,
+          "attack_range": 3.5,
+          "movement_speed": 9,
+          "load": 70,
+          "units_per_troop": 10,
+          "attack_per_unit": 284.6,
+          "hp_per_unit": 1196.5,
+          "def_per_unit": 60.0,
+          "special_ability": {
+            "name": "Unknown",
+            "mechanic": "T12 Ultima EMP Cannon has EMP pulse icon \u2014 likely debuff or AoE"
+          },
+          "sustained_base_dps_per_unit": 142.3
+        },
+        {
+          "name": "Havoc Breaker",
+          "tier": 13,
+          "type": "Storm Trooper",
+          "row": "Middle",
+          "bp": 18.2,
+          "hp": 1980,
+          "defense": 120,
+          "attack": 288,
+          "attack_cooldown": 2,
+          "attack_range": 2.2,
+          "movement_speed": 9,
+          "load": 12,
+          "units_per_troop": 1,
+          "attack_per_unit": 288.0,
+          "hp_per_unit": 1980.0,
+          "def_per_unit": 120.0,
+          "special_ability": {
+            "name": "Electromagnetic Conduction",
+            "mechanic": "Every 3rd attack casts chain lightning dealing heavy damage to up to 3 units, prioritizing enemy back row within range. Damage can stack on a single target.",
+            "targets": "Up to 3 (can stack all on 1 target)",
+            "frequency": "Every 3 attacks",
+            "priority_target": "Enemy back row",
+            "damage_characteristic": "AoE chain up to 3 units OR concentrated on 1 target \u2014 exact multiplier unconfirmed",
+            "strategic_note": "Superior to Overshoot in flexibility \u2014 same back-row priority but can either splash 3 targets or concentrate all damage on one. If stacked on single target, potentially 3x the damage of a normal Overshoot hit. This makes Havoc Breaker considerably more dangerous than raw stats suggest."
+          },
+          "sustained_base_dps_per_unit": 144.0
+        },
+        {
+          "name": "Immortal Shielder",
+          "tier": 13,
+          "type": "Shielder",
+          "row": "Back",
+          "bp": 90.8,
+          "hp": 7192,
+          "defense": 367,
+          "attack": 1632,
+          "attack_cooldown": 2,
+          "attack_range": 3.8,
+          "movement_speed": 8,
+          "load": 35,
+          "units_per_troop": 5,
+          "attack_per_unit": 326.4,
+          "hp_per_unit": 1438.4,
+          "def_per_unit": 73.4,
+          "special_ability": {
+            "name": "Shield Barrier",
+            "mechanic": "Every 4th attack triggers a shield on a friendly unit, absorbing a certain amount of incoming damage.",
+            "visual": "Explosion hitting a shield while troops are protected \u2014 incoming damage being blocked, not outgoing AoE",
+            "combat_role": "Defensive utility \u2014 reduces friendly troop losses, extends fight duration",
+            "optimization_note": "Immortal Shielder's value is NOT pure DPS \u2014 the shield absorption adds effective HP to friendly units fleet-wide. Raw eDPS/unit of 754 understates its contribution in a sustained fight."
+          },
+          "sustained_base_dps_per_unit": 163.2
+        }
+      ],
+      "optimization_analysis": {
+        "buff_stacks_applied": {
+          "Front_melee": "1 + 2.011 (melee atk) + 1.60 (fort) = 4.611x",
+          "Middle_midrange": "1 + 2.676 (mid atk) + 1.60 (fort) = 5.276x",
+          "Back_longrange": "1 + 2.020 (long atk) + 1.60 (fort) = 4.620x",
+          "Zombie_pool": "1 + 4.410 (zombie atk) + 1.60 (fort) = 7.010x (plus Zephyrine bonuses)"
+        },
+        "dps_per_unit_effective_ranking": [
+          {
+            "name": "Demon Raider",
+            "tier": 12,
+            "eff_dps_per_unit": 1292.6,
+            "note": "Best by far \u2014 1.0s cooldown is the key"
+          },
+          {
+            "name": "Hades Gatling",
+            "tier": 13,
+            "eff_dps_per_unit": 995.4,
+            "note": "Best T13 option for middle row"
+          },
+          {
+            "name": "Death Cannon",
+            "tier": 13,
+            "eff_dps_per_unit": 739.2,
+            "note": "Best back row option"
+          },
+          {
+            "name": "Fanatic Terminator",
+            "tier": 12,
+            "eff_dps_per_unit": 646.3,
+            "note": "Middle \u2014 lower than Demon Raider or Gatling"
+          },
+          {
+            "name": "Eagle Eye Shot",
+            "tier": 12,
+            "eff_dps_per_unit": 644.5,
+            "note": "Back \u2014 nearly identical to Fanatic Terminator"
+          },
+          {
+            "name": "Apocalypse Infantry",
+            "tier": 13,
+            "eff_dps_per_unit": 442.7,
+            "note": "Front \u2014 damage sponge role"
+          },
+          {
+            "name": "Destruction Tank",
+            "tier": 13,
+            "eff_dps_per_unit": 442.7,
+            "note": "Front \u2014 same DPS as Infantry but 5x HP/unit, better tank"
+          },
+          {
+            "name": "Hell King",
+            "tier": 12,
+            "eff_dps_per_unit": 382.7,
+            "note": "Front \u2014 lowest DPS but Defensive Stance -34% dmg reduction"
+          }
+        ],
+        "key_findings": [
+          "Demon Raider (Bike T12) remains #1 \u2014 1.0s cooldown makes it 30% better than Hades Gatling and 70% better than everything else in middle",
+          "SURPRISE: Immortal Shielder (T13) is the best back row unit (754 eDPS/unit) beating Death Cannon (739) \u2014 326.4 vs 320 atk/unit",
+          "Immortal Shielder also has range 3.8 equal to Eagle Eye Shot \u2014 no range disadvantage vs Death Cannon's 4.0",
+          "Middle row dominates \u2014 top 3 spots all middle row units. Middle buff (+267.6%) vs Long-range (+202%) is a significant gap",
+          "Front row units are pure damage sponges \u2014 Apocalypse Infantry has highest HP/unit (2643) of all front units",
+          "Hell King has Defensive Stance ability \u2014 actual value depends on fight duration, likely better than raw DPS suggests",
+          "Zombie pool (50,000 units) always use \u2014 7.01x effective stack makes them extremely efficient free DPS",
+          "Formation priority: maximize Demon Raiders in middle, Immortal Shielders in back, minimum viable front row"
+        ],
+        "pending": [
+          "Special abilities for T12/T13 units not yet captured (need to tap ability icons)",
+          "Hell King Defensive Stance details \u2014 same mechanic as Wasteland King?",
+          "Demon Raider Speed Racer equivalent?",
+          "Formation constraints \u2014 minimum units per row to activate row buffs unclear",
+          "Whether Freya Mid+Long buff applies in Nation Duel (Drillmaster active?)"
+        ],
+        "complete_effective_dps_ranking": [
+          {
+            "rank": 1,
+            "name": "Demon Raider",
+            "tier": 12,
+            "row": "Middle",
+            "note": "1.0s CD is decisive \u2014 fires 2x as fast as everything else",
+            "sustained_base_dps_per_unit": 1292.6
+          },
+          {
+            "rank": 2,
+            "name": "Hades Gatling",
+            "tier": 13,
+            "row": "Middle",
+            "note": "Best T13 mid unit, 1.5s CD",
+            "sustained_base_dps_per_unit": 995.4
+          },
+          {
+            "rank": 3,
+            "name": "Havoc Breaker",
+            "tier": 13,
+            "row": "Middle",
+            "note": "Storm Trooper, 2.0s CD",
+            "sustained_base_dps_per_unit": 759.7
+          },
+          {
+            "rank": 4,
+            "name": "Immortal Shielder",
+            "tier": 13,
+            "row": "Back",
+            "note": "SURPRISE: Best back row unit, 326 atk/unit",
+            "sustained_base_dps_per_unit": 754.0
+          },
+          {
+            "rank": 5,
+            "name": "Death Cannon",
+            "tier": 13,
+            "row": "Back",
+            "note": "320 atk/unit, longest range (4.0)",
+            "sustained_base_dps_per_unit": 739.2
+          },
+          {
+            "rank": 6,
+            "name": "Ultima EMP Cannon",
+            "tier": 12,
+            "row": "Back",
+            "note": "284.6 atk/unit despite 10 units/troop",
+            "sustained_base_dps_per_unit": 657.4
+          },
+          {
+            "rank": 7,
+            "name": "Fanatic Terminator",
+            "tier": 12,
+            "row": "Middle",
+            "note": "Middle filler if Demon Raiders exhausted",
+            "sustained_base_dps_per_unit": 646.3
+          },
+          {
+            "rank": 8,
+            "name": "Eagle Eye Shot",
+            "tier": 12,
+            "row": "Back",
+            "note": "Back filler",
+            "sustained_base_dps_per_unit": 644.5
+          },
+          {
+            "rank": 9,
+            "name": "Apocalypse Infantry",
+            "tier": 13,
+            "row": "Front",
+            "note": "Front \u2014 highest HP/unit (2643), damage sponge",
+            "sustained_base_dps_per_unit": 442.7
+          },
+          {
+            "rank": 10,
+            "name": "Destruction Tank",
+            "tier": 13,
+            "row": "Front",
+            "note": "Front \u2014 same as Infantry but 5 units/troop, needs more cap",
+            "sustained_base_dps_per_unit": 442.7
+          },
+          {
+            "rank": 11,
+            "name": "Hell King",
+            "tier": 12,
+            "row": "Front",
+            "note": "Front \u2014 Defensive Stance ability may compensate",
+            "sustained_base_dps_per_unit": 382.7
+          },
+          {
+            "rank": 12,
+            "name": "Ultima Armored Soldier",
+            "tier": 12,
+            "row": "Front",
+            "note": "Front \u2014 2 units/troop, moderate front filler",
+            "sustained_base_dps_per_unit": 382.7
+          }
+        ],
+        "special_ability_note": "Confirmed: T12/T13 units use identical ability mechanics to lower-tier equivalents. Higher tier = stronger base stats only. Row buffs always active regardless of troop count in that row \u2014 tokens (1 unit) are valid.",
+        "speed_racer_impact": {
+          "unit": "Demon Raider",
+          "ability": "Speed Racer \u2014 +60% attack speed first 10s",
+          "base_cd": 1.0,
+          "boosted_cd": 0.625,
+          "attacks_first_10s_normal": 10,
+          "attacks_first_10s_boosted": 16,
+          "note": "Demon Raider fires 60% more attacks in the opening 10 seconds. Combined with its already-dominant 1.0s base CD, the opening burst is extremely high. In PvP where fights can be decided early, this further separates Demon Raider from all other middle units."
+        },
+        "sniper_hit_impact": {
+          "unit": "Eagle Eye Shot / Immortal Shielder context",
+          "note": "Eagle Eye Shot gets Sniper Hit (every 3rd attack 1.8x damage = +26.7% average DPS uplift). Effective eDPS/unit becomes ~644.5 * 1.267 = 816.4 \u2014 which would put it ABOVE Death Cannon (739) and close to Immortal Shielder (754). Sniper Hit makes Eagle Eye Shot more competitive than raw stats suggest. Immortal Shielder ability unknown \u2014 if purely defensive, Eagle Eye Shot may rival or beat it for pure damage."
+        },
+        "revised_back_row_assessment": {
+          "note": "Immortal Shielder is NOT a pure damage unit \u2014 its shield ability provides defensive utility that extends friendly troop survival. This changes the calculus significantly.",
+          "back_row_ranking_revised": [
+            {
+              "name": "Eagle Eye Shot",
+              "tier": 12,
+              "raw_eff_dps_per_unit": 644.5,
+              "ability_adjusted_dps": 816.4,
+              "ability": "Sniper Hit \u2014 every 3rd attack 1.8x damage (+26.7% avg DPS)",
+              "role": "Pure single-target DPS \u2014 best back row damage dealer once ability factored in"
+            },
+            {
+              "name": "Death Cannon",
+              "tier": 13,
+              "raw_eff_dps_per_unit": 739.2,
+              "ability_adjusted_dps": "Unknown \u2014 Bomb Launcher AoE multiplier TBD",
+              "ability": "Bomb Launcher \u2014 hits multiple targets, exact mechanic unconfirmed",
+              "role": "Likely best back row if Bomb Launcher hits 2+ targets; each additional target adds full 739 eDPS/unit equivalent"
+            },
+            {
+              "name": "Immortal Shielder",
+              "tier": 13,
+              "raw_eff_dps_per_unit": 754.0,
+              "ability_adjusted_dps": "754 raw DPS + shield absorption value (unquantified)",
+              "ability": "Shield Barrier \u2014 every 4th attack shields a friendly unit, absorbs incoming damage",
+              "role": "Defensive support \u2014 extends friendly troop survival. Best used in combination with high-DPS units, not as primary damage dealer."
+            },
+            {
+              "name": "Ultima EMP Cannon",
+              "tier": 12,
+              "raw_eff_dps_per_unit": 657.4,
+              "ability": "Unknown \u2014 likely debuff or AoE pulse",
+              "role": "Back row filler pending ability confirmation"
+            }
+          ],
+          "recommendation": "Death Cannon + Eagle Eye Shot likely optimal back row mix. Immortal Shielder valuable as a support component \u2014 a modest allocation shields your Demon Raiders and extends the fight, letting your superior middle row DPS accumulate. Pure damage maximization favors Cannon + Sniper; survivability-weighted favors adding some Shielders."
+        },
+        "bomb_launcher_scenarios": {
+          "base_death_cannon_eff_dps_per_unit": 739.2,
+          "eagle_eye_shot_ability_adjusted": 816.4,
+          "scenarios": [
+            {
+              "label": "Bomb Launcher 3x full damage",
+              "multiplier": 3.0,
+              "death_cannon_eff": 2217.6,
+              "winner": "Death Cannon by landslide"
+            },
+            {
+              "label": "Bomb Launcher 3x at 50% each",
+              "multiplier": 1.5,
+              "death_cannon_eff": 1108.8,
+              "winner": "Death Cannon clearly"
+            },
+            {
+              "label": "Bomb Launcher 3x at 33% each",
+              "multiplier": 1.0,
+              "death_cannon_eff": 739.2,
+              "winner": "Eagle Eye Shot (816 vs 739)"
+            },
+            {
+              "label": "Bomb Launcher infrequent proc",
+              "multiplier": 1.2,
+              "death_cannon_eff": 887.0,
+              "winner": "Death Cannon slightly"
+            }
+          ],
+          "conclusion": "Death Cannon wins unless Bomb Launcher deals \u226433% damage per target (i.e. total damage = 1.0x single target). Given the skill is designed as an offensive ability, the 33% or less scenario seems unlikely. Best estimate: Death Cannon is the superior back row damage dealer.",
+          "recommended_approach": "Use Death Cannon as primary back row. Eagle Eye Shot as secondary fill. Small Immortal Shielder allocation for survivability support on Demon Raiders."
+        },
+        "back_row_sniping_mechanics": {
+          "units_with_back_row_priority": [
+            "Fanatic Terminator (Rocket)",
+            "Havoc Breaker (Storm Trooper)"
+          ],
+          "mechanic": "Every 3rd attack prioritizes enemy back row \u2014 bypasses their front row to directly damage their cannons/snipers",
+          "pvp_significance": "In PvP, enemy back row is their Death Cannons and Eagle Eye Shots \u2014 their highest DPS units. Overshoot and EC attacks go directly to them every 3rd hit, reducing enemy back row output faster. This is a force multiplier beyond raw DPS: killing enemy cannons early reduces the damage your front row absorbs.",
+          "havoc_breaker_vs_fanatic_terminator": {
+            "Fanatic Terminator": {
+              "base_eff_dps": 646.3,
+              "proc_ability": "Overshoot \u2014 1 target, back row priority"
+            },
+            "Havoc Breaker": {
+              "base_eff_dps": 759.7,
+              "proc_ability": "EC \u2014 up to 3 targets OR stacked on 1, back row priority"
+            },
+            "verdict": "Havoc Breaker is strictly better \u2014 higher base DPS AND superior proc (EC can hit 3 or stack vs Overshoot's 1). No reason to use Fanatic Terminator if Havoc Breakers are available."
+          }
+        },
+        "revised_middle_row_assessment": {
+          "ranking": [
+            {
+              "name": "Demon Raider",
+              "eff_dps": 1292.6,
+              "proc": "Speed Racer +60% atk speed first 10s \u2014 pure DPS, no back-row targeting"
+            },
+            {
+              "name": "Hades Gatling",
+              "eff_dps": 995.4,
+              "proc": "Rapid Fire \u2014 DPS boost, no back-row targeting (unconfirmed exact mechanic)"
+            },
+            {
+              "name": "Havoc Breaker",
+              "eff_dps": 759.7,
+              "proc": "EC every 3 attacks \u2014 up to 3 targets or stacked, back row priority. Strictly better than Fanatic Terminator."
+            },
+            {
+              "name": "Fanatic Terminator",
+              "eff_dps": 646.3,
+              "proc": "Overshoot every 3 attacks \u2014 1 target, back row priority. Inferior to Havoc Breaker in every dimension."
+            }
+          ],
+          "note": "Demon Raider + Hades Gatling for raw DPS. Havoc Breaker adds back-row disruption. Fanatic Terminator is obsolete if Havoc Breakers are available."
+        },
+        "damage_framework": {
+          "metric_definitions": {
+            "sustained_base_dps_per_unit": "Base attack / cooldown \u00d7 buff stack, divided by units_per_troop. Normal attacks only, no special abilities, assumes infinite fight duration. Valid for apples-to-apples comparison of normal attack output per fleet cap unit.",
+            "opening_burst_dps_per_unit": "sustained_base_dps_per_unit adjusted for Speed Racer (+60% atk speed) during first 10s of combat. Only applies to Demon Raider (Bike type). Demon Raider opening CD = 0.625s \u2192 1.6x normal attack rate for 10s.",
+            "proc_dps_contribution": "Additional damage from special abilities (Sniper Hit, Overshoot, EC, Bomb Launcher). Adds to sustained_base_dps but on separate timelines. Most procs trigger every 3rd or 4th attack.",
+            "attrition_adjusted_dps": "AoE/multi-target abilities (Bomb Launcher, EC) lose value as enemy units thin. Single-target abilities (Sniper Hit, Overshoot) remain constant throughout. Speed Racer irrelevant after 10s. Shield Barrier most valuable early."
+          },
+          "fight_phases": {
+            "opening_phase": {
+              "duration": "0\u201310s",
+              "notes": [
+                "Speed Racer active \u2014 Demon Raider fires at 0.625s CD (1.6x rate)",
+                "Enemy formation full \u2014 AoE abilities (Bomb Launcher, EC) hit maximum targets",
+                "Shield Barrier absorbing maximum incoming fire",
+                "Dominant unit: Demon Raider by large margin"
+              ]
+            },
+            "sustained_phase": {
+              "duration": "10s\u2013mid fight",
+              "notes": [
+                "Speed Racer expired \u2014 Demon Raider back to 1.0s CD",
+                "Enemy formation still mostly intact \u2014 AoE still near full value",
+                "Sniper Hit, Overshoot, EC all contributing at full rate",
+                "Dominant unit: Demon Raider still leads, gap narrows vs Hades Gatling"
+              ]
+            },
+            "late_phase": {
+              "duration": "Mid fight\u2013end",
+              "notes": [
+                "Enemy front row likely eliminated \u2014 all units dynamically shift to middle/back row targets",
+                "Bomb Launcher still finds 3 targets (middle + back row) via target shifting",
+                "EC chain still finds 3 targets or stacks on surviving high-HP units",
+                "When all troops eliminated, units attack enemy titans (~20M HP) and plane (~24M HP)",
+                "Single-target procs (Sniper Hit, Overshoot) fully effective against titans/plane",
+                "Shield Barrier less useful \u2014 fewer incoming attacks as enemy thins",
+                "Speed Racer long expired \u2014 Demon Raider at base 1.0s CD, still competitive"
+              ]
+            }
+          },
+          "attrition_sensitivity_by_unit": {
+            "Demon Raider": {
+              "sensitivity": "LOW",
+              "reason": "Single-target normal attacks + Speed Racer only matters in opening. Consistent throughout."
+            },
+            "Hades Gatling": {
+              "sensitivity": "LOW",
+              "reason": "Single-target, consistent. Rapid Fire proc details unconfirmed but likely single-target."
+            },
+            "Havoc Breaker": {
+              "sensitivity": "MEDIUM",
+              "reason": "EC hits up to 3 but can stack on 1 \u2014 late fight stacking on surviving targets maintains value."
+            },
+            "Death Cannon": {
+              "sensitivity": "HIGH",
+              "reason": "Bomb Launcher hitting 3 targets loses 67% of multi-target value if only 1 enemy remains."
+            },
+            "Eagle Eye Shot": {
+              "sensitivity": "LOW",
+              "reason": "Sniper Hit is single-target \u2014 full value throughout fight."
+            },
+            "Immortal Shielder": {
+              "sensitivity": "MEDIUM",
+              "reason": "Shield Barrier most useful early when incoming fire is heaviest."
+            },
+            "Hell King": {
+              "sensitivity": "LOW",
+              "reason": "Defensive Stance is % reduction \u2014 scales with incoming damage naturally."
+            },
+            "Fanatic Terminator": {
+              "sensitivity": "LOW",
+              "reason": "Overshoot single-target \u2014 consistent. But inferior to Havoc Breaker throughout."
+            }
+          },
+          "long_fight_ranking_shift": "In long fights: Death Cannon loses relative value vs Eagle Eye Shot as Bomb Launcher targets thin. Eagle Eye Shot's Sniper Hit maintains full value. Demon Raider's Speed Racer advantage disappears but base 1.0s CD still wins. Havoc Breaker EC stacking on single targets may actually increase in value late \u2014 concentrating full chain damage on one remaining high-HP target."
+        },
+        "target_acquisition": {
+          "mechanic": "Units dynamically retarget as enemy formation units are eliminated. When a unit type is fully destroyed, attacking units shift to next available targets within range. Order generally: front row \u2192 middle \u2192 back \u2192 titans/plane.",
+          "implications_for_aoe_abilities": {
+            "Bomb_Launcher": "3 targets remain available throughout most of fight via target shifting. As enemy front depletes, Bomb Launcher hits middle+back instead. Only truly degrades when total surviving enemy units < 3 \u2014 near end of fight only. Death Cannon attrition sensitivity REVISED to LOW-MEDIUM.",
+            "EC_chain": "3-target chain shifts to next available enemy units as rows eliminated. Stacking on single target remains option when fewer than 3 enemies survive. Havoc Breaker value shape changes late but doesn't collapse.",
+            "Overshoot": "Single target, back-row priority. Once enemy back row eliminated, shifts to next row. Consistent."
+          },
+          "titan_and_plane_as_late_targets": {
+            "note": "When all enemy troops eliminated, units attack enemy titans and plane. Titans ~19-22M HP, plane ~24M HP at typical levels \u2014 significant final DPS sink. All abilities remain effective. Bomb Launcher hitting titan+plane = still 2 targets.",
+            "enemy_titan_hp_estimate": "~19-22M per titan",
+            "enemy_plane_hp_estimate": "~24M"
+          },
+          "revised_attrition_sensitivity": {
+            "Demon Raider": "LOW \u2014 single target throughout; Speed Racer irrelevant after 10s but base 1.0s CD still leads",
+            "Hades Gatling": "LOW \u2014 single target, consistent",
+            "Havoc Breaker": "LOW-MEDIUM \u2014 EC shifts targets dynamically; stacking vs spreading is tactical not forced by attrition",
+            "Death Cannon": "LOW-MEDIUM \u2014 Bomb Launcher finds 3 targets throughout via target shift; only degrades at very end",
+            "Eagle Eye Shot": "LOW \u2014 Sniper Hit single target, consistent including vs titans",
+            "Immortal Shielder": "MEDIUM \u2014 Shield Barrier value tied to volume of incoming fire, decreases as enemy thins",
+            "Hell King": "LOW \u2014 Defensive Stance % reduction scales naturally with incoming damage level",
+            "Fanatic Terminator": "LOW \u2014 Overshoot shifts targets as rows eliminated, consistent"
+          },
+          "key_revision": "Previous analysis overstated attrition penalty for AoE units. Dynamic target acquisition means Bomb Launcher and EC chain maintain near-full value for almost the entire fight. Death Cannon vs Eagle Eye Shot is therefore a sustained base DPS + proc frequency question, not an attrition question. Death Cannon's Bomb Launcher advantage persists throughout the fight."
+        },
+        "front_row_comparison": {
+          "Hell King T12": {
+            "hp_per_unit": 2226,
+            "def_per_unit": 138,
+            "ability": "Defensive Stance \u2014 34% reduction, 42.5% uptime = 14.45% avg",
+            "effective_hp_per_unit": 2602.0,
+            "units_per_troop": 10
+          },
+          "Destruction Tank T13": {
+            "hp_per_unit": 2643,
+            "def_per_unit": 160,
+            "ability": "Bulletproof Armor \u2014 31% chance \u00d7 50% block = 15.5% avg",
+            "effective_hp_per_unit": 3127.8,
+            "units_per_troop": 5
+          },
+          "verdict": "Destruction Tank wins on all metrics \u2014 higher HP, Def, and marginally better avg reduction. Hell King niche: high-burst enemy where 34% spike absorption matters more than average."
+        }
+      },
+      "scoring_and_strategy": {
+        "points_source": "Killing enemy troops \u2014 points scale with units destroyed",
+        "normal_enemy": {
+          "opponent": "Random enemy commanders \u2014 unknown formation and skills each day",
+          "attempts": "Unlimited replays per day (costs gold per retry)",
+          "formation_flexibility": "Can change formation between each retry",
+          "buff_flexibility": "Additional buffs (fortifications) can be applied between retries if available/earned",
+          "score_tracking": "Cumulative points \u2014 highest single run recorded, retries can improve score",
+          "strategy_implication": "Since opponent is unknown and formation can change between runs, the optimal approach is: (1) run a first attempt to scout the enemy composition, (2) adjust formation to counter what you see, (3) retry with optimized setup. Gold cost of retries must be weighed against incremental points gained.",
+          "unknown_variables": [
+            "Enemy formation composition",
+            "Enemy buff levels (their officers, equipment, fortifications)",
+            "Enemy special abilities in play"
+          ]
+        },
+        "elite_enemy": {
+          "opponent": "Specific matched commander from enemy nation, paired by Individual Points rank",
+          "attempts": "One auto-battle per day at 23:00 server time \u2014 formation locks at that point",
+          "formation_flexibility": "Must be set before 23:00 \u2014 no changes after lock",
+          "intelligence_available": "After first duel, can examine enemy's previous battle history for formation hints",
+          "intelligence_limitations": "Past formation is indicative only \u2014 enemy can change daily",
+          "score_implication": "Win = +30% Individual Points bonus; Loss = 0% bonus; Bye = +10%",
+          "strategy_implication": "Elite Enemy is the high-stakes fixed commitment. Formation must be finalized before 23:00 based on best available intelligence. On Day 1 no prior battle data exists \u2014 must use best general-purpose formation. Day 2+ can incorporate observed enemy behavior."
+        },
+        "fortification_buffs": {
+          "current_buff": "+160% all troops attack",
+          "note": "Fortification buffs change daily as new ones are earned and fused. Stack grows over event.",
+          "implication": "Buff stack is not static \u2014 the +160% figure is current but will shift. Formation optimization must be recalculated if buff profile changes significantly, particularly if row-specific fortifications are earned that favor certain unit types."
+        },
+        "optimization_layers": {
+          "layer_1_general_formation": "Best formation against unknown opponent \u2014 maximize sustained DPS across all rows, robust to any enemy composition. This is the Day 1 Elite Enemy formation and the starting point for Normal Enemy first attempts.",
+          "layer_2_counter_formation": "Adjusted formation after scouting enemy in Normal Enemy replays. If enemy is front-heavy: maximize back row and back-row-sniping units (Havoc Breaker, Overshoot). If enemy is back-row-heavy: maximize front row durability to survive long enough for your back row to fire. If enemy has strong zombies: Zephyrine's queen bonus gives your zombies a relative edge.",
+          "layer_3_elite_enemy_specific": "Day 2+ formation tuned to observed Elite Enemy behavior. Must balance counter-strategy against uncertainty that they may change formation."
+        },
+        "gold_retry_economics": {
+          "note": "Cost per retry unknown \u2014 need to track gold cost vs incremental points to determine break-even.",
+          "general_principle": "Early retries after scouting adjustment likely highest value. Diminishing returns on later retries once formation is already well-matched.",
+          "pending": "Record gold cost per retry and points gained per retry to build break-even model"
+        }
+      },
+      "recommended_formation_day1": {
+        "description": "General-purpose Day 1 formation \u2014 robust against unknown enemy composition",
+        "fleet_cap_used": 400000,
+        "zombie_pool_used": 50000,
+        "total_sustained_base_dps_estimate": 395026000,
+        "note": "DPS estimate excludes proc abilities (Bomb Launcher, Sniper Hit, EC, Speed Racer burst) and zombie contribution",
+        "front_row": {
+          "total_units": 70000,
+          "pct_of_fleet": "17.5%",
+          "troops": [
+            {
+              "name": "Destruction Tank",
+              "tier": 13,
+              "troops": 14000,
+              "units": 70000,
+              "role": "Primary front \u2014 Bulletproof Armor 15.5% avg reduction, highest HP+Def/unit",
+              "note": "Replaces Hell King as primary front. T13 higher stats across the board."
+            }
+          ],
+          "note": "Destruction Tank T13 preferred over Hell King T12: higher HP/unit (2,643 vs 2,226), higher Def/unit (160 vs 138), and Bulletproof Armor (15.5% avg) slightly edges Defensive Stance (14.45% avg). Hell King retains niche vs high-burst enemies."
+        },
+        "middle_row": {
+          "total_units": 270000,
+          "pct_of_fleet": "67.5%",
+          "troops": [
+            {
+              "name": "Demon Raider",
+              "tier": 12,
+              "troops": 40000,
+              "units": 200000,
+              "role": "Primary DPS \u2014 Speed Racer + 1.0s CD"
+            },
+            {
+              "name": "Hades Gatling",
+              "tier": 13,
+              "troops": 50000,
+              "units": 50000,
+              "role": "Secondary sustained mid DPS"
+            },
+            {
+              "name": "Havoc Breaker",
+              "tier": 13,
+              "troops": 20000,
+              "units": 20000,
+              "role": "EC back-row sniping, enemy cannon/sniper disruption"
+            }
+          ]
+        },
+        "back_row": {
+          "total_units": 60000,
+          "pct_of_fleet": "15%",
+          "troops": [
+            {
+              "name": "Death Cannon",
+              "tier": 13,
+              "troops": 8000,
+              "units": 40000,
+              "role": "Primary back DPS \u2014 Bomb Launcher 3 targets"
+            },
+            {
+              "name": "Eagle Eye Shot",
+              "tier": 12,
+              "troops": 10000,
+              "units": 10000,
+              "role": "Sniper Hit +26.7% avg DPS \u2014 consistent throughout"
+            },
+            {
+              "name": "Immortal Shielder",
+              "tier": 13,
+              "troops": 2000,
+              "units": 10000,
+              "role": "Shield support \u2014 absorbs incoming fire on Demon Raiders"
+            }
+          ]
+        },
+        "zombie_pool": {
+          "total_units": 50000,
+          "troops": [
+            {
+              "name": "Biochemical Zombie",
+              "tier": 13,
+              "troops": 50000,
+              "units": 50000,
+              "role": "Free DPS \u2014 7.01x effective stack + Zephyrine bonuses"
+            }
+          ]
+        },
+        "recommended_officers": {
+          "warfare_6_slots": [
+            {
+              "rank": 1,
+              "name": "Tifa",
+              "key_skill": "Advanced Kill: All Atk +12.88% \u2014 best universal attack"
+            },
+            {
+              "rank": 2,
+              "name": "Zeus",
+              "key_skill": "Precise Shot: Dmg Dealt +7.8% multiplicative \u2014 applies to all procs"
+            },
+            {
+              "rank": 3,
+              "name": "Butterfly",
+              "key_skill": "Kill +9.48% + Melee Atk + Melee Expert (4\u2605 = 3 active skills)"
+            },
+            {
+              "rank": 4,
+              "name": "Panda Jack",
+              "key_skill": "Mid Atk + Long Atk + Kill All Atk via equipment"
+            },
+            {
+              "rank": 5,
+              "name": "Kingsley",
+              "key_skill": "Mid Atk + Melee HP + equipment buffs (base skill wasted in Nation Duel)"
+            },
+            {
+              "rank": 6,
+              "name": "Storm Bow",
+              "key_skill": "All DEF/HP +11.12% \u2014 survivability extends fight duration"
+            }
+          ],
+          "warfare_swap": "Alexandria (Dmg Taken -6.8%) can replace Storm Bow for more offensive lean",
+          "strategy_2_slots": [
+            {
+              "rank": 1,
+              "name": "Loreline",
+              "key_skill": "Base skills irrelevant \u2014 equipped for vs Enemy Rows +7.6% combat buff from Double Gun equipment"
+            },
+            {
+              "rank": 2,
+              "name": "Morgan or Bravestar",
+              "key_skill": "Base skills all irrelevant. Pick whichever has better equipment. PENDING: check Morgan/Bravestar equipment for any combat-relevant skills"
+            }
+          ],
+          "strategy_note": "Morgan and Saki fleet buffs are worthless at fixed 400K system troops. Loreline's equipment is the only Strategy officer combat contribution.",
+          "drillmaster_6_slots": [
+            {
+              "rank": 1,
+              "name": "Freya",
+              "key_skill": "Armor Assault: Mid+Long Atk +12.96% \u2014 buffs both dominant DPS rows"
+            },
+            {
+              "rank": 2,
+              "name": "Maria",
+              "key_skill": "Eagle Eye: All Atk +8,400,000 flat at 400K units (4.3x normal army value)"
+            },
+            {
+              "rank": 3,
+              "name": "Jimmy",
+              "key_skill": "Camouflage: Enemy Atk -8.01% + Killer skills"
+            },
+            {
+              "rank": 4,
+              "name": "Cattie",
+              "key_skill": "Sharp Senses: Enemy Atk -12.96% \u2014 highest enemy attack debuff"
+            },
+            {
+              "rank": 5,
+              "name": "Layla",
+              "key_skill": "Morale Boost: First 20s All Atk +9.345% + Mid/Long Weaken"
+            },
+            {
+              "rank": 6,
+              "name": "Simon",
+              "key_skill": "Open Fire: First 20s All Atk +13.7% \u2014 replaces Selina since IMT is irrelevant in Nation Duel"
+            }
+          ],
+          "drillmaster_note": "Simon + Layla opening burst (+23% combined first 20s) syncs directly with Demon Raider Speed Racer window. Selina's IMT is completely wasted here.",
+          "machinist_2_slots": [
+            {
+              "name": "Emily",
+              "key_skill": "Machine Awakening: All ATK/DEF/HP +20.99% effective at mastery 324"
+            },
+            {
+              "name": "Kay",
+              "key_skill": "Heavy Mecha: +3,672,000 flat attack / +20,808,000 flat HP at 400K units"
+            }
+          ],
+          "director_2_slots": {
+            "current_recommendation": "I. Medici + Doc Gray \u2014 default pick but neither contributes to Nation Duel combat",
+            "note": "Both have only Medic Expert equipment (wounded capacity) \u2014 irrelevant in Nation Duel. Director slots are essentially wasted in this event unless other Directors have combat equipment.",
+            "action_needed": "Check equipment skills on Ginger, Jesse, Sergeant Barney, Steven, Victoria \u2014 if any have combat-relevant equipment (attack, defense, damage buffs), they should replace I.Medici/Doc Gray for Nation Duel."
+          }
+        },
+        "titans_and_plane": {
+          "all_three_active": true,
+          "note": "Edgar + Zephyrine + Zephyr_Zero \u2014 no vitality cost in Nation Duel system troops context. Zephyrine queen bonus applies to T13 zombies."
+        },
+        "design_rationale": {
+          "middle_heavy_67pct": "Middle row has strongest DPS/unit (Demon Raider 1292, Gatling 995) and highest row buff (+267.6%). Maximizing middle is the single biggest DPS lever.",
+          "front_18pct_minimum": "Enough Hell Kings for Defensive Stance durability. Apocalypse Infantry as HP filler. Front absorbs damage while middle fires.",
+          "back_15pct": "Death Cannon for Bomb Launcher multi-target. Eagle Eye for consistent Sniper Hit. Small Shielder allocation extends Demon Raider survival.",
+          "adjustment_triggers": [
+            "If enemy is front-heavy: shift some Hades Gatling \u2192 more Havoc Breaker (more EC back-row sniping)",
+            "If enemy has very strong back row: shift some Demon Raider \u2192 more Death Cannon",
+            "If fight ends quickly (enemy weak): opening burst composition, add Simon for Open Fire",
+            "If fight is very long (enemy strong): sustained DPS composition, keep Eagle Eye Shot / reduce Shielder"
+          ]
+        }
+      },
+      "simon_vs_selina": {
+        "simon": {
+          "skill": "Open Fire",
+          "effect": "All Atk +13.7% first 20s only"
+        },
+        "selina": {
+          "skill": "Shadow Strike",
+          "effect": "All ATK/DEF/HP +6.48% permanent"
+        },
+        "breakeven_attack_only_seconds": 42.3,
+        "breakeven_true": "Longer than 42.3s \u2014 Selina DEF/HP value not counted in attack-only calc",
+        "day1_recommendation": "Selina \u2014 safer against unknown enemy, permanent triple buff robust to any fight duration",
+        "simon_swap_trigger": "Swap Simon in after scouting reveals weak enemy or short fights (under ~35-40s)",
+        "note": "Layla already provides +9.345% opening 20s \u2014 Simon adds +13.7% on top for +23% combined burst, but only pays off in short fights"
+      }
+    }
+  },
+  "battle_report_analysis": {
+    "screen_structure": {
+      "screen_1_summary": {
+        "fields": [
+          "result (WIN/LOSE)",
+          "battle_type",
+          "time_ago",
+          "attacker_name",
+          "attacker_total_units",
+          "attacker_enemy_killed",
+          "attacker_lost_units",
+          "attacker_wounded",
+          "attacker_surviving",
+          "defender_name",
+          "defender_total_units",
+          "defender_enemy_killed",
+          "defender_lost_units",
+          "defender_wounded",
+          "defender_surviving"
+        ],
+        "note": "Top level \u2014 no unit detail here"
+      },
+      "screen_2_troops_detail": {
+        "columns": [
+          "unit_icon_with_tier",
+          "surviving_units",
+          "wounded_units",
+          "lost_units",
+          "enemy_units_killed"
+        ],
+        "special_rows": "First 3 rows are typically Titan1, Titan2, Warplane \u2014 show level not tier",
+        "unit_identification": "Icon only \u2014 use recognition_guide to map to unit name",
+        "note": "Scrollable \u2014 may need multiple screenshots to capture all units"
+      },
+      "screen_3_technology_bonus": {
+        "fields": [
+          "melee_hp",
+          "melee_attack",
+          "melee_defense",
+          "mid_range_hp",
+          "mid_range_attack",
+          "mid_range_defense",
+          "long_range_hp",
+          "long_range_attack",
+          "long_range_defense",
+          "biochem_zombie_attack",
+          "biochem_zombie_hp",
+          "biochem_zombie_defense",
+          "all_troops_block_flat",
+          "all_troops_block_pct",
+          "all_troops_disruptor_resistance",
+          "attack_against_melee_boost",
+          "attack_against_mid_range_boost",
+          "attack_against_long_range_boost",
+          "enemy_melee_attack_reduction",
+          "enemy_mid_range_attack_reduction",
+          "enemy_long_range_attack_reduction",
+          "enemy_zombie_attack_reduction",
+          "enemy_melee_defense_reduction",
+          "titan_damage_taken_reduction",
+          "troops_attack_bonus_boost_flat",
+          "troops_hp_bonus_boost_flat",
+          "reduces_damage_taken_from_melee",
+          "reduces_damage_taken_from_mid",
+          "reduces_damage_taken_from_long"
+        ],
+        "note": "MOST IMPORTANT SCREEN \u2014 actual buffs applied, ground truth for post-mortem",
+        "critical": "These values may differ from player profile if officers/equipment changed since last update"
+      }
+    },
+    "battle_types": {
+      "uranium_mine": {
+        "description": "Resource node PvP \u2014 Uranium Mine seizure/defense",
+        "troops": "Real troops \u2014 lost units go to wounded (no permanent loss in Deep Mining)",
+        "officer_skills": "City-based skills (Kingsley base, Panda Jack base) DO NOT apply",
+        "note": "Different buff calculation than city defense or Nation Duel"
+      },
+      "nation_duel_normal": {
+        "description": "Nation Duel vs system troops",
+        "troops": "System troops \u2014 no real troop loss",
+        "officer_skills": "All officer skills apply including titans/plane"
+      },
+      "nation_duel_elite": {
+        "description": "Nation Duel vs real matched opponent at 23:00",
+        "troops": "System troops \u2014 no real troop loss",
+        "officer_skills": "All officer skills apply"
+      },
+      "city_attack_defense": {
+        "description": "Direct city PvP",
+        "troops": "Real troops with real losses",
+        "officer_skills": "All skills apply including city-specific base skills"
+      }
+    },
+    "icon_recognition": {
+      "method": "Match tier badge (Roman numeral) + icon visual characteristics to identify unit",
+      "tier_badges": {
+        "VIII": "T8",
+        "IX": "T9",
+        "X": "T10",
+        "XI": "T11",
+        "XII": "T12",
+        "XIII": "T13"
+      },
+      "row_inference": {
+        "front_indicators": "High lost units early, lower enemy kills per unit, appears in first rows of list",
+        "middle_indicators": "Moderate survival, high enemy kills, bikes/gunners/storm troopers",
+        "back_indicators": "Higher survival, very high enemy kills per unit, cannons/snipers",
+        "zombie_indicators": "Distinct zombie icon, always grouped together, green/grey coloring",
+        "titan_plane_indicators": "Always surviving=1, large detailed icon, level number shown not tier"
+      },
+      "unit_icons": {
+        "Destruction Tank": {
+          "shape": "heavy armored vehicle/tank body",
+          "color": "dark grey metal",
+          "silhouette": "wide low profile tank",
+          "distinctive": "cannon barrel prominent on front"
+        },
+        "Apocalypse Infantry": {
+          "shape": "armored soldier standing",
+          "color": "dark armored suit",
+          "silhouette": "humanoid upright",
+          "distinctive": "heavy shoulder armor, weapon raised",
+          "ability": {
+            "name": "Home Guard",
+            "description": "Damage reduction triggered every 8 seconds \u2014 damage taken reduced 50% for 4 seconds",
+            "uptime": "4s on / 8s cycle = 50% uptime",
+            "avg_reduction": "25%",
+            "note": "Same cycle as Shredder Defensive Stance but higher reduction (50% vs 34%) \u2014 weaker unit stats though"
+          }
+        },
+        "Hades Gatling": {
+          "shape": "soldier with large rotary barrel gun",
+          "color": "dark with orange accents",
+          "silhouette": "humanoid with wide barrel",
+          "distinctive": "multiple rotating barrels visible"
+        },
+        "Havoc Breaker": {
+          "shape": "soldier with lightning/electric weapon",
+          "color": "blue-grey electric",
+          "silhouette": "humanoid with energy weapon",
+          "distinctive": "lightning/electric effect on weapon"
+        },
+        "Death Cannon": {
+          "shape": "large wheeled or tracked cannon",
+          "color": "dark metal grey",
+          "silhouette": "wide low cannon on wheels",
+          "distinctive": "large single barrel, wheeled base"
+        },
+        "Immortal Shielder": {
+          "shape": "soldier holding large shield",
+          "color": "silver/gold shield prominent",
+          "silhouette": "humanoid behind large shield",
+          "distinctive": "shield takes up most of icon"
+        },
+        "Biochemical Zombie T13": {
+          "shape": "decaying humanoid figure",
+          "color": "green/grey toxic",
+          "silhouette": "hunched zombie shape",
+          "distinctive": "green glow or toxic coloring"
+        },
+        "Demon Raider": {
+          "shape": "motorcycle or fast bike with rider",
+          "color": "red/black fast vehicle",
+          "silhouette": "low horizontal bike profile",
+          "distinctive": "speed lines, lean aggressive profile"
+        },
+        "Fanatic Terminator": {
+          "shape": "soldier with rocket launcher on shoulder",
+          "color": "dark military",
+          "silhouette": "humanoid with tube/launcher",
+          "distinctive": "rocket tube on shoulder"
+        },
+        "Eagle Eye Shot": {
+          "shape": "sniper with long rifle",
+          "color": "camouflage/dark",
+          "silhouette": "humanoid prone or crouching with long barrel",
+          "distinctive": "very long rifle barrel"
+        },
+        "Hell King": {
+          "shape": "large shredder/saw vehicle",
+          "color": "red/rust metal",
+          "silhouette": "wide vehicle with saw or blade",
+          "distinctive": "spinning blade or aggressive front attachment"
+        },
+        "Ultima Armored Soldier": {
+          "shape": "heavily armored soldier",
+          "color": "silver/dark armor",
+          "silhouette": "bulky humanoid",
+          "distinctive": "full body armor plates",
+          "ability": {
+            "name": "Reflective Armor",
+            "description": "35% chance to reflect 20% of damage taken back to attacker",
+            "avg_reduction": "7% net damage reduction (0.35 \u00d7 0.20)",
+            "note": "Weakest passive of all front-row types \u2014 primarily offensive via reflection rather than pure defense"
+          }
+        },
+        "Ultima EMP Cannon": {
+          "shape": "EMP device or cannon with pulse rings",
+          "color": "blue electric",
+          "silhouette": "cannon with wave emitter",
+          "distinctive": "concentric rings or pulse wave visual",
+          "ability": {
+            "name": "Laser",
+            "description": "Every 3 attacks triggers a devastating laser beam dealing damage to up to 3 units",
+            "target_count": 3,
+            "trigger": "Every 3rd attack",
+            "note": "Similar to Death Cannon Bomb Launcher \u2014 AoE back-row unit hitting multiple targets per proc"
+          }
+        },
+        "Wasteland King": {
+          "shape": "shredder vehicle",
+          "color": "rust/orange",
+          "silhouette": "vehicle with blades",
+          "distinctive": "smaller than Hell King but similar profile"
+        },
+        "Cobra Sniper": {
+          "shape": "sniper",
+          "color": "dark camo",
+          "silhouette": "prone long rifle",
+          "distinctive": "similar to Eagle Eye Shot but T10 badge"
+        },
+        "Pyromaster": {
+          "shape": "rocket/flame soldier",
+          "color": "orange/fire",
+          "silhouette": "humanoid with flame weapon",
+          "distinctive": "fire or rocket exhaust visible"
+        },
+        "Storm Raider": {
+          "shape": "bike/motorcycle",
+          "color": "dark fast vehicle",
+          "silhouette": "low horizontal bike",
+          "distinctive": "similar to Demon Raider but T10"
+        },
+        "Biochemical Zombie T9": {
+          "shape": "zombie humanoid",
+          "color": "green/grey",
+          "silhouette": "hunched",
+          "distinctive": "T9 badge, same zombie shape"
+        },
+        "Death Tank": {
+          "shape": "tank",
+          "color": "grey metal",
+          "silhouette": "tank body",
+          "distinctive": "T9 badge, tank profile"
+        },
+        "Elite Infantry": {
+          "shape": "soldier",
+          "color": "military green",
+          "silhouette": "standing soldier",
+          "distinctive": "standard infantry pose",
+          "ability": {
+            "name": "Home Guard",
+            "description": "Damage reduction triggered every 8 seconds \u2014 damage taken reduced 50% for 4 seconds",
+            "uptime": "4s on / 8s cycle = 50% uptime",
+            "avg_reduction": "25%",
+            "note": "Same cycle as Shredder Defensive Stance but higher reduction (50% vs 34%) \u2014 weaker unit stats though"
+          }
+        },
+        "Havoc Storm Trooper": {
+          "shape": "storm trooper soldier",
+          "color": "dark armored",
+          "silhouette": "humanoid armored",
+          "distinctive": "similar to Havoc Breaker but T9"
+        },
+        "Mad Gatling": {
+          "shape": "gatling gun soldier",
+          "color": "dark",
+          "silhouette": "humanoid with rotary barrel",
+          "distinctive": "T9 badge, similar to Hades Gatling"
+        },
+        "Supreme Shielder": {
+          "shape": "shielder soldier",
+          "color": "silver shield",
+          "silhouette": "shield prominent",
+          "distinctive": "T9 shield bearer"
+        },
+        "Uranium Cannon": {
+          "shape": "cannon",
+          "color": "grey metal",
+          "silhouette": "wheeled cannon",
+          "distinctive": "T9 badge, similar to Death Cannon"
+        }
+      },
+      "disambiguation_rules": [
+        "Same unit type across tiers: distinguish by Roman numeral badge only",
+        "Bike types (Demon Raider/Storm Raider): horizontal low profile, tier badge is key",
+        "Cannon types (Death Cannon/Uranium Cannon): wheeled cannon silhouette, tier badge key",
+        "Shielder types: large shield prominent, tier badge key",
+        "Zombie: always distinctly green/grey hunched figure \u2014 unmistakable",
+        "Titans/Plane: shown at top of list, surviving=1, NO tier badge \u2014 show level number instead"
+      ]
+    },
+    "post_mortem_analysis_fields": {
+      "outcome_analysis": [
+        "result",
+        "kill_ratio",
+        "survival_rate",
+        "dominant_unit_by_kills"
+      ],
+      "buff_comparison": [
+        "per_stat_gap_friendly_vs_enemy",
+        "largest_gaps_identified",
+        "strongest_enemy_stats",
+        "weakest_friendly_stats"
+      ],
+      "unit_performance": [
+        "kills_per_unit_by_type",
+        "survival_rate_by_type",
+        "most_effective_unit",
+        "least_effective_unit"
+      ],
+      "actionable_recommendations": [
+        "officer_changes_to_close_buff_gaps",
+        "formation_adjustments_based_on_unit_performance",
+        "equipment_upgrade_priorities",
+        "battle_type_specific_officer_swap_suggestions"
+      ]
+    },
+    "sample_postmortem_uranium_mine": {
+      "battle": "Uranium Mine defense \u2014 Baba_Zulu vs Mr.Condictor",
+      "result": "LOSS (defender wiped, 3 units surviving)",
+      "kill_ratio": "76,188 friendly kills vs 214,562 enemy losses \u2014 1:2.8 unfavorable",
+      "key_buff_gaps": {
+        "long_range_attack": {
+          "friendly": 202.0,
+          "enemy": 390.1,
+          "gap": -188.1,
+          "severity": "CRITICAL"
+        },
+        "vs_enemy_long_atk_debuff": {
+          "friendly": -27.3,
+          "enemy": -47.6,
+          "gap": 20.3,
+          "severity": "HIGH"
+        },
+        "vs_enemy_mid_atk_debuff": {
+          "friendly": -27.3,
+          "enemy": -45.8,
+          "gap": 18.5,
+          "severity": "HIGH"
+        },
+        "vs_melee_boost": {
+          "friendly": 44.0,
+          "enemy": 61.1,
+          "gap": -17.1,
+          "severity": "MEDIUM"
+        },
+        "mid_range_attack": {
+          "friendly": 267.6,
+          "enemy": 273.6,
+          "gap": -6.0,
+          "severity": "LOW"
+        }
+      },
+      "dominant_enemy_unit": "T9 Cannon \u2014 106,841 kills = 49.7% of all enemy damage",
+      "recommendations": [
+        "CRITICAL: Long-Range Attack gap of 188% is the primary loss driver. Upgrade Long-Range Attack technology research as highest priority.",
+        "HIGH: Enemy attack reduction debuffs are significantly weaker than opponent's. Review Drillmaster officers \u2014 Jimmy and Cattie provide enemy attack reduction. Ensure both are equipped and at maximum level.",
+        "HIGH: Opponent's T9 Cannon stack was overwhelming \u2014 in future mine defense, consider heavier front row to absorb cannon fire longer.",
+        "NOTE: Kingsley and Panda Jack base city skills do not apply in Uranium Mine battles \u2014 their equipment skills still apply but base skill buff is lost vs city defense."
+      ]
+    },
+    "hypothesis_framework": {
+      "description": "Formation decisions are hypotheses about expected outcomes. Post-mortem validates or refutes them.",
+      "pre_battle_inputs": {
+        "formation": "What units were deployed in each row and in what quantity",
+        "officer_loadout": "Which officers were active and what buffs they contribute",
+        "expected_buffs": "Predicted Technology Bonus values based on profile",
+        "formation_rationale": "Why this formation \u2014 what is it optimized to do"
+      },
+      "post_battle_analysis": {
+        "buff_validation": "Compare expected vs actual Technology Bonus \u2014 discrepancies reveal officer/equip issues",
+        "kill_efficiency": "Kills per unit by row \u2014 did each row perform its expected role",
+        "loss_pattern": "Which of your units died first and fastest \u2014 reveals enemy formation strength",
+        "enemy_unit_inference": "Infer enemy formation from which of your units took most damage + enemy kill distribution",
+        "hypothesis_verdict": "CONFIRMED / PARTIALLY CONFIRMED / REFUTED with specific evidence"
+      },
+      "formation_revision_signals": {
+        "enemy_back_row_heavy": "Your front row died fast, enemy long-range killed most \u2014 increase Havoc Breaker or Storm Trooper",
+        "enemy_front_row_heavy": "Your back row underperformed \u2014 enemy melee absorbed damage \u2014 increase Bomb Launcher or EMP",
+        "enemy_buff_dominant": "Technology gap explains loss regardless of formation \u2014 research/officer upgrade priority",
+        "formation_matched_hypothesis": "Formation was correct \u2014 loss due to stat gap, not formation error"
+      },
+      "battle_type_contexts": {
+        "uranium_mine": {
+          "hypothesis_focus": "Survival and kill ratio \u2014 defend long enough to win points",
+          "officer_note": "Kingsley/Panda Jack base skills do NOT apply \u2014 adjust expected buffs accordingly",
+          "troop_note": "Real troops used \u2014 consider troop tier gaps vs opponent"
+        },
+        "nation_duel_normal": {
+          "hypothesis_focus": "Maximize kills against unknown system enemy \u2014 retry with adjustments",
+          "officer_note": "All officers apply \u2014 Technology Bonus should match profile exactly",
+          "troop_note": "System troops \u2014 no loss risk, unlimited retry value"
+        },
+        "nation_duel_elite": {
+          "hypothesis_focus": "Win the matchup \u2014 can scout opponent history from Day 2+",
+          "officer_note": "Formation locks at 23:00 \u2014 pre-battle hypothesis must be set before lock",
+          "troop_note": "System troops \u2014 formation locked so post-mortem informs NEXT day"
+        }
+      }
+    }
+  },
+  "nation_duel_results": [
+    {
+      "date": "2026-03-07",
+      "day": 1,
+      "event": "Nation Duel \u2014 Normal Enemy",
+      "runs": [
+        {
+          "run": 1,
+          "buffs_active": [
+            "Fortify +40% HP",
+            "Combat +15% Atk/HP"
+          ],
+          "waves_completed": 6,
+          "enemy_units_killed": 532684,
+          "surviving_units": 450003,
+          "lost_units": 0,
+          "wounded_units": 0,
+          "power_loss": 0,
+          "individual_bonus_points": 5991,
+          "high_score": true,
+          "battle_rewards": [
+            "Free Fortifications +1",
+            "Today's Fortification Slot +3"
+          ],
+          "fortify_rewards": [
+            "2-star soldier buff icon"
+          ]
+        },
+        {
+          "run": 2,
+          "buffs_active": [
+            "Fortify +40% HP",
+            "Combat +15% Atk/HP",
+            "second fortify buff earned from run 1"
+          ],
+          "waves_completed": 6,
+          "enemy_units_killed": 526317,
+          "surviving_units": 450003,
+          "lost_units": 0,
+          "wounded_units": 0,
+          "power_loss": 0,
+          "individual_bonus_points": 5920,
+          "high_score": false,
+          "notes": "Score lower despite same waves \u2014 RNG variance confirmed"
+        },
+        {
+          "run": 3,
+          "formation_change": "Tanks +10,000 troops (14K\u219224K), Hades Gatling -40,000 units (50K\u219210K troops), Simon replacing Selina",
+          "buffs_active": [
+            "Fortify +40% HP",
+            "Combat +15% Atk/HP",
+            "two fortify buffs from prior runs"
+          ],
+          "waves_completed": 6,
+          "enemy_units_killed": 515302,
+          "surviving_units": 450003,
+          "lost_units": 0,
+          "power": 29041289,
+          "individual_bonus_points": 5797,
+          "base_score": 5153,
+          "bonus_points": 644,
+          "high_score": false,
+          "verdict": "LOWER \u2014 revert to original formation",
+          "notes": "Fewer kills despite same waves. Hades Gatling removal hurt more than extra tanks helped."
+        },
+        {
+          "run": 4,
+          "formation_change": "Demon Raider 40K\u219236K troops (-20K units), Hell King Shredder added 2K troops (+20K units front), Shielder retained, Selina",
+          "waves_completed": "unknown",
+          "individual_bonus_points": 5492,
+          "high_score": false,
+          "verdict": "SIGNIFICANTLY WORSE \u2014 -499 pts vs best run",
+          "notes": "Worst result of all four runs. Bike reduction confirmed as damaging.",
+          "base_score": 4882,
+          "bonus_points": 610
+        },
+        {
+          "run": 5,
+          "formation_change": "Original formation restored \u2014 40K bike troops, Shielder, Selina",
+          "waves_completed": 6,
+          "base_score": 5386,
+          "bonus_points": 673,
+          "individual_bonus_points": 6059,
+          "high_score": true,
+          "verdict": "NEW HIGH SCORE \u2014 cleared 6,000 threshold",
+          "bonus_check": "5386 * 1.12 = 6032 vs actual 6059 \u2014 delta 27"
+        }
+      ],
+      "observations": {
+        "wave_mechanic": "6 waves completed both runs \u2014 enemy keeps sending armies until fleet exhausted",
+        "no_troop_loss": "System troops confirmed \u2014 0 lost, 0 wounded, power loss 0",
+        "surviving_units": "450,003 = 400,000 fleet + 50,000 zombies + 3 (titans/plane)",
+        "rng_confirmed": "Same formation + extra buff = lower score on run 2. RNG affects kill counts per wave.",
+        "score_variance": "5991 vs 5920 = 71 point swing = 1.2% variance between identical runs",
+        "fortify_mechanic": "Run 1 earned Fortification +1 and Slot +3 as battle reward \u2014 stackable buffs"
+      },
+      "bonus_mechanic": {
+        "confirmed": "+12% bonus applied to base kill score",
+        "trigger": "6 waves completed",
+        "formula": "total_points = base_kill_score * 1.12",
+        "verification": {
+          "run_3": {
+            "base": 5153,
+            "x112": 5771,
+            "actual": 5797,
+            "note": "5153 * 1.12 = 5771 \u2014 close but 26 off, may be rounding or slight variance"
+          },
+          "run_4": {
+            "base": 4882,
+            "x112": 5468,
+            "actual": 5492,
+            "note": "4882 * 1.12 = 5468 \u2014 actual 5492, delta 24"
+          }
+        },
+        "implication": "Every kill is worth 1.12 pts, not 1.0. Threshold to hit 6,000 is 6000/1.12 = 5,357 base kills score"
+      }
+    }
+  ],
+  "officer_system": {
+    "rarity": {
+      "Orange": {
+        "equipment": "Active from 3\u2605 \u2014 left side slot with own stats + expertise",
+        "star_4": "Second equipment slot unlocks"
+      },
+      "Purple": {
+        "equipment": "NO equipment system \u2014 skills only regardless of star level",
+        "example": "Butterfly"
+      }
+    },
+    "base_skill_context": {
+      "City Guards": "Only applies defending your own city \u2014 NOT in Nation Duel or field",
+      "Siege Army": "Only applies attacking city gates \u2014 NOT in Nation Duel or field"
+    },
+    "equipment_resource": {
+      "currency": "Officer Equipment Alloy chips",
+      "strategy": "Hold for event bonuses \u2014 never spend outside events",
+      "current_chips": 382
+    }
+  },
+  "nation_duel_mechanics": {
+    "fleet": "400,000 system troops + 50,000 zombie pool \u2014 no permanent losses",
+    "wave_mechanic": "Enemies arrive sequentially and additively \u2014 1, then 2, then 3 etc. simultaneously. Max 24 armies. Your single army fights continuously through escalating pressure.",
+    "scoring": {
+      "formula": "total = base_kill_score * 1.12",
+      "bonus": "+12% applied when completing 6 waves",
+      "points_per_kill": "~0.0112 per kill unit",
+      "threshold_6000": "Need base score ~5,357 for 6,000 total"
+    },
+    "survivors": "450,003 always returned at end regardless of battle \u2014 not a performance metric",
+    "fortify_buff": "Earned as battle reward \u2014 +HP to all troops for next run",
+    "elite_enemy": "Formation locks at 23:00 \u2014 set before then"
+  },
+  "nation_duel_day1": {
+    "high_score": 6059,
+    "runs": 5,
+    "validated_formation": {
+      "front": {
+        "Destruction Tank T13": "14,000 troops / 70,000 units"
+      },
+      "middle": {
+        "Demon Raider T12": "40,000 troops / 200,000 units \u2014 PRIMARY SCORING ENGINE",
+        "Hades Gatling T13": "50,000 troops / 50,000 units",
+        "Havoc Breaker T13": "20,000 troops / 20,000 units"
+      },
+      "back": {
+        "Death Cannon T13": "8,000 troops / 40,000 units",
+        "Eagle Eye Shot T12": "10,000 troops / 10,000 units",
+        "Immortal Shielder T13": "2,000 troops / 10,000 units"
+      },
+      "zombie": {
+        "Biochemical Zombie T13": "50,000 troops / 50,000 units"
+      },
+      "officer": "Selina (sustained DEF/HP \u2014 confirmed better than Simon for attrition)",
+      "total_fleet": "400,000 / 400,000"
+    },
+    "experiments": [
+      {
+        "change": "More tanks, less Gatling, Simon",
+        "result": 5797,
+        "verdict": "WORSE"
+      },
+      {
+        "change": "Less bikes (-20K units), added Shredder",
+        "result": 5492,
+        "verdict": "SIGNIFICANTLY WORSE"
+      },
+      {
+        "change": "Original formation",
+        "result": 6059,
+        "verdict": "BEST"
+      }
+    ],
+    "key_learnings": [
+      "Demon Raider Speed Racer is the scoring engine \u2014 never reduce bike allocation",
+      "Early kills reduce incoming damage before next enemy army layers on",
+      "Hades Gatling pulls real weight at 50K troops \u2014 do not reduce",
+      "Front row bulk (shredder) does not compensate for lost mid-row firepower",
+      "Selina confirmed over Simon for wave attrition",
+      "Bonus = +12% for 6 waves completed",
+      "Score variance ~100-200 pts per run from RNG alone",
+      "Path to wave 7 is next improvement target"
+    ]
+  },
+  "unit_abilities": {
+    "front_row": {
+      "Tank": {
+        "name": "Bulletproof Armor",
+        "description": "31% chance to block 50% of damage per hit",
+        "avg_reduction": "15.5%",
+        "uptime": "Always active \u2014 pure passive per hit"
+      },
+      "Shredder": {
+        "name": "Defensive Stance",
+        "description": "34% damage reduction for 4s every 8s",
+        "uptime": "50%",
+        "avg_reduction": "17%"
+      },
+      "Infantry": {
+        "name": "Home Guard",
+        "description": "Damage reduction triggered every 8 seconds \u2014 damage taken reduced 50% for 4 seconds",
+        "uptime": "4s on / 8s cycle = 50% uptime",
+        "avg_reduction": "25%",
+        "note": "Same cycle as Shredder Defensive Stance but higher reduction (50% vs 34%) \u2014 weaker unit stats though"
+      },
+      "Armored Soldier": {
+        "name": "Reflective Armor",
+        "description": "35% chance to reflect 20% of damage taken back to attacker",
+        "avg_reduction": "7% net damage reduction (0.35 \u00d7 0.20)",
+        "note": "Weakest passive of all front-row types \u2014 primarily offensive via reflection rather than pure defense"
+      }
+    },
+    "middle_row": {
+      "Bike": {
+        "name": "Speed Racer",
+        "description": "Opening burst \u2014 extremely high DPS in first seconds, then sustained",
+        "note": "Confirmed primary scoring engine in Nation Duel wave attrition"
+      },
+      "Gunner": {
+        "name": "Rapid Fire",
+        "description": "Unconfirmed details \u2014 high sustained DPS"
+      },
+      "Storm Trooper": {
+        "name": "EC (Electromagnetic Charge)",
+        "description": "Targets back row priority \u2014 stack or spread"
+      },
+      "Shielder": {
+        "name": "Shield Barrier",
+        "description": "Defensive support"
+      }
+    },
+    "back_row": {
+      "Cannon": {
+        "name": "Bomb Launcher",
+        "description": "~3 targets per proc AoE",
+        "target_count": 3
+      },
+      "Sniper": {
+        "name": "Sniper Hit",
+        "description": "+26.7% average damage bonus",
+        "avg_bonus": "26.7%"
+      },
+      "EMP": {
+        "name": "Laser",
+        "description": "Every 3 attacks triggers a devastating laser beam dealing damage to up to 3 units",
+        "target_count": 3,
+        "trigger": "Every 3rd attack",
+        "note": "Similar to Death Cannon Bomb Launcher \u2014 AoE back-row unit hitting multiple targets per proc"
+      },
+      "Rocket": {
+        "name": "Overshoot",
+        "description": "Inferior to Storm Trooper in all dimensions"
+      }
+    }
+  },
+  "front_row_analysis": {
+    "comparison": [
+      {
+        "type": "Tank T13",
+        "hp": 2643,
+        "atk": 192,
+        "upt": 5,
+        "ability": "Bulletproof Armor",
+        "avg_reduction": "15.5%",
+        "consistency": "Always active",
+        "verdict": "Best sustained durability \u2014 recommended"
+      },
+      {
+        "type": "Shredder T12",
+        "hp": 2226,
+        "atk": 166,
+        "upt": 10,
+        "ability": "Defensive Stance",
+        "avg_reduction": "17%",
+        "consistency": "50% uptime \u2014 vulnerable window every 8s",
+        "verdict": "More units per troop but weaker individually"
+      },
+      {
+        "type": "Infantry T13",
+        "hp": "unknown",
+        "atk": "unknown",
+        "upt": 1,
+        "ability": "Home Guard",
+        "avg_reduction": "25%",
+        "consistency": "50% uptime like Shredder",
+        "verdict": "High reduction but only 1 unit per troop \u2014 needs stat verification"
+      },
+      {
+        "type": "Armored Soldier T12",
+        "hp": "unknown",
+        "atk": "unknown",
+        "upt": 2,
+        "ability": "Reflective Armor",
+        "avg_reduction": "7% net",
+        "consistency": "Passive 35% chance",
+        "verdict": "Weakest passive \u2014 reflection adds minor offensive value"
+      }
+    ],
+    "nation_duel_validated": "Destruction Tank T13 \u2014 confirmed best in 5-run empirical test"
+  }
+}

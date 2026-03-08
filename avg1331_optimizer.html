@@ -409,7 +409,7 @@ input[type=number]::-webkit-inner-spin-button{opacity:0.3;}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc }
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -446,8 +446,16 @@ window.saveToFirebase = async function() {
   const user = auth.currentUser;
   if (!user || !window.STATE) return;
   try {
-    await setDoc(doc(db, "players", user.uid), window.STATE, { merge: true });
+    await setDoc(doc(db, "players", user.uid), {
+      ...window.STATE,
+      lastUpdated: new Date().toISOString()
+    }, { merge: true });
   } catch(e) { console.error("Save error:", e); }
+};
+
+window._fbLoadAllPlayers = async function() {
+  const snap = await getDocs(collection(db, "players"));
+  return snap.docs.map(d => ({ uid: d.id, data: d.data(), lastUpdated: d.data().lastUpdated }));
 };
 
 onAuthStateChanged(auth, user => {
@@ -464,6 +472,9 @@ onAuthStateChanged(auth, user => {
     const nameEl = document.getElementById("playerName");
     if (nameEl && !nameEl.value) nameEl.value = user.displayName || "";
     loadProfile(user.uid);
+    setTimeout(()=>{ window.checkLeaderAccess && window.checkLeaderAccess(); }, 500);
+    const ss = document.getElementById('syncStatus');
+    if (ss) { ss.textContent = '● signed in'; ss.style.color = 'var(--green)'; }
   } else {
     if (authBtn)    { authBtn.textContent = "Sign In with Google"; authBtn.onclick = () => signInWithPopup(auth, provider); }
     if (authStatus) { authStatus.textContent = "Not signed in"; authStatus.style.color = "var(--muted)"; }
@@ -554,9 +565,17 @@ onAuthStateChanged(auth, user => {
         <span class="nav-badge" id="badge-pm">—</span>
       </div>
     </div>
+    <div class="nav-section" id="allianceNavSection" style="display:none;">
+      <div class="nav-label">Alliance</div>
+      <div class="nav-item" onclick="showPanel('alliance');loadAllianceRoster()">
+        <span class="nav-icon">⚑</span> Roster
+        <span class="nav-badge" id="badge-alliance">—</span>
+      </div>
+    </div>
     <div style="flex:1;"></div>
     <div style="padding:12px 16px;font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);border-top:1px solid var(--border);">
-      v1.0 · Nation Duel + Monsters
+      <span id="syncStatus" style="color:var(--muted);">○ local</span><br>
+      v1.1 · Nation Duel + Monsters
     </div>
   </div>
 
@@ -855,6 +874,25 @@ onAuthStateChanged(auth, user => {
   </div>
 </div>
 
+<!-- ALLIANCE ROSTER PANEL -->
+<div id="panel-alliance" class="panel">
+  <div class="dash-header">
+    <h2>ALLIANCE ROSTER</h2>
+    <p>AVG1331 member profiles — visible to alliance leader only.</p>
+  </div>
+  <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center;">
+    <button onclick="loadAllianceRoster()" class="qa-btn primary" style="font-size:0.75rem;">
+      ↺ Refresh Roster
+    </button>
+    <span id="rosterStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);"></span>
+  </div>
+  <div id="allianceRosterGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
+    <div style="color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:0.78rem;padding:20px;">
+      Click Refresh to load roster...
+    </div>
+  </div>
+</div>
+
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
   <div class="admin-box">
@@ -1053,6 +1091,11 @@ async function saveState() {
   // Also save to Firebase if signed in
   window.saveToFirebase && window.saveToFirebase();
   updateDashboard();
+  // Show sync indicator
+  const ss = document.getElementById('syncStatus');
+  if (ss) { ss.textContent = '● saving...'; ss.style.color = 'var(--gold)';
+    setTimeout(()=>{ ss.textContent = window._fbUser ? '● synced' : '○ local';
+      ss.style.color = window._fbUser ? 'var(--green)' : 'var(--muted)'; }, 1500); }
 }
 
 function applyState() {
@@ -1732,6 +1775,69 @@ function formatPmOutput(text) {
     .replace(/`([^`]+)`/g, '<code style="font-family:\'Share Tech Mono\',monospace;font-size:0.8em;color:var(--accent);background:var(--faint);padding:1px 5px;border-radius:3px;">$1</code>')
     .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>');
+}
+
+// ════════════════════════════════════════════
+// ALLIANCE ROSTER (Leader only)
+// ════════════════════════════════════════════
+const LEADER_UID = "GYQ9bo0ss3SVSHyPWgDoA4JhOq93"; // Replace with your Firebase UID after first sign-in
+
+function checkLeaderAccess() {
+  const isLeader = window._fbUser && window._fbUser.uid === LEADER_UID;
+  const navSection = document.getElementById('allianceNavSection');
+  if (navSection) navSection.style.display = isLeader ? 'block' : 'none';
+  return isLeader;
+}
+window.checkLeaderAccess = checkLeaderAccess;
+
+async function loadAllianceRoster() {
+  if (!checkLeaderAccess()) {
+    document.getElementById('rosterStatus').textContent = 'Access restricted to alliance leader.';
+    return;
+  }
+  const grid = document.getElementById('allianceRosterGrid');
+  const status = document.getElementById('rosterStatus');
+  grid.innerHTML = '<div style="color:var(--muted);font-family:\'Share Tech Mono\',monospace;font-size:0.78rem;padding:20px;"><div class="spinner" style="display:inline-block;margin-right:8px;"></div> Loading roster...</div>';
+  status.textContent = '';
+
+  try {
+    // Call Firebase via the exposed window function
+    const members = await window._fbLoadAllPlayers();
+    if (!members || members.length === 0) {
+      grid.innerHTML = '<div style="color:var(--muted);font-family:\'Share Tech Mono\',monospace;font-size:0.78rem;padding:20px;">No members have signed in yet.</div>';
+      return;
+    }
+    const badge = document.getElementById('badge-alliance');
+    if (badge) { badge.textContent = members.length; badge.className = 'nav-badge ok'; }
+    status.textContent = `${members.length} members found`;
+
+    grid.innerHTML = members.map(m => {
+      const s = m.data;
+      const fleet = s.troops ? Object.entries(s.troops).filter(([k])=>k!=='zombie')
+        .reduce((t,[,row])=>t+Object.entries(row).reduce((rt,[unit,cnt])=>{
+          const u = (window.ALL_UNITS||[]).find(x=>x.name===unit);
+          return rt + (parseInt(cnt)||0) * (u?.upt||1);
+        },0),0) : 0;
+      const wf = s.officers?.warfare?.filter(Boolean)||[];
+      const bp = s.cityBP ? parseInt(s.cityBP).toLocaleString() : '—';
+      const lastSeen = m.lastUpdated ? new Date(m.lastUpdated).toLocaleDateString() : '—';
+      return `<div class="profile-card" style="cursor:default;">
+        <div class="pc-header">
+          <span class="pc-title">${s.player || 'Unknown'}</span>
+          <span class="pc-status ${fleet>0?'complete':'partial'}">${fleet>0?'Active':'Partial'}</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-row"><span class="pc-key">Battle Power</span><span class="pc-val">${bp}</span></div>
+          <div class="pc-row"><span class="pc-key">City Level</span><span class="pc-val">${s.cityLevel ? 'C'+s.cityLevel : '—'}</span></div>
+          <div class="pc-row"><span class="pc-key">Fleet</span><span class="pc-val ${fleet>0?'set':''}">${fleet>0?fleet.toLocaleString()+' / 400,000':'—'}</span></div>
+          <div class="pc-row"><span class="pc-key">Warfare Officers</span><span class="pc-val">${wf.length}/6 set</span></div>
+          <div class="pc-row"><span class="pc-key">Last Updated</span><span class="pc-val" style="font-size:0.65rem;">${lastSeen}</span></div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="color:var(--red);font-family:'Share Tech Mono',monospace;font-size:0.78rem;padding:20px;">Error loading roster: ${e.message}</div>`;
+  }
 }
 
 // ════════════════════════════════════════════

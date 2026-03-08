@@ -443,14 +443,19 @@ async function loadProfile(uid) {
 }
 
 window.saveToFirebase = async function() {
-  const user = auth.currentUser;
+  const user = window._fbUser;
   if (!user || !window.STATE) return;
+  const ss = document.getElementById('syncStatus');
   try {
     await setDoc(doc(db, "players", user.uid), {
       ...window.STATE,
       lastUpdated: new Date().toISOString()
     }, { merge: true });
-  } catch(e) { console.error("Save error:", e); }
+    if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
+  } catch(e) {
+    console.error("Save error:", e);
+    if (ss) { ss.textContent = '✗ ' + e.code; ss.style.color = 'var(--red)'; }
+  }
 };
 
 window._fbLoadAllPlayers = async function() {
@@ -1089,13 +1094,10 @@ async function saveState() {
     await window.storage.set('aoo_player_state', JSON.stringify(STATE));
   } catch(e) {}
   // Also save to Firebase if signed in
+  const ss = document.getElementById('syncStatus');
+  if (window._fbUser && ss) { ss.textContent = '● saving...'; ss.style.color = 'var(--gold)'; }
   window.saveToFirebase && window.saveToFirebase();
   updateDashboard();
-  // Show sync indicator
-  const ss = document.getElementById('syncStatus');
-  if (ss) { ss.textContent = '● saving...'; ss.style.color = 'var(--gold)';
-    setTimeout(()=>{ ss.textContent = window._fbUser ? '● synced' : '○ local';
-      ss.style.color = window._fbUser ? 'var(--green)' : 'var(--muted)'; }, 1500); }
 }
 
 function applyState() {

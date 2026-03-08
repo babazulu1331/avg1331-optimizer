@@ -447,10 +447,14 @@ window.saveToFirebase = async function() {
   if (!user || !window.STATE) return;
   const ss = document.getElementById('syncStatus');
   try {
-    const savePromise = setDoc(doc(db, "players", user.uid), {
+    // Sanitize STATE — strip non-serializable fields
+    const clean = JSON.parse(JSON.stringify({
       ...window.STATE,
+      uploadedImages: [],   // never save base64 images to Firestore
+      adminUnlocked: false,
       lastUpdated: new Date().toISOString()
-    }, { merge: true });
+    }));
+    const savePromise = setDoc(doc(db, "players", user.uid), clean, { merge: true });
     const timeout = new Promise((_,reject) => setTimeout(()=>reject(new Error('timeout')), 8000));
     await Promise.race([savePromise, timeout]);
     if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
@@ -494,7 +498,10 @@ onAuthStateChanged(auth, user => {
     const nameEl = document.getElementById("playerName");
     if (nameEl && !nameEl.value) nameEl.value = user.displayName || "";
     loadProfile(user.uid);
-    setTimeout(()=>{ window.checkLeaderAccess && window.checkLeaderAccess(); }, 500);
+    setTimeout(()=>{
+      window.checkLeaderAccess && window.checkLeaderAccess();
+      window.saveToFirebase && window.saveToFirebase();
+    }, 1500);
     const ss = document.getElementById('syncStatus');
     if (ss) { ss.textContent = '● signed in'; ss.style.color = 'var(--green)'; }
   } else {

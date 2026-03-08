@@ -498,8 +498,13 @@ onAuthStateChanged(auth, user => {
     const nameEl = document.getElementById("playerName");
     if (nameEl && !nameEl.value) nameEl.value = user.displayName || "";
     loadProfile(user.uid);
-    setTimeout(()=>{
+    setTimeout(async ()=>{
       window.checkLeaderAccess && window.checkLeaderAccess();
+      // Warm up Firestore connection with a lightweight write first
+      try {
+        await setDoc(doc(db, "test", "ping"), { ts: new Date().toISOString() }, { merge: true });
+      } catch(e) { /* ignore warmup errors */ }
+      // Now do the real save
       window.saveToFirebase && window.saveToFirebase();
     }, 1500);
     const ss = document.getElementById('syncStatus');

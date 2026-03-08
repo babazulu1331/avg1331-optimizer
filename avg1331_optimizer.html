@@ -447,14 +447,31 @@ window.saveToFirebase = async function() {
   if (!user || !window.STATE) return;
   const ss = document.getElementById('syncStatus');
   try {
-    await setDoc(doc(db, "players", user.uid), {
+    const savePromise = setDoc(doc(db, "players", user.uid), {
       ...window.STATE,
       lastUpdated: new Date().toISOString()
     }, { merge: true });
+    const timeout = new Promise((_,reject) => setTimeout(()=>reject(new Error('timeout')), 8000));
+    await Promise.race([savePromise, timeout]);
     if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
   } catch(e) {
     console.error("Save error:", e);
-    if (ss) { ss.textContent = '✗ ' + e.code; ss.style.color = 'var(--red)'; }
+    if (ss) { ss.textContent = '✗ ' + (e.code || e.message); ss.style.color = 'var(--red)'; }
+  }
+};
+
+window.testFirebaseWrite = async function() {
+  const user = window._fbUser;
+  const ss = document.getElementById('syncStatus');
+  if (!user) { alert('Not signed in — _fbUser is null'); return; }
+  alert('Attempting write for UID: ' + user.uid);
+  try {
+    await setDoc(doc(db, "test", "ping"), { ts: new Date().toISOString(), uid: user.uid }, { merge: true });
+    alert('SUCCESS — test/ping written to Firestore!');
+    if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
+  } catch(e) {
+    alert('FAILED: ' + e.code + ' — ' + e.message);
+    if (ss) { ss.textContent = '✗ ' + (e.code || e.message); ss.style.color = 'var(--red)'; }
   }
 };
 
@@ -507,6 +524,9 @@ onAuthStateChanged(auth, user => {
     <button id="adminBtn" onclick="openAdmin()" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:5px 12px;
       border:1px solid var(--border2);background:var(--surface2);color:var(--muted);
       border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;">⚙ ADMIN</button>
+    <button onclick="window.testFirebaseWrite && window.testFirebaseWrite()" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:5px 12px;
+      border:1px solid var(--purple);background:var(--surface2);color:var(--purple);
+      border-radius:3px;cursor:pointer;letter-spacing:1px;">🔥 DB TEST</button>
   </div>
 </div>
 

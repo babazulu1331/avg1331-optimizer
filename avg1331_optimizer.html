@@ -16,6 +16,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;overflow:hidden;}
+@media(max-width:768px){html,body{height:auto;overflow:auto;}}
 body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-weight:400;display:flex;flex-direction:column;
   background-image:radial-gradient(ellipse at 10% 0%,rgba(0,80,160,0.15) 0%,transparent 50%),
   radial-gradient(ellipse at 90% 100%,rgba(0,50,120,0.10) 0%,transparent 50%);}
@@ -402,7 +403,109 @@ input[type=number]::-webkit-inner-spin-button{opacity:0.3;}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+/* Google Translate widget override — match FORGE theme */
+#google_translate_element { display:inline-block; }
+#google_translate_element select {
+  background:var(--surface2);border:1px solid var(--border2);color:var(--text);
+  font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:4px 8px;
+  border-radius:3px;outline:none;cursor:pointer;max-width:130px;
+}
+.goog-te-banner-frame, .skiptranslate { display:none !important; }
+body { top:0 !important; }
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  html,body{overflow:auto;}
+  #app{flex-direction:column;overflow:auto;}
+
+  /* Topbar */
+  #topbar{height:auto;flex-wrap:wrap;padding:8px 12px;gap:6px;}
+  .logo{font-size:0.85rem;}
+  #playerName{width:100px;}
+  .top-meta{font-size:0.6rem;}
+  .top-actions{gap:6px;flex-wrap:wrap;}
+  #google_translate_element select{max-width:100px;font-size:0.6rem;}
+  #authBtn, #adminBtn{font-size:0.6rem;padding:4px 8px;}
+
+  /* Sidebar becomes horizontal tab bar at bottom */
+  #sidebar{
+    width:100%;height:auto;flex-direction:row;
+    border-right:none;border-top:1px solid var(--border);
+    overflow-x:auto;overflow-y:hidden;
+    position:fixed;bottom:0;left:0;right:0;z-index:50;
+    background:var(--surface);flex-shrink:0;
+  }
+  .nav-section{padding:0;display:flex;flex-direction:row;}
+  .nav-label{display:none;}
+  .nav-item{
+    flex-direction:column;padding:8px 12px;font-size:0.6rem;
+    border-left:none;border-top:3px solid transparent;
+    white-space:nowrap;min-width:60px;text-align:center;
+    justify-content:center;
+  }
+  .nav-item.active{border-top-color:var(--accent);border-left-color:transparent;}
+  .nav-item .nav-icon{font-size:1rem;width:auto;}
+  .nav-badge{margin-left:0;margin-top:2px;}
+  #sidebar > div:last-child{display:none;} /* hide version footer */
+
+  /* Main content — add bottom padding for fixed tab bar */
+  #content{padding:14px;padding-bottom:80px;overflow-y:auto;}
+
+  /* Auth gate */
+  #authGate{padding:20px;}
+
+  /* Profile grid — single column */
+  .profile-grid{grid-template-columns:1fr;}
+
+  /* Officer grid — single column */
+  .officer-layout{grid-template-columns:1fr;}
+
+  /* Troop builder — collapse columns */
+  .unit-builder-row{
+    grid-template-columns:1fr 50px 70px 70px;
+    font-size:0.75rem;
+  }
+  .ub-ability{display:none;} /* hide ability on mobile, too cramped */
+
+  /* Modals — full screen */
+  .modal{width:95vw;max-height:90vh;}
+  .admin-box{width:95vw;max-height:90vh;}
+
+  /* Quick actions — wrap */
+  .quick-actions{flex-direction:column;}
+  .qa-btn{width:100%;justify-content:center;}
+
+  /* Recommendation controls */
+  .rec-controls{flex-direction:column;}
+  .battle-select{width:100%;}
+  .gen-btn{width:100%;}
+
+  /* Post mortem upload areas */
+  .pm-upload-grid{grid-template-columns:1fr;}
+
+  /* Alliance roster — single column */
+  #allianceRosterGrid{grid-template-columns:1fr;}
+
+  /* Cap bar */
+  .cap-rows{flex-direction:column;gap:4px;}
+}
+
+@media (max-width: 480px) {
+  .unit-builder-row{grid-template-columns:1fr 45px 65px;}
+  #topbar .top-meta{display:none;}
+}
 </style>
+
+<!-- Google Translate -->
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <!-- Firebase SDK -->
 <script type="module">
@@ -434,9 +537,32 @@ window._fbSignOut = () => signOut(auth);
 
 async function loadProfile(uid) {
   try {
-    const snap = await getDoc(doc(db, "players", uid));
-    if (snap.exists()) {
-      window.STATE = { ...window.STATE, ...snap.data() };
+    const user = window._fbUser;
+    if (!user) return;
+    const token = await user.getIdToken(true);
+    const projectId = 'avg1331-optimizer';
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/players/${uid}`;
+    const resp = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (data.fields) {
+      function fromFirestoreValue(v) {
+        if (v.stringValue !== undefined) return v.stringValue;
+        if (v.integerValue !== undefined) return parseInt(v.integerValue);
+        if (v.doubleValue !== undefined) return v.doubleValue;
+        if (v.booleanValue !== undefined) return v.booleanValue;
+        if (v.nullValue !== undefined) return null;
+        if (v.arrayValue) return (v.arrayValue.values || []).map(fromFirestoreValue);
+        if (v.mapValue) {
+          const obj = {};
+          for (const [k, val] of Object.entries(v.mapValue.fields || {})) obj[k] = fromFirestoreValue(val);
+          return obj;
+        }
+        return null;
+      }
+      const parsed = {};
+      for (const [k, v] of Object.entries(data.fields)) parsed[k] = fromFirestoreValue(v);
+      window.STATE = { ...window.STATE, ...parsed };
       window.applyState && window.applyState();
     }
   } catch(e) { console.error("Load error:", e); }
@@ -446,21 +572,51 @@ window.saveToFirebase = async function() {
   const user = window._fbUser;
   if (!user || !window.STATE) return;
   const ss = document.getElementById('syncStatus');
+  if (ss) { ss.textContent = '● saving...'; ss.style.color = 'var(--gold)'; }
   try {
-    // Sanitize STATE — strip non-serializable fields
+    // Sanitize STATE
     const clean = JSON.parse(JSON.stringify({
       ...window.STATE,
-      uploadedImages: [],   // never save base64 images to Firestore
+      uploadedImages: [],
       adminUnlocked: false,
       lastUpdated: new Date().toISOString()
     }));
-    const savePromise = setDoc(doc(db, "players", user.uid), clean, { merge: true });
-    const timeout = new Promise((_,reject) => setTimeout(()=>reject(new Error('timeout')), 8000));
-    await Promise.race([savePromise, timeout]);
+
+    // Convert to Firestore REST format
+    function toFirestoreValue(val) {
+      if (val === null || val === undefined) return { nullValue: null };
+      if (typeof val === 'boolean') return { booleanValue: val };
+      if (typeof val === 'number') return Number.isInteger(val) ? { integerValue: String(val) } : { doubleValue: val };
+      if (typeof val === 'string') return { stringValue: val };
+      if (Array.isArray(val)) return { arrayValue: { values: val.map(toFirestoreValue) } };
+      if (typeof val === 'object') {
+        const fields = {};
+        for (const [k, v] of Object.entries(val)) fields[k] = toFirestoreValue(v);
+        return { mapValue: { fields } };
+      }
+      return { stringValue: String(val) };
+    }
+    const fields = {};
+    for (const [k, v] of Object.entries(clean)) fields[k] = toFirestoreValue(v);
+
+    // Get fresh ID token for auth
+    const token = await user.getIdToken(true);
+    const projectId = 'avg1331-optimizer';
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/players/${user.uid}?updateMask.fieldPaths=${Object.keys(clean).join('&updateMask.fieldPaths=')}`;
+
+    const resp = await fetch(url, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields })
+    });
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.error?.message || resp.statusText);
+    }
     if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
   } catch(e) {
     console.error("Save error:", e);
-    if (ss) { ss.textContent = '✗ ' + (e.code || e.message); ss.style.color = 'var(--red)'; }
+    if (ss) { ss.textContent = '✗ ' + e.message; ss.style.color = 'var(--red)'; }
   }
 };
 
@@ -500,11 +656,6 @@ onAuthStateChanged(auth, user => {
     loadProfile(user.uid);
     setTimeout(async ()=>{
       window.checkLeaderAccess && window.checkLeaderAccess();
-      // Warm up Firestore connection with a lightweight write first
-      try {
-        await setDoc(doc(db, "test", "ping"), { ts: new Date().toISOString() }, { merge: true });
-      } catch(e) { /* ignore warmup errors */ }
-      // Now do the real save
       window.saveToFirebase && window.saveToFirebase();
     }, 1500);
     const ss = document.getElementById('syncStatus');
@@ -529,6 +680,7 @@ onAuthStateChanged(auth, user => {
   </div>
   <div class="top-meta" id="cityBadge">C?? &nbsp;|&nbsp; BP —</div>
   <div class="top-actions" style="gap:12px;">
+    <div id="google_translate_element"></div>
     <span id="authStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);"></span>
     <button id="authBtn" style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;padding:5px 12px;
       border:1px solid var(--border2);background:var(--surface2);color:var(--text);
@@ -1461,6 +1613,22 @@ Be precise with numbers. Note anything unclear.`;
 }
 
 // ════════════════════════════════════════════
+// LANGUAGE HELPER
+// ════════════════════════════════════════════
+function getSelectedLanguage() {
+  try {
+    const sel = document.querySelector('.goog-te-combo');
+    if (sel && sel.value && sel.value !== 'en') {
+      const names = { zh:'Chinese', ja:'Japanese', ko:'Korean', ru:'Russian',
+        fr:'French', de:'German', es:'Spanish', pt:'Portuguese', ar:'Arabic',
+        th:'Thai', vi:'Vietnamese', id:'Indonesian', tr:'Turkish' };
+      return names[sel.value] || null;
+    }
+  } catch(e) {}
+  return null;
+}
+
+// ════════════════════════════════════════════
 // RECOMMENDATION ENGINE
 // ════════════════════════════════════════════
 async function generateRecommendation(){
@@ -1490,7 +1658,10 @@ async function generateRecommendation(){
     monster:"Monster Hunting (PvE — maximize damage output)"
   };
 
-  const systemPrompt=`You are the AoO Alliance Optimizer, an expert Age of Origins formation advisor.
+  const lang = getSelectedLanguage();
+  const langInstruction = lang ? `\nIMPORTANT: Respond entirely in ${lang}.` : '';
+
+  const systemPrompt=`You are the AoO Alliance Optimizer, an expert Age of Origins formation advisor.${langInstruction}
 You have deep knowledge of the game mechanics database for T12/T13 units in Nation Duel and monster hunting.
 
 KEY GAME MECHANICS (always apply):
@@ -1739,7 +1910,10 @@ Active officers: ${Object.entries(STATE.officers).map(([cat, slots]) =>
     `${cat}: ${slots.filter(Boolean).join(', ') || 'none set'}`).join(' | ')}
 Titans: Edgar Lv.${STATE.edgarLv || 16} | Zephyrine Lv.${STATE.zephLv || 15} | Warplane Lv.${STATE.planeLv || 19}`;
 
-  const systemPrompt = `You are the AoO Alliance Optimizer post-mortem analyst for Age of Origins.
+  const lang = getSelectedLanguage();
+  const langInstruction = lang ? `\nIMPORTANT: Respond entirely in ${lang}.` : '';
+
+  const systemPrompt = `You are the AoO Alliance Optimizer post-mortem analyst for Age of Origins.${langInstruction}
 Your job is to analyze battle reports and determine whether the player's pre-battle hypothesis was correct, identify what actually happened, and produce prioritized actionable recommendations.
 
 ANALYSIS PHILOSOPHY:

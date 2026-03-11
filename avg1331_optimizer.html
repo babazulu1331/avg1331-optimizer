@@ -604,7 +604,7 @@ window.saveToFirebase = async function() {
     const projectId = 'avg1331-optimizer';
     const docPath = `projects/${projectId}/databases/(default)/documents/players/${user.uid}`;
 
-    await setDoc(doc(window._fbDb, "players", user.uid), clean, { merge: true });
+    await setDoc(doc(db, "players", user.uid), clean, { merge: true });
     
     if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
   } catch(e) {

@@ -604,23 +604,8 @@ window.saveToFirebase = async function() {
     const projectId = 'avg1331-optimizer';
     const docPath = `projects/${projectId}/databases/(default)/documents/players/${user.uid}`;
 
-    // Use commit endpoint — handles both create and update
-    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents:commit`;
-    const body = {
-      writes: [{
-        update: { name: docPath, fields },
-        updateMask: { fieldPaths: Object.keys(clean) }
-      }]
-    };
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!resp.ok) {
-      const err = await resp.json();
-      throw new Error(err.error?.message || resp.statusText);
-    }
+    await setDoc(doc(window._fbDb, "players", user.uid), clean, { merge: true });
+    
     if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
   } catch(e) {
     console.error("Save error:", e);

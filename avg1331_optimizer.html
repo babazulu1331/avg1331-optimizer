@@ -252,6 +252,125 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-
 #analysisOutput{margin-top:14px;background:var(--surface);border:1px solid var(--border);
   border-radius:6px;padding:16px;min-height:80px;font-size:0.82rem;line-height:1.7;display:none;}
 
+/* ── BATTLE REPORTS ── */
+.br-layout { display: flex; flex-direction: column; gap: 14px; }
+
+/* Step cards */
+.br-step { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.br-step-head { background: var(--surface2); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+.br-step-title { font-family: 'Orbitron', monospace; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); }
+.br-step-hint { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); }
+.br-step-body { padding: 14px 16px; }
+
+/* Upload slots grid */
+.br-slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+
+.br-slot { position: relative; border: 2px dashed var(--border2); border-radius: 6px; background: var(--surface2);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; min-height: 100px; overflow: hidden; }
+.br-slot:hover, .br-slot.drag-over { border-color: var(--accent); background: rgba(0,200,255,0.04); }
+.br-slot.has-image { border-style: solid; border-color: rgba(0,200,255,0.3); }
+.br-slot-icon { font-size: 1.6rem; opacity: 0.35; margin-bottom: 6px; }
+.br-slot-label { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--muted); text-align: center; line-height: 1.5; }
+.br-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+.br-slot-overlay { position: absolute; inset: 0; background: rgba(6,11,18,0.7);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  opacity: 0; transition: opacity 0.15s; }
+.br-slot:hover .br-slot-overlay { opacity: 1; }
+.br-slot-overlay-label { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--accent); }
+.br-slot-remove { font-size: 0.65rem; color: var(--red); padding: 2px 6px; border-radius: 3px;
+  background: rgba(255,68,85,0.12); cursor: pointer; border: 1px solid rgba(255,68,85,0.3); }
+
+/* Add more button */
+.br-add-slot { border: 2px dashed var(--faint); border-radius: 6px; background: transparent;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; min-height: 100px; color: var(--muted); }
+.br-add-slot:hover { border-color: var(--border2); color: var(--text); }
+.br-add-slot-icon { font-size: 1.4rem; margin-bottom: 4px; }
+.br-add-slot-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; }
+
+/* Context fields */
+.br-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.br-field { display: flex; flex-direction: column; gap: 4px; }
+.br-field label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 1px; }
+.br-field select, .br-field input { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 7px 10px; color: var(--text); font-family: 'Share Tech Mono', monospace; font-size: 0.75rem;
+  outline: none; width: 100%; }
+.br-field select:focus, .br-field input:focus { border-color: var(--accent); }
+.br-field-full { grid-column: 1 / -1; }
+.br-field textarea { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 8px 10px; color: var(--text); font-family: 'Exo 2', sans-serif; font-size: 0.8rem;
+  outline: none; width: 100%; resize: vertical; min-height: 60px; line-height: 1.5; }
+.br-field textarea:focus { border-color: var(--accent); }
+
+/* Submit bar */
+.br-submit-bar { display: flex; align-items: center; gap: 12px; margin-top: 4px; flex-wrap: wrap; }
+.br-submit-btn { padding: 10px 24px; background: rgba(0,200,255,0.12); border: 1px solid var(--accent);
+  border-radius: 5px; color: var(--accent); font-family: 'Orbitron', monospace; font-size: 0.68rem;
+  font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; }
+.br-submit-btn:hover { background: rgba(0,200,255,0.22); }
+.br-submit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.br-image-count { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+.br-image-count .br-count-val { color: var(--accent); }
+
+/* Status / validation bar */
+.br-status-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+  border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+  background: var(--faint); border: 1px solid var(--border); }
+.br-status-bar.ok { background: rgba(61,224,112,0.06); border-color: rgba(61,224,112,0.25); color: var(--green); }
+.br-status-bar.warn { background: rgba(240,184,64,0.06); border-color: rgba(240,184,64,0.25); color: var(--gold); }
+.br-status-bar.error { background: rgba(255,68,85,0.06); border-color: rgba(255,68,85,0.25); color: var(--red); }
+.br-status-bar.loading { color: var(--accent); }
+
+/* Processing overlay */
+.br-processing { display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+  font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; color: var(--accent); }
+.br-processing-detail { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+
+/* Result preview */
+.br-result { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px;
+  padding: 14px 16px; margin-top: 12px; font-size: 0.8rem; line-height: 1.7; }
+.br-result pre { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text);
+  white-space: pre-wrap; word-break: break-word; }
+.br-result-label { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 2px;
+  color: var(--accent); margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+
+/* Extracted JSON viewer */
+.br-json-viewer { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; line-height: 1.6;
+  color: var(--text); white-space: pre-wrap; word-break: break-word; }
+.br-json-key { color: var(--accent2); }
+.br-json-string { color: var(--green); }
+.br-json-number { color: var(--gold); }
+.br-json-null { color: var(--muted); }
+.br-json-bool { color: var(--purple); }
+
+/* Review Mode placeholder */
+.br-review-placeholder { border: 1px dashed var(--border); border-radius: 6px; padding: 20px;
+  text-align: center; color: var(--muted); font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+  margin-top: 10px; }
+.br-review-placeholder .br-rp-icon { font-size: 1.8rem; margin-bottom: 8px; opacity: 0.3; }
+
+/* Session history strip */
+.br-history { display: flex; flex-direction: column; gap: 6px; }
+.br-history-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 5px;
+  font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; cursor: pointer; transition: all 0.15s; }
+.br-history-item:hover { border-color: var(--border2); }
+.br-hi-badge { padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; flex-shrink: 0; }
+.br-hi-badge.win { background: rgba(61,224,112,0.12); color: var(--green); }
+.br-hi-badge.loss { background: rgba(255,68,85,0.12); color: var(--red); }
+.br-hi-name { color: var(--text); font-weight: 600; flex: 1; }
+.br-hi-meta { color: var(--muted); font-size: 0.62rem; }
+.br-hi-imgs { color: var(--muted); font-size: 0.62rem; margin-left: auto; }
+
+/* Worker endpoint badge */
+.br-worker-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+  background: rgba(0,200,255,0.05); border: 1px solid rgba(0,200,255,0.2);
+  border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+.br-worker-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 4px var(--green); flex-shrink: 0; }
+.br-worker-dot.offline { background: var(--red); box-shadow: 0 0 4px var(--red); }
+
 /* ── ADMIN ── */
 #adminPanel{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;
   display:none;align-items:center;justify-content:center;}
@@ -485,6 +604,10 @@ body { top:0 !important; }
   /* Alliance roster — single column */
   #allianceRosterGrid{grid-template-columns:1fr;}
 
+  /* Battle Reports */
+  .br-slots { grid-template-columns: repeat(2, 1fr); }
+  .br-fields { grid-template-columns: 1fr 1fr; }
+
   /* Cap bar */
   .cap-rows{flex-direction:column;gap:4px;}
 }
@@ -604,8 +727,23 @@ window.saveToFirebase = async function() {
     const projectId = 'avg1331-optimizer';
     const docPath = `projects/${projectId}/databases/(default)/documents/players/${user.uid}`;
 
-    await setDoc(doc(db, "players", user.uid), clean, { merge: true });
-    
+    // Use commit endpoint — handles both create and update
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents:commit`;
+    const body = {
+      writes: [{
+        update: { name: docPath, fields },
+        updateMask: { fieldPaths: Object.keys(clean) }
+      }]
+    };
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.error?.message || resp.statusText);
+    }
     if (ss) { ss.textContent = '● synced'; ss.style.color = 'var(--green)'; }
   } catch(e) {
     console.error("Save error:", e);
@@ -745,6 +883,10 @@ onAuthStateChanged(auth, user => {
       <div class="nav-item" onclick="showPanel('postmortem')">
         <span class="nav-icon">⊛</span> Post-Mortem
         <span class="nav-badge" id="badge-pm">—</span>
+      </div>
+      <div class="nav-item" onclick="showPanel('battlereports')">
+        <span class="nav-icon">⬡</span> Battle Reports
+        <span class="nav-badge" id="badge-br">—</span>
       </div>
     </div>
     <div class="nav-section" id="allianceNavSection" style="display:none;">
@@ -1042,8 +1184,174 @@ onAuthStateChanged(auth, user => {
       </div>
     </div>
 
+    <!-- BATTLE REPORTS -->
+    <div id="panel-battlereports" class="panel"></div>
+
   </div><!-- /content -->
 </div><!-- /app -->
+
+<!-- BATTLE REPORTS TEMPLATE — injected into panel via JS on first visit -->
+<template id="tpl-battlereports">
+<div class="br-layout">
+
+  <!-- Header row: worker status -->
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div>
+      <div class="dash-header" style="margin-bottom:0;">
+        <h2>BATTLE REPORTS</h2>
+        <p>Upload battle report screenshots for structured extraction and Review Mode validation.</p>
+      </div>
+    </div>
+    <div>
+      <div class="br-worker-badge">
+        <div class="br-worker-dot" id="brWorkerDot"></div>
+        <span id="brWorkerLabel">forge-api-proxy · checking...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Screenshots -->
+  <div class="br-step">
+    <div class="br-step-head">
+      <span class="br-step-title">① BATTLE SCREENSHOTS</span>
+      <span class="br-step-hint">Summary · Troop Detail (both sides) · Tech Bonus</span>
+    </div>
+    <div class="br-step-body">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+        Capture order: <span style="color:var(--text);">Summary screen</span> → <span style="color:var(--text);">Check Details (your side)</span> → scroll all troop rows → scroll to Tech Bonus →
+        then <span style="color:var(--text);">Check Details (enemy side)</span> → same scroll sequence.
+      </div>
+
+      <!-- Slot grid -->
+      <div class="br-slots" id="brSlotGrid">
+        <!-- Slots rendered by JS -->
+      </div>
+
+      <div style="margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div class="br-image-count">
+          <span class="br-count-val" id="brImgCount">0</span> screenshot(s) loaded
+        </div>
+        <div id="brValidationBar" class="br-status-bar" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Context -->
+  <div class="br-step">
+    <div class="br-step-head">
+      <span class="br-step-title">② REPORT CONTEXT</span>
+      <span class="br-step-hint">Helps the extractor target the right fields</span>
+    </div>
+    <div class="br-step-body">
+      <div class="br-fields">
+        <div class="br-field">
+          <label>ATTACKER NAME</label>
+          <input type="text" id="brAttacker" placeholder="e.g. PeepTheKhaki's" maxlength="40">
+        </div>
+        <div class="br-field">
+          <label>ATTACKER ALLIANCE</label>
+          <input type="text" id="brAttackerAlliance" placeholder="e.g. AVG" maxlength="10">
+        </div>
+        <div class="br-field">
+          <label>DEFENDER NAME</label>
+          <input type="text" id="brDefender" placeholder="e.g. FDwar" maxlength="40">
+        </div>
+        <div class="br-field">
+          <label>DEFENDER ALLIANCE</label>
+          <input type="text" id="brDefenderAlliance" placeholder="e.g. LAW" maxlength="10">
+        </div>
+        <div class="br-field">
+          <label>BATTLE TYPE</label>
+          <select id="brBattleType">
+            <option value="nation_duel">Nation Duel</option>
+            <option value="city_attack">City Attack</option>
+            <option value="uranium_mine">Uranium Mine</option>
+            <option value="rally">Rally</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="br-field">
+          <label>RESULT</label>
+          <select id="brResult">
+            <option value="victory">Victory</option>
+            <option value="defeat">Defeat</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+        <div class="br-field br-field-full">
+          <label>NOTES <span style="color:var(--muted);font-size:0.55rem;">(optional — forfeit, wave number, special context)</span></label>
+          <textarea id="brNotes" placeholder="e.g. Wave 7, fortify slots 8, enemy sent 1 zombie (forfeit)"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Submit -->
+  <div class="br-step">
+    <div class="br-step-head">
+      <span class="br-step-title">③ EXTRACT</span>
+      <span class="br-step-hint">Sends screenshots to FORGE Worker → Claude API</span>
+    </div>
+    <div class="br-step-body">
+      <div class="br-submit-bar">
+        <button class="br-submit-btn" id="brSubmitBtn" onclick="brSubmit()" disabled>
+          ⬡ EXTRACT BATTLE DATA
+        </button>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);line-height:1.5;">
+          Routes via Cloudflare Worker.<br>Free Tier: 5 req/min · 10K tokens/min.
+        </div>
+      </div>
+
+      <!-- Processing state -->
+      <div id="brProcessing" style="display:none;">
+        <div class="br-processing">
+          <div class="spinner"></div>
+          <div>
+            <div id="brProcessingMsg">Sending to FORGE Worker...</div>
+            <div class="br-processing-detail" id="brProcessingDetail">Encoding screenshots and building extraction prompt</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result area -->
+      <div id="brResultArea" style="display:none;">
+        <div class="br-result">
+          <div class="br-result-label">⬡ EXTRACTED DATA — RAW JSON</div>
+          <div class="br-json-viewer" id="brJsonOutput"></div>
+        </div>
+
+        <!-- Review Mode placeholder -->
+        <div class="br-review-placeholder">
+          <div class="br-rp-icon">⊞</div>
+          <div>Review Mode validation panels — <span style="color:var(--accent);">next session</span></div>
+          <div style="margin-top:4px;color:var(--muted);font-size:0.65rem;">Unit total check, inline editing, and trust-level submission will appear here.</div>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div id="brErrorArea" style="display:none;">
+        <div class="br-status-bar error" id="brErrorMsg" style="margin-top:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Session history -->
+  <div class="br-step">
+    <div class="br-step-head">
+      <span class="br-step-title">⬡ THIS SESSION</span>
+      <span class="br-step-hint">Extracted reports (not yet saved to Firestore)</span>
+    </div>
+    <div class="br-step-body">
+      <div class="br-history" id="brHistory">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--muted);padding:8px 0;">
+          No reports extracted this session yet.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</template>
 
 <!-- OFFICER PICKER MODAL -->
 <div class="modal-overlay" id="officerModal" style="display:none;" onclick="if(event.target===this)closeModal()">
@@ -1324,6 +1632,7 @@ function showPanel(id) {
   document.querySelectorAll('.nav-item').forEach(n=>{
     if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(id)) n.classList.add('active');
   });
+  if (id === 'battlereports') initBattleReports();
 }
 
 // ════════════════════════════════════════════
@@ -2038,6 +2347,390 @@ async function loadAllianceRoster() {
     }).join('');
   } catch(e) {
     grid.innerHTML = `<div style="color:var(--red);font-family:'Share Tech Mono',monospace;font-size:0.78rem;padding:20px;">Error loading roster: ${e.message}</div>`;
+  }
+}
+
+// ════════════════════════════════════════════
+// BATTLE REPORTS — Upload UI + Worker Integration
+// ════════════════════════════════════════════
+const BR_WORKER_URL = 'https://forge-api-proxy.babazulu1331.workers.dev';
+const BR_MAX_SLOTS = 12;
+
+// State for this session
+let brState = {
+  images: [],        // [{file, dataUrl, label}]
+  sessionReports: [] // extracted reports this session
+};
+
+// Initialize panel on first visit
+function initBattleReports() {
+  const panel = document.getElementById('panel-battlereports');
+  if (panel.dataset.initialized) return;
+  panel.dataset.initialized = 'true';
+  const tpl = document.getElementById('tpl-battlereports');
+  panel.appendChild(tpl.content.cloneNode(true));
+  brRenderSlots();
+  brCheckWorker();
+}
+
+// ── Slot rendering ──────────────────────────
+const BR_SLOT_LABELS = [
+  'Battle Summary', 'Your Troops', 'Your Tech', 'Enemy Troops', 'Enemy Tech',
+  'Overview', 'Screen 7', 'Screen 8', 'Screen 9', 'Screen 10', 'Screen 11', 'Screen 12'
+];
+
+function brRenderSlots() {
+  const grid = document.getElementById('brSlotGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  // Filled image slots
+  brState.images.forEach((img, idx) => {
+    const slot = document.createElement('div');
+    slot.className = 'br-slot has-image';
+    slot.innerHTML = `
+      <img src="${img.dataUrl}" alt="${img.label}">
+      <div class="br-slot-overlay">
+        <div class="br-slot-overlay-label">${img.label}</div>
+        <div class="br-slot-remove" onclick="brRemoveImage(${idx});event.stopPropagation()">✕ Remove</div>
+      </div>`;
+    grid.appendChild(slot);
+  });
+
+  // Add slot (if under max)
+  if (brState.images.length < BR_MAX_SLOTS) {
+    const nextLabel = BR_SLOT_LABELS[brState.images.length] || `Screen ${brState.images.length + 1}`;
+    const addSlot = document.createElement('div');
+    addSlot.className = 'br-slot';
+    addSlot.innerHTML = `
+      <div class="br-slot-icon">📷</div>
+      <div class="br-slot-label">Click or drop<br><span style="color:var(--accent);font-size:0.6rem;">${nextLabel}</span></div>`;
+    addSlot.onclick = () => brTriggerFilePicker();
+    addSlot.addEventListener('dragover', e => { e.preventDefault(); addSlot.classList.add('drag-over'); });
+    addSlot.addEventListener('dragleave', () => addSlot.classList.remove('drag-over'));
+    addSlot.addEventListener('drop', e => { e.preventDefault(); addSlot.classList.remove('drag-over'); brHandleFiles(e.dataTransfer.files); });
+    grid.appendChild(addSlot);
+  }
+
+  brUpdateCount();
+}
+
+function brTriggerFilePicker() {
+  let inp = document.getElementById('brHiddenFileInput');
+  if (!inp) {
+    inp = document.createElement('input');
+    inp.type = 'file';
+    inp.id = 'brHiddenFileInput';
+    inp.accept = 'image/*';
+    inp.multiple = true;
+    inp.style.display = 'none';
+    inp.onchange = () => brHandleFiles(inp.files);
+    document.body.appendChild(inp);
+  }
+  inp.value = '';
+  inp.click();
+}
+
+function brHandleFiles(files) {
+  const fileArr = Array.from(files);
+  const remaining = BR_MAX_SLOTS - brState.images.length;
+  fileArr.slice(0, remaining).forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const label = BR_SLOT_LABELS[brState.images.length] || `Screen ${brState.images.length + 1}`;
+      brState.images.push({ file, dataUrl: e.target.result, label });
+      brRenderSlots();
+      brValidate();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function brRemoveImage(idx) {
+  brState.images.splice(idx, 1);
+  brRenderSlots();
+  brValidate();
+}
+
+function brUpdateCount() {
+  const el = document.getElementById('brImgCount');
+  if (el) el.textContent = brState.images.length;
+  const btn = document.getElementById('brSubmitBtn');
+  if (btn) btn.disabled = brState.images.length === 0;
+}
+
+// ── Validation bar ────────────────────────────
+function brValidate() {
+  const bar = document.getElementById('brValidationBar');
+  if (!bar) return;
+  const n = brState.images.length;
+  if (n === 0) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  if (n < 3) {
+    bar.className = 'br-status-bar warn';
+    bar.textContent = `⚠ ${n} screenshot${n>1?'s':''} — recommend at least 3 (Summary + your Troops + your Tech)`;
+  } else if (n < 5) {
+    bar.className = 'br-status-bar ok';
+    bar.textContent = `✓ ${n} screenshots — good. Add enemy screens for full dual-side extraction.`;
+  } else {
+    bar.className = 'br-status-bar ok';
+    bar.textContent = `✓ ${n} screenshots loaded — full extraction ready.`;
+  }
+}
+
+// ── Worker health check ───────────────────────
+async function brCheckWorker() {
+  const dot = document.getElementById('brWorkerDot');
+  const lbl = document.getElementById('brWorkerLabel');
+  if (!dot || !lbl) return;
+  try {
+    const r = await fetch(BR_WORKER_URL, { method: 'GET', signal: AbortSignal.timeout(4000) });
+    if (r.status < 500) {
+      dot.className = 'br-worker-dot';
+      lbl.textContent = 'forge-api-proxy · online';
+    } else {
+      throw new Error('5xx');
+    }
+  } catch(e) {
+    dot.className = 'br-worker-dot offline';
+    lbl.textContent = 'forge-api-proxy · unreachable';
+  }
+}
+
+// ── Extraction prompt (v1.1 inline) ──────────
+function brBuildExtractionPrompt(context) {
+  return `You are FORGE — the Formation Optimizer for Age of Origins battle report extractor.
+Extract all data from the provided battle report screenshots and return ONLY a valid JSON object. No preamble, no markdown fences, no explanation.
+
+CONTEXT:
+- Attacker: ${context.attacker || 'unknown'} (${context.attackerAlliance || '?'})
+- Defender: ${context.defender || 'unknown'} (${context.defenderAlliance || '?'})
+- Battle type: ${context.battleType}
+- Result: ${context.result}
+- Notes: ${context.notes || 'none'}
+
+UNIT ROW ASSIGNMENT:
+Front row: Infantry, Tank (Destruction Tank), Shredder (Hell King), Armored Soldier
+Mid row: Storm Trooper (Havoc Breaker), Gunner (Hades Gatling), Bike (Demon Raider), Rocket (Fanatic Terminator)
+Back row: Cannon (Death Cannon), Sniper (Eagle Eye Shot), Shielder (Immortal Shielder), EMP
+Special: Zombie, Warplane, Titan Male, Titan Female
+
+CRITICAL ICON DISTINCTIONS:
+- Storm Trooper T13: TALL CYLINDER WITH BLUE-TIPPED EMITTER. NOT EMP.
+- EMP T12: PULSE/WAVE EMITTER — horizontal wave pattern. T12 only.
+- Rocket T12: TWO PARALLEL LINES / DUAL BARREL
+- Sniper T12: SINGLE LONG RIFLE — one barrel
+- Bike T12: MOTORCYCLE SILHOUETTE
+
+UNITS PER TROOP (upt): Shredder=10, EMP=10, Shielder=10, Bike=5, Tank=5, Cannon=5, Armored Soldier=2, Infantry=1, Sniper=1, Rocket=1, Storm Trooper=1, Gunner=1, Zombie=1
+
+FORFEIT PATTERN: If a side sent only 1 unit (e.g. 1 Zombie), mark as forfeit:true. Special attack still procs.
+
+Missing tech stats = genuinely 0, not a parsing error. Record as 0.
+
+Return this exact JSON structure:
+{
+  "battle": {
+    "attacker": "", "attacker_alliance": "", "defender": "", "defender_alliance": "",
+    "type": "", "result": "", "forfeit": false, "forfeit_side": null,
+    "wave": null, "fortify_slots": null
+  },
+  "attacker_side": {
+    "troops_sent": {},
+    "troops_lost": {},
+    "troops_remaining": {},
+    "kills_dealt": {},
+    "tech_bonus": {},
+    "total_troops_sent": 0,
+    "total_kills_dealt": 0
+  },
+  "defender_side": {
+    "troops_sent": {},
+    "troops_lost": {},
+    "troops_remaining": {},
+    "kills_dealt": {},
+    "tech_bonus": {},
+    "total_troops_sent": 0,
+    "total_kills_dealt": 0
+  },
+  "extraction_confidence": {
+    "attacker_troops": "high|medium|low",
+    "attacker_tech": "high|medium|low",
+    "defender_troops": "high|medium|low",
+    "defender_tech": "high|medium|low",
+    "notes": []
+  }
+}`;
+}
+
+// ── Submit ─────────────────────────────────────
+async function brSubmit() {
+  const btn = document.getElementById('brSubmitBtn');
+  const processing = document.getElementById('brProcessing');
+  const resultArea = document.getElementById('brResultArea');
+  const errorArea = document.getElementById('brErrorArea');
+  const msgEl = document.getElementById('brProcessingMsg');
+  const detailEl = document.getElementById('brProcessingDetail');
+
+  if (brState.images.length === 0) return;
+
+  btn.disabled = true;
+  resultArea.style.display = 'none';
+  errorArea.style.display = 'none';
+  processing.style.display = 'block';
+
+  const context = {
+    attacker: document.getElementById('brAttacker')?.value?.trim() || '',
+    attackerAlliance: document.getElementById('brAttackerAlliance')?.value?.trim() || '',
+    defender: document.getElementById('brDefender')?.value?.trim() || '',
+    defenderAlliance: document.getElementById('brDefenderAlliance')?.value?.trim() || '',
+    battleType: document.getElementById('brBattleType')?.value || 'nation_duel',
+    result: document.getElementById('brResult')?.value || 'unknown',
+    notes: document.getElementById('brNotes')?.value?.trim() || ''
+  };
+
+  try {
+    if (msgEl) msgEl.textContent = 'Encoding screenshots...';
+    if (detailEl) detailEl.textContent = `${brState.images.length} image(s) → base64`;
+
+    // Build image content blocks
+    const imageContent = await Promise.all(brState.images.map(async img => {
+      const base64 = img.dataUrl.split(',')[1];
+      const mimeMatch = img.dataUrl.match(/data:([^;]+);/);
+      const mediaType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+      return {
+        type: 'image',
+        source: { type: 'base64', media_type: mediaType, data: base64 }
+      };
+    }));
+
+    if (msgEl) msgEl.textContent = 'Sending to FORGE Worker...';
+    if (detailEl) detailEl.textContent = 'POST → forge-api-proxy.babazulu1331.workers.dev';
+
+    const extractionPrompt = brBuildExtractionPrompt(context);
+
+    const payload = {
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      messages: [{
+        role: 'user',
+        content: [
+          ...imageContent,
+          { type: 'text', text: extractionPrompt }
+        ]
+      }]
+    };
+
+    const resp = await fetch(BR_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (msgEl) msgEl.textContent = 'Parsing extraction response...';
+    if (detailEl) detailEl.textContent = 'Received · processing JSON';
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error(`Worker returned ${resp.status}: ${errText.slice(0, 200)}`);
+    }
+
+    const data = await resp.json();
+    const rawText = data.content?.map(c => c.text || '').join('') || '';
+
+    // Try to parse as JSON
+    let extracted = null;
+    try {
+      const clean = rawText.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();
+      extracted = JSON.parse(clean);
+    } catch(e) {
+      // Show raw text if not parseable JSON
+      extracted = { _raw: rawText, _parse_error: e.message };
+    }
+
+    // Display result
+    processing.style.display = 'none';
+    resultArea.style.display = 'block';
+    const jsonEl = document.getElementById('brJsonOutput');
+    if (jsonEl) jsonEl.innerHTML = brColorizeJson(JSON.stringify(extracted, null, 2));
+
+    // Add to session history
+    const label = [context.attacker, 'vs', context.defender].filter(Boolean).join(' ') || 'Battle Report';
+    brState.sessionReports.push({ label, context, extracted, timestamp: new Date() });
+    brUpdateHistory();
+    brUpdateBadge();
+
+  } catch(e) {
+    processing.style.display = 'none';
+    errorArea.style.display = 'block';
+    const errEl = document.getElementById('brErrorMsg');
+    if (errEl) errEl.textContent = `✗ ${e.message}`;
+  }
+
+  btn.disabled = false;
+}
+
+// ── JSON syntax highlighter ───────────────────
+function brColorizeJson(json) {
+  return json
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+      let cls = 'br-json-number';
+      if (/^"/.test(match)) {
+        cls = /:$/.test(match) ? 'br-json-key' : 'br-json-string';
+      } else if (/true|false/.test(match)) {
+        cls = 'br-json-bool';
+      } else if (/null/.test(match)) {
+        cls = 'br-json-null';
+      }
+      return `<span class="${cls}">${match}</span>`;
+    });
+}
+
+// ── Session history ────────────────────────────
+function brUpdateHistory() {
+  const el = document.getElementById('brHistory');
+  if (!el) return;
+  if (brState.sessionReports.length === 0) {
+    el.innerHTML = '<div style="font-family:\'Share Tech Mono\',monospace;font-size:0.72rem;color:var(--muted);padding:8px 0;">No reports extracted this session yet.</div>';
+    return;
+  }
+  el.innerHTML = brState.sessionReports.map((r, i) => {
+    const result = r.context.result;
+    const badgeCls = result === 'victory' ? 'win' : result === 'defeat' ? 'loss' : '';
+    const badgeTxt = result === 'victory' ? 'VICTORY' : result === 'defeat' ? 'DEFEAT' : 'UNKNOWN';
+    const imgCount = brState.images.length;
+    const time = r.timestamp.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    const conf = r.extracted?.extraction_confidence;
+    const confNote = conf ? ` · atk:${conf.attacker_troops||'?'} def:${conf.defender_troops||'?'}` : '';
+    return `<div class="br-history-item" onclick="brViewReport(${i})">
+      <span class="br-hi-badge ${badgeCls}">${badgeTxt}</span>
+      <span class="br-hi-name">${r.label}</span>
+      <span class="br-hi-meta">${r.context.battleType.replace('_',' ')}${confNote}</span>
+      <span class="br-hi-imgs">${time}</span>
+    </div>`;
+  }).join('');
+}
+
+function brViewReport(idx) {
+  const r = brState.sessionReports[idx];
+  if (!r) return;
+  const jsonEl = document.getElementById('brJsonOutput');
+  const resultArea = document.getElementById('brResultArea');
+  if (jsonEl && resultArea) {
+    jsonEl.innerHTML = brColorizeJson(JSON.stringify(r.extracted, null, 2));
+    resultArea.style.display = 'block';
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function brUpdateBadge() {
+  const badge = document.getElementById('badge-br');
+  if (!badge) return;
+  const n = brState.sessionReports.length;
+  if (n > 0) {
+    badge.textContent = n;
+    badge.className = 'nav-badge ok';
   }
 }
 
